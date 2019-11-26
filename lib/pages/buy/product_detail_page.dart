@@ -1,4 +1,4 @@
-import 'package:arator/star_rating.dart';
+import 'package:arator/components/star_rating.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailPage extends StatefulWidget {

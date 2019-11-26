@@ -1,4 +1,4 @@
-import 'package:arator/components/PageBodyContainer.dart';
+import 'package:arator/components/common/page_body_container.dart';
 import 'package:flutter/material.dart';
 
 class ProfileTab extends StatefulWidget {

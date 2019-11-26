@@ -1,6 +1,5 @@
+import 'package:arator/components/common/page_body_container.dart';
 import 'package:flutter/material.dart';
-
-import 'components/PageBodyContainer.dart';
 
 class BuyerTab extends StatefulWidget {
   @override

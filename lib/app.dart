@@ -1,7 +1,7 @@
-import 'package:arator/tab_navigator.dart';
+import 'package:arator/components/common/tab_navigator.dart';
 import 'package:flutter/material.dart';
 
-import 'bottom_navigation.dart';
+import 'components/common/bottom_navigation.dart';
 
 class App extends StatefulWidget {
   @override
@@ -45,9 +45,9 @@ class AppState extends State<App> {
       },
       child: Scaffold(
         body: Stack(children: <Widget>[
-          _buildOffstageNavigator(TabItem.buy),
-          _buildOffstageNavigator(TabItem.sell),
-          _buildOffstageNavigator(TabItem.profile),
+          _buildOffstageNavigator(TabItem.buy, TabNavigatorRoutes.buy),
+          _buildOffstageNavigator(TabItem.sell, TabNavigatorRoutes.sell),
+          _buildOffstageNavigator(TabItem.profile, TabNavigatorRoutes.profile),
         ]),
         bottomNavigationBar: BottomNavigation(
           currentTab: _currentTab,
@@ -57,12 +57,13 @@ class AppState extends State<App> {
     );
   }
 
-  Widget _buildOffstageNavigator(TabItem tabItem) {
+  Widget _buildOffstageNavigator(TabItem tabItem, String initialRoute) {
     return Offstage(
       offstage: _currentTab != tabItem,
       child: TabNavigator(
         navigatorKey: _navigatorKeys[tabItem],
         tabItem: tabItem,
+        initialRoute: initialRoute,
       ),
     );
   }

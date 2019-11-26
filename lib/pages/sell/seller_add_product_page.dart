@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:arator/components/PageBodyContainer.dart';
+import 'package:arator/components/common/page_body_container.dart';
 import 'package:arator/data/FruitModel.dart';
 import 'package:arator/data/Produce.dart';
 import 'package:flutter/material.dart';
