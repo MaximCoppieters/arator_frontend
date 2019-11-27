@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScopedModel(
-      model: FruitModel(),
+      model: ProduceModel(),
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(

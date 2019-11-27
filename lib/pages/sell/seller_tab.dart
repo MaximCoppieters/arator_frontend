@@ -20,7 +20,7 @@ class _SellerTabState extends State<SellerTab> {
             {TabNavigator.push(context, TabNavigatorRoutes.sellerAddProduct)},
       ),
       body: Container(
-        child: ScopedModelDescendant<FruitModel>(
+        child: ScopedModelDescendant<ProduceModel>(
           builder: (context, child, model) => CustomScrollView(
             slivers: <Widget>[
               SliverAppBar(
@@ -70,7 +70,7 @@ class _SellerTabState extends State<SellerTab> {
                             child: Column(
                           children: <Widget>[
                             Text(
-                              model.fruits[index].species,
+                              model.userProduce[index].species,
                               style: TextStyle(fontSize: 20.0),
                             ),
                             SizedBox(
@@ -79,13 +79,13 @@ class _SellerTabState extends State<SellerTab> {
                             Container(
                               alignment: Alignment.bottomCenter,
                               child: Image.file(
-                                File(model.fruits[index].imagePath),
+                                File(model.userProduce[index].imagePath),
                               ),
                             ),
                           ],
                         )),
                       );
-                    }, childCount: model.fruits.length)),
+                    }, childCount: model.userProduce.length)),
                 padding: EdgeInsets.all(2),
               ),
             ],

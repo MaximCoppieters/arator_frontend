@@ -43,7 +43,8 @@ class _SellerAddProductPageState extends State<SellerAddProductPage> {
     String species = speciesInformation[1];
     String subspecies = speciesInformation[2];
 
-    var fruit = new Produce(species, imageFile.path);
+    var fruit =
+        new Produce(species, imageFile.path, null, null, null, null, null);
     fruit.family = family;
     fruit.subspecies = subspecies;
     return fruit;
@@ -55,7 +56,7 @@ class _SellerAddProductPageState extends State<SellerAddProductPage> {
       appBar: AppBar(
         title: Text('Add Produce'),
       ),
-      body: ScopedModelDescendant<FruitModel>(
+      body: ScopedModelDescendant<ProduceModel>(
         builder: (context, child, model) => PageBodyContainer(
           child: Column(
             children: <Widget>[
@@ -135,7 +136,7 @@ class _SellerAddProductPageState extends State<SellerAddProductPage> {
     );
   }
 
-  void save(Produce fruit, FruitModel model) {
+  void save(Produce fruit, ProduceModel model) {
     model.add(fruit);
     print("family:" + fruit.family);
     print("species:" + fruit.species);

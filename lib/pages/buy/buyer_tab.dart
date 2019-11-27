@@ -1,5 +1,8 @@
+import 'package:arator/components/buy/buy_product_overview_card.dart';
 import 'package:arator/components/common/page_body_container.dart';
+import 'package:arator/data/FruitModel.dart';
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class BuyerTab extends StatefulWidget {
   @override
@@ -13,63 +16,22 @@ class _BuyerTabState extends State<BuyerTab> {
       appBar: AppBar(
         title: Text("Product Overview"),
       ),
-      body: PageBodyContainer(
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                children: <Widget>[
-                  Card(
-                    child: Container(
-                        padding: EdgeInsets.all(10.0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: <Widget>[
-                            Container(
-                              width: double.infinity,
-                              child: Text(
-                                "Cauliflower",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14.0),
-                                textAlign: TextAlign.left,
-                              ),
-                            ),
-                            ConstrainedBox(
-                              child: Container(
-                                  child: Image.asset(
-                                      "assets/images/cauliflower.jpg")),
-                              constraints: BoxConstraints(maxHeight: 120.0),
-                            ),
-                            Container(
-                              width: double.infinity,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: <Widget>[
-                                  Text(
-                                    "Pedro Fernandez",
-                                    textAlign: TextAlign.left,
-                                  ),
-                                  Text(
-                                    "2,5km",
-                                    textAlign: TextAlign.left,
-                                  ),
-                                  Text(
-                                    "€5,30/kg",
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        )),
-                  )
-                ],
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: ScopedModelDescendant<ProduceModel>(
+              builder: (context, child, produceModel) => GridView.builder(
+                itemCount: produceModel.nearbyProduce.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return BuyProduceOverviewCard(
+                      produceModel.nearbyProduce[index]);
+                },
+                gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                    childAspectRatio: 0.8, crossAxisCount: 2),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

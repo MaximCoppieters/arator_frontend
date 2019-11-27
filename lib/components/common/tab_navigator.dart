@@ -1,3 +1,4 @@
+import 'package:arator/pages/buy/buy_product_detail_page.dart';
 import 'package:arator/pages/buy/buyer_tab.dart';
 import 'package:arator/pages/profile/profile_tab.dart';
 import 'package:arator/pages/sell/seller_add_product_page.dart';
@@ -12,6 +13,7 @@ class TabNavigatorRoutes {
   static const String sell = '/sell';
   static const String profile = '/profile';
   static const String sellerAddProduct = '/seller_add_product';
+  static const String buyProductDetail = '/buy/product_detail';
 }
 
 class TabNavigator extends StatelessWidget {
@@ -40,6 +42,7 @@ class TabNavigator extends StatelessWidget {
       TabNavigatorRoutes.sell: (context) => SellerTab(),
       TabNavigatorRoutes.profile: (context) => ProfileTab(),
       TabNavigatorRoutes.sellerAddProduct: (context) => SellerAddProductPage(),
+      TabNavigatorRoutes.buyProductDetail: (context) => BuyProductDetailPage(),
     };
   }
 

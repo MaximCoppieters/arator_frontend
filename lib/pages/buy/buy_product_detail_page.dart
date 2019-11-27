@@ -1,16 +1,16 @@
 import 'package:arator/components/star_rating.dart';
 import 'package:flutter/material.dart';
 
-class ProductDetailPage extends StatefulWidget {
-  ProductDetailPage({Key key, this.title}) : super(key: key);
+class BuyProductDetailPage extends StatefulWidget {
+  BuyProductDetailPage({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _ProductDetailPage createState() => _ProductDetailPage();
+  _BuyProductDetailPage createState() => _BuyProductDetailPage();
 }
 
-class _ProductDetailPage extends State<ProductDetailPage> {
+class _BuyProductDetailPage extends State<BuyProductDetailPage> {
   String selected = "blue";
   bool favourite = false;
 
