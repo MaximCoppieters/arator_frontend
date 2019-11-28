@@ -1,5 +1,14 @@
-import 'package:arator/components/star_rating.dart';
+import 'package:arator/components/buy/increment_number_field.dart';
+import 'package:arator/components/common/page_body_container.dart';
+import 'package:arator/components/common/profile_picture.dart';
+import 'package:arator/components/common/profile_review_row.dart';
+import 'package:arator/components/common/star_rating_buttons.dart';
+import 'package:arator/data/Produce.dart';
+import 'package:arator/data/ProduceModel.dart';
+import 'package:arator/data/ShippingUnitChoice.dart';
+import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class BuyProductDetailPage extends StatefulWidget {
   BuyProductDetailPage({Key key, this.title}) : super(key: key);
@@ -13,42 +22,58 @@ class BuyProductDetailPage extends StatefulWidget {
 class _BuyProductDetailPage extends State<BuyProductDetailPage> {
   String selected = "blue";
   bool favourite = false;
+  int currentImageIndex = 0;
+  List<String> imageUrls = [
+    "assets/images/apples.jpg",
+    "assets/images/cauliflower.jpg"
+  ];
+  ShippingUnitChoice selectedShippingUnit;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //The whole application area
-      body: Container(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
-        child: SafeArea(
+      body: ScopedModelDescendant<ProduceModel>(
+        builder: (context, child, produceModel) => SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Row(
-                children: <Widget>[
-                  BackButton(),
-                  Text(
-                    "Jonagold apples",
-                    style: TextStyle(fontSize: 24.0),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+              productImageCarousel(),
+              PageBodyContainer(
+                child: Column(
+                  children: <Widget>[
+                    ProfileReviewRow(produceModel),
+                  ],
+                ),
               ),
-              SizedBox(
-                height: 20.0,
+              Divider(),
+              PageBodyContainer(
+                alignment: Alignment.topLeft,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "Jonagold Apples",
+                      // produceModel.selectedProduce.species,
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "€21,4/kg",
+                      // produceModel.selectedProduce.getPricePerUnit(),
+                      style: TextStyle(fontSize: 16.0),
+                    ),
+                    Text(
+                      "24km away",
+                      //produceModel.selectedProduce.distance,
+                      style: TextStyle(fontSize: 14.0),
+                    ),
+                    SizedBox(
+                      height: 15.0,
+                    ),
+                    produceSections(),
+                  ],
+                ),
               ),
-              hero(),
-              StarRating(
-                value: 4,
-                onChanged: (int index) {},
-              ),
-              //Center Items
-              Expanded(
-                child: sections(),
-              ),
-
-              //Bottom Button
-              purchase()
+              purchaseSection(produceModel.selectedProduce),
             ],
           ),
         ),
@@ -56,102 +81,55 @@ class _BuyProductDetailPage extends State<BuyProductDetailPage> {
     );
   }
 
-  ///************** Hero   ***************************************************/
-
-  Widget hero() {
-    return Container(
-      child: Row(
-        children: <Widget>[
-          Stack(
-            children: <Widget>[
-              Container(
-                width: 220.0,
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
-                child: Image.asset(
-                  "assets/images/apples.jpg",
-                ),
-              ),
-              // should be a paged
-              // view.
-              Positioned(
-                child: FloatingActionButton(
-                    elevation: 2,
-                    child: Image.asset(
-                      favourite
-                          ? "assets/images/heart_icon.png"
-                          : "assets/images/heart_icon_disabled.png",
-                      width: 20,
-                      height: 20,
-                    ),
-                    backgroundColor: Colors.white,
-                    onPressed: () {
-                      setState(() {
-                        favourite = !favourite;
-                      });
-                    }),
-                bottom: 10,
-                right: 10,
-              ),
-            ],
-          ),
-          SizedBox(
-            width: 20.0,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "€1,00/kg",
-                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                "2,54km away",
-                style: TextStyle(fontSize: 14.0),
-              ),
-              Text(
-                "Sold by:",
-                style: TextStyle(fontSize: 14.0),
-              ),
-              Text(
-                "Pedro Fernandez",
-                style: TextStyle(fontSize: 14.0),
-              )
-            ],
-          )
-        ],
-      ),
+  Widget productImageCarousel() {
+    return Stack(
+      children: <Widget>[
+        SizedBox(
+            height: 260.0,
+            width: double.infinity,
+            child: Carousel(
+              dotBgColor: Colors.transparent,
+              dotSize: 5.0,
+              autoplay: false,
+              images: imageUrls
+                  .map((url) => Image.asset(
+                        url,
+                        fit: BoxFit.fitWidth,
+                      ))
+                  .toList(),
+            )),
+        Positioned(
+            child: BackButton(
+              color: Colors.white,
+            ),
+            top: 10,
+            left: 5),
+      ],
     );
   }
 
-  /***** End */
-
-  ///************ SECTIONS  *************************************************/
-
-  Widget sections() {
+  Widget produceSections() {
     return Container(
-      padding: EdgeInsets.all(16),
       child: Column(
         children: <Widget>[
-          description(),
+          produceDescription(),
           SizedBox(
             height: 10.0,
           ),
-          property(),
+          producePropertySection(),
         ],
       ),
     );
   }
 
-  Widget description() {
+  Widget produceDescription() {
     return Text(
       "Jonagold apples have an under blush which varies in color from greenish yellow to rosy orange depending on the strain and the temperature the apples are grown in. The skin is also covered with red spotting and vertical striping. Large in size its flesh is crisp, juicy and creamy yellow in color.",
-      textAlign: TextAlign.justify,
-      style: TextStyle(height: 1.5, color: Color(0xFF6F8398)),
+      style: TextStyle(color: Theme.of(context).textTheme.body2.color),
     );
   }
 
-  Widget property() {
+  Widget producePropertySection() {
     return Container(
       child: Row(
         children: <Widget>[
@@ -220,128 +198,66 @@ class _BuyProductDetailPage extends State<BuyProductDetailPage> {
     );
   }
 
-  Widget colorSelector() {
+  Widget purchaseAmountChoices(Produce produce) {
     return Container(
-      child: Row(
-        children: <Widget>[
-          ColorTicker(
-              color: Colors.blue,
-              selected: selected == "blue",
-              selectedCallback: () {
-                setState(() {
-                  selected = "blue";
-                });
-              }),
-          ColorTicker(
-              color: Colors.green,
-              selected: selected == "green",
-              selectedCallback: () {
-                setState(() {
-                  selected = "green";
-                });
-              }),
-          ColorTicker(
-            color: Colors.yellow,
-            selected: selected == "yellow",
-            selectedCallback: () {
-              setState(() {
-                selected = "yellow";
-              });
-            },
-          ),
-          ColorTicker(
-            color: Colors.pink,
-            selected: selected == "pink",
-            selectedCallback: () {
-              setState(() {
-                selected = "pink";
-              });
-            },
-          ),
-        ],
+      child: Column(
+        children: produce.shippingUnitChoices
+            .map((possibleShippingUnit) => RadioListTile(
+                  title: Text(
+                      "${possibleShippingUnit.amount.toString()} ${possibleShippingUnit.amountUnit}"),
+                  activeColor: Theme.of(context).accentColor,
+                  subtitle: Text(produce.getPricePerUnit()),
+                  secondary: Text("€ 4,0",
+                      style: TextStyle(
+                          fontSize: 16.0,
+                          color: Theme.of(context).primaryColor)),
+                  value: possibleShippingUnit,
+                  groupValue: selectedShippingUnit,
+                  onChanged: (value) {
+                    setState(() {
+                      selectedShippingUnit = value;
+                    });
+                  },
+                ))
+            .toList(),
       ),
     );
   }
 
-  Widget size() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          "Size",
-          textAlign: TextAlign.left,
-          style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF2F2F3E)),
-        ),
-        spaceVertical(10),
-        Container(
-          width: 70,
-          padding: EdgeInsets.all(10),
-          color: Color(0xFFF5F8FB),
-          child: Text(
-            "10.1",
-            style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF2F2F3E)),
-          ),
-        )
-      ],
-    );
-  }
-
-  /***** End */
-
-  ///************** BOTTOM BUTTON ********************************************/
-  Widget purchase() {
+  Widget purchaseSection(Produce produce) {
     return Container(
       padding: EdgeInsets.all(10),
       child: Column(
         children: <Widget>[
+          purchaseAmountChoices(produce),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              Container(
-                width: 100.0,
-                child: TextField(
-                  decoration: new InputDecoration(labelText: "Amount (kg)"),
-                  keyboardType: TextInputType.number,
+              NumberInputWithIncrementDecrement(),
+              RaisedButton(
+                child: Row(
+                  children: <Widget>[
+                    Icon(Icons.shopping_basket, color: Colors.white),
+                    Padding(
+                      padding: EdgeInsets.only(right: 10.0),
+                    ),
+                    Text(
+                      "Add To Basket",
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                  ],
                 ),
-              ),
-              Text(
-                r"Total: €1,80",
-                style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.w100,
-                    color: Color(0xFF2F2F3E)),
+                color: Colors.green,
+                onPressed: () {},
               ),
             ],
-          ),
-          SizedBox(
-            height: 10.0,
-          ),
-          RaisedButton(
-            child: Text(
-              "ADD TO BASKET",
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF2F2F3E)),
-            ),
-            color: Colors.green,
-            onPressed: () {},
           ),
         ],
       ),
     );
   }
-
-  /***** End */
-
-  ///************** UTILITY WIDGET ********************************************/
 
   Widget spaceVertical(double size) {
     return SizedBox(

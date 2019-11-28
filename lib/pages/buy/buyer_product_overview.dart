@@ -1,15 +1,14 @@
 import 'package:arator/components/buy/buy_product_overview_card.dart';
-import 'package:arator/components/common/page_body_container.dart';
-import 'package:arator/data/FruitModel.dart';
+import 'package:arator/data/ProduceModel.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class BuyerTab extends StatefulWidget {
+class BuyerProductOverview extends StatefulWidget {
   @override
-  _BuyerTabState createState() => _BuyerTabState();
+  _BuyerProductOverviewState createState() => _BuyerProductOverviewState();
 }
 
-class _BuyerTabState extends State<BuyerTab> {
+class _BuyerProductOverviewState extends State<BuyerProductOverview> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

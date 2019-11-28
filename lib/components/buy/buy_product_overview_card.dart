@@ -1,14 +1,16 @@
+import 'package:arator/components/common/profile_picture.dart';
 import 'package:arator/components/common/tab_navigator.dart';
-import 'package:arator/data/FruitModel.dart';
 import 'package:arator/data/Produce.dart';
+import 'package:arator/data/ProduceModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class BuyProduceOverviewCard extends StatelessWidget {
   final Produce produce;
+  final bool omitHeader;
 
-  BuyProduceOverviewCard(this.produce);
+  BuyProduceOverviewCard(this.produce, {this.omitHeader = false});
 
   @override
   Widget build(BuildContext context) {
@@ -22,24 +24,11 @@ class BuyProduceOverviewCard extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                child: Row(
-                  children: <Widget>[
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(50.0),
-                      child: Container(
-                          width: 25.0,
-                          child: Image.asset(
-                            "assets/images/pedro.jpg",
-                          )),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 7.5),
-                    ),
-                    Text(produce.seller.userName),
-                  ],
-                ),
-              ),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                  child: omitHeader
+                      ? Container()
+                      : headerProfileRow(produceModel)),
               Image.asset(produce.imagePath,
                   height: 150.0, fit: BoxFit.fitHeight),
               Container(
@@ -50,8 +39,7 @@ class BuyProduceOverviewCard extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(
-                            " ${produce.priceUnit} ${produce.price} / ${produce.amountUnit}",
+                        Text(produce.getPricePerUnit(),
                             style: TextStyle(
                                 color: Theme.of(context).accentColor,
                                 fontSize: Theme.of(context)
@@ -89,6 +77,18 @@ class BuyProduceOverviewCard extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget headerProfileRow(Model produceModel) {
+    return Row(
+      children: <Widget>[
+        ProfilePicture("assets/images/pedro.jpg", 25.0, produceModel),
+        Padding(
+          padding: EdgeInsets.only(left: 7.5),
+        ),
+        Text(produce.seller.userName),
+      ],
     );
   }
 }

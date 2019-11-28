@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:arator/components/common/page_body_container.dart';
-import 'package:arator/data/FruitModel.dart';
 import 'package:arator/data/Produce.dart';
+import 'package:arator/data/ProduceModel.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
@@ -43,8 +43,8 @@ class _SellerAddProductPageState extends State<SellerAddProductPage> {
     String species = speciesInformation[1];
     String subspecies = speciesInformation[2];
 
-    var fruit =
-        new Produce(species, imageFile.path, null, null, null, null, null);
+    var fruit = new Produce(
+        species, imageFile.path, null, null, null, null, null, null);
     fruit.family = family;
     fruit.subspecies = subspecies;
     return fruit;

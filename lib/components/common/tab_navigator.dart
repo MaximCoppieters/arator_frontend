@@ -1,8 +1,9 @@
 import 'package:arator/pages/buy/buy_product_detail_page.dart';
-import 'package:arator/pages/buy/buyer_tab.dart';
+import 'package:arator/pages/buy/buyer_product_overview.dart';
 import 'package:arator/pages/profile/profile_tab.dart';
 import 'package:arator/pages/sell/seller_add_product_page.dart';
 import 'package:arator/pages/sell/seller_tab.dart';
+import 'package:arator/pages/sell/seller_user_profile.dart';
 import 'package:flutter/material.dart';
 
 import 'bottom_navigation.dart';
@@ -14,6 +15,7 @@ class TabNavigatorRoutes {
   static const String profile = '/profile';
   static const String sellerAddProduct = '/seller_add_product';
   static const String buyProductDetail = '/buy/product_detail';
+  static const String sellerUserProfile = '/sell/user_profile';
 }
 
 class TabNavigator extends StatelessWidget {
@@ -37,12 +39,13 @@ class TabNavigator extends StatelessWidget {
     BuildContext context,
   ) {
     return {
-      TabNavigatorRoutes.root: (context) => BuyerTab(),
-      TabNavigatorRoutes.buy: (context) => BuyerTab(),
+      TabNavigatorRoutes.root: (context) => BuyerProductOverview(),
+      TabNavigatorRoutes.buy: (context) => BuyerProductOverview(),
       TabNavigatorRoutes.sell: (context) => SellerTab(),
       TabNavigatorRoutes.profile: (context) => ProfileTab(),
       TabNavigatorRoutes.sellerAddProduct: (context) => SellerAddProductPage(),
       TabNavigatorRoutes.buyProductDetail: (context) => BuyProductDetailPage(),
+      TabNavigatorRoutes.sellerUserProfile: (context) => SellerUserProfile(),
     };
   }
 
