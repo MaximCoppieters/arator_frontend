@@ -3,6 +3,7 @@ import 'package:arator/data/ShippingUnitChoice.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import 'Produce.dart';
+import 'Review.dart';
 import 'ShippingUnitChoice.dart';
 import 'User.dart';
 
@@ -11,15 +12,6 @@ class ProduceModel extends Model {
   Produce selectedProduce;
   User selectedUser;
 
-  static User pedroFernandez = new User(
-      email: "pedro.fernandez@gmail.com",
-      userName: "Pedro Fernandez",
-      address: Address(
-          street: "Daalhofstraat",
-          number: "5c",
-          postalCode: "3840",
-          country: "Belgium"),
-      profileImagePath: "assets/images/pedro.jpg");
   static User enrico = new User(
       email: "enrico.fernandez@gmail.com",
       userName: "Enrico Fèrera",
@@ -28,7 +20,21 @@ class ProduceModel extends Model {
           number: "5c",
           postalCode: "3840",
           country: "Belgium"),
+      about:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
       profileImagePath: "assets/images/pedro.jpg");
+  static User pedroFernandez = new User(
+      email: "pedro.fernandez@gmail.com",
+      userName: "Pedro Fernandez",
+      address: Address(
+          street: "Daalhofstraat",
+          number: "5c",
+          postalCode: "3840",
+          country: "Belgium"),
+      profileImagePath: "assets/images/pedro.jpg",
+      reviews: [new Review(4, "Will buy from again, thanks!", enrico)],
+      about:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
 
   static List<ShippingUnitChoice> shippingUnitChoices = [
     new ShippingUnitChoice("ada", 1000, "Emmer", "gram"),

@@ -9,6 +9,7 @@ class User {
   String profileImagePath;
   String description;
   Address address;
+  String about;
 
   List<Produce> products;
   List<Review> reviews;
@@ -18,5 +19,6 @@ class User {
       this.userName,
       this.profileImagePath,
       this.reviews,
-      this.address});
+      this.address,
+      this.about});
 }

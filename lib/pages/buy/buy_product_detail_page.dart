@@ -1,8 +1,6 @@
 import 'package:arator/components/buy/increment_number_field.dart';
 import 'package:arator/components/common/page_body_container.dart';
-import 'package:arator/components/common/profile_picture.dart';
 import 'package:arator/components/common/profile_review_row.dart';
-import 'package:arator/components/common/star_rating_buttons.dart';
 import 'package:arator/data/Produce.dart';
 import 'package:arator/data/ProduceModel.dart';
 import 'package:arator/data/ShippingUnitChoice.dart';

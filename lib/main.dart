@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
                   fontSize: 16.0,
                   fontFamily: 'Lato',
                   fontWeight: FontWeight.bold),
-              body1: TextStyle(fontSize: 10.0, fontFamily: 'Helvetica'),
+              body1: TextStyle(fontSize: 14.0, fontFamily: 'Helvetica'),
               button: TextStyle(fontSize: 14.0, fontFamily: 'Helvetica'),
             )),
         home: App(),

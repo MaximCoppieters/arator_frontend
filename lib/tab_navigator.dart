@@ -1,12 +1,13 @@
 import 'package:arator/pages/buy/buy_product_detail_page.dart';
 import 'package:arator/pages/buy/buyer_product_overview.dart';
+import 'package:arator/pages/common/message_page.dart';
 import 'package:arator/pages/profile/profile_tab.dart';
 import 'package:arator/pages/sell/seller_add_product_page.dart';
 import 'package:arator/pages/sell/seller_tab.dart';
 import 'package:arator/pages/sell/seller_user_profile.dart';
 import 'package:flutter/material.dart';
 
-import 'bottom_navigation.dart';
+import 'components/common/bottom_navigation.dart';
 
 class TabNavigatorRoutes {
   static const String root = '/';
@@ -16,13 +17,14 @@ class TabNavigatorRoutes {
   static const String sellerAddProduct = '/seller_add_product';
   static const String buyProductDetail = '/buy/product_detail';
   static const String sellerUserProfile = '/sell/user_profile';
+  static const String userMessage = '/message';
 }
 
 class TabNavigator extends StatelessWidget {
   TabNavigator({this.navigatorKey, this.tabItem, this.initialRoute});
   final GlobalKey<NavigatorState> navigatorKey;
   final TabItem tabItem;
-  String initialRoute;
+  final String initialRoute;
 
   static void push(BuildContext context, String route) {
     var routeBuilders = _routeBuilders(context);
@@ -46,6 +48,7 @@ class TabNavigator extends StatelessWidget {
       TabNavigatorRoutes.sellerAddProduct: (context) => SellerAddProductPage(),
       TabNavigatorRoutes.buyProductDetail: (context) => BuyProductDetailPage(),
       TabNavigatorRoutes.sellerUserProfile: (context) => SellerUserProfile(),
+      TabNavigatorRoutes.userMessage: (context) => MessagePage(),
     };
   }
 

@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:arator/components/common/tab_navigator.dart';
 import 'package:arator/data/ProduceModel.dart';
+import 'package:arator/tab_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 

@@ -1,4 +1,4 @@
-import 'package:arator/components/common/tab_navigator.dart';
+import 'package:arator/tab_navigator.dart';
 import 'package:flutter/material.dart';
 
 import 'components/common/bottom_navigation.dart';
