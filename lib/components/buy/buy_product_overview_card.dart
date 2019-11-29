@@ -83,7 +83,7 @@ class BuyProduceOverviewCard extends StatelessWidget {
   Widget headerProfileRow(Model produceModel) {
     return Row(
       children: <Widget>[
-        ProfilePicture("assets/images/pedro.jpg", 25.0, produceModel),
+        ProfilePicture("assets/images/pedro.jpg", 25.0),
         Padding(
           padding: EdgeInsets.only(left: 7.5),
         ),

@@ -1,4 +1,9 @@
+import 'dart:io';
+
 import 'package:arator/components/common/page_body_container.dart';
+import 'package:arator/components/common/profile_picture.dart';
+import 'package:arator/data/profile_navigation_option.dart';
+import 'package:arator/tab_navigator.dart';
 import 'package:flutter/material.dart';
 
 class ProfileTab extends StatefulWidget {
@@ -7,83 +12,50 @@ class ProfileTab extends StatefulWidget {
 }
 
 class _ProfileTabState extends State<ProfileTab> {
+  List<Widget> navigationOptions() {
+    return [
+      GestureDetector(
+        onTap: _routeToPage(TabNavigatorRoutes.changeProfile),
+        child: ListTile(
+          leading: ProfilePicture(
+            "assets/images/pedro.jpg",
+            50.0,
+          ),
+          title: Text("Pedro Fernandez"),
+          subtitle: Text("Edit"),
+        ),
+      ),
+      ProfileNavigationOption("Distance Settings", Icons.my_location,
+          _routeToPage(TabNavigatorRoutes.settingsOverview)),
+      ProfileNavigationOption("Messages", Icons.message,
+          _routeToPage(TabNavigatorRoutes.messageOverview)),
+      ProfileNavigationOption("Settings", Icons.settings,
+          _routeToPage(TabNavigatorRoutes.settingsOverview)),
+      ProfileNavigationOption("Shopping Cart", Icons.shopping_basket,
+          _routeToPage(TabNavigatorRoutes.shoppingCart)),
+      ProfileNavigationOption("Transaction History", Icons.play_arrow,
+          _routeToPage(TabNavigatorRoutes.transactionHistory)),
+      ProfileNavigationOption("Invite A Friend", Icons.person_add,
+          _routeToPage(TabNavigatorRoutes.addFriend)),
+      ProfileNavigationOption("Log Out", Icons.exit_to_app, () => exit(0)),
+    ];
+  }
+
+  Function _routeToPage(String route) {
+    return () => {TabNavigator.push(context, route)};
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("My Profile Settings Overview"),
+        title: Text("My Profile"),
       ),
       body: PageBodyContainer(
         child: Column(
           children: <Widget>[
             Expanded(
-              child: ListView(
-                children: <Widget>[
-                  ListTile(
-                    leading: ClipRRect(
-                        borderRadius: BorderRadius.circular(50.0),
-                        child: Image.asset("assets/images/pedro.jpg")),
-                    title: Text("Pedro Fernandez"),
-                    subtitle: Text("Edit"),
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.my_location,
-                      color: Colors.green,
-                    ),
-                    title: Text("My Location Settings"),
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.message,
-                      color: Colors.green,
-                    ),
-                    title: Text("Messages"),
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.settings,
-                      color: Colors.green,
-                    ),
-                    title: Text("Preferences"),
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.shopping_basket,
-                      color: Colors.green,
-                    ),
-                    title: Text("My Shopping Cart"),
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.shop_two,
-                      color: Colors.green,
-                    ),
-                    title: Text("Transaction History"),
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.person_add,
-                      color: Colors.green,
-                    ),
-                    title: Text("Invite A Friend"),
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.settings,
-                      color: Colors.green,
-                    ),
-                    title: Text("Settings"),
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.exit_to_app,
-                      color: Colors.green,
-                    ),
-                    title: Text("Log Out"),
-                  ),
-                ],
-              ),
+              child: ListView(children: navigationOptions()),
             ),
           ],
         ),

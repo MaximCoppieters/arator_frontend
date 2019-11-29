@@ -24,8 +24,7 @@ class _SellerUserProfileReviewsState extends State<SellerUserProfileReviews> {
                       ProfilePicture(
                           // produceModel.selectedUser.reviews[index].reviewer.profileImagePath
                           "assets/images/pedro.jpg",
-                          50.0,
-                          produceModel),
+                          50.0),
                       Padding(
                         padding: EdgeInsets.only(left: 10.0),
                       ),

@@ -17,8 +17,7 @@ class ProfileReviewRow extends StatelessWidget {
         ProfilePicture(
           "assets/images/pedro.jpg",
           // produceModel.selectedProduce.seller.profileImagePath,
-          50.0,
-          model, shouldNavigate: shouldNavigate,
+          50.0, shouldNavigate: shouldNavigate,
         ),
         Padding(
           padding: EdgeInsets.only(right: 10.0),

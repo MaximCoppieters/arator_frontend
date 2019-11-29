@@ -1,7 +1,13 @@
 import 'package:arator/pages/buy/buy_product_detail_page.dart';
 import 'package:arator/pages/buy/buyer_product_overview.dart';
-import 'package:arator/pages/common/message_page.dart';
+import 'package:arator/pages/buy/shopping_cart.dart';
+import 'package:arator/pages/chat/message_page.dart';
+import 'package:arator/pages/profile/add_friend.dart';
+import 'package:arator/pages/profile/change_profile.dart';
+import 'package:arator/pages/profile/message_overview.dart';
 import 'package:arator/pages/profile/profile_tab.dart';
+import 'package:arator/pages/profile/settings_overview.dart';
+import 'package:arator/pages/profile/transaction_history.dart';
 import 'package:arator/pages/sell/seller_add_product_page.dart';
 import 'package:arator/pages/sell/seller_tab.dart';
 import 'package:arator/pages/sell/seller_user_profile.dart';
@@ -17,7 +23,13 @@ class TabNavigatorRoutes {
   static const String sellerAddProduct = '/seller_add_product';
   static const String buyProductDetail = '/buy/product_detail';
   static const String sellerUserProfile = '/sell/user_profile';
-  static const String userMessage = '/message';
+  static const String userMessage = '/message/user';
+  static const String messageOverview = '/profile/message_overview';
+  static const String settingsOverview = '/profile/settings';
+  static const String addFriend = '/profile/add_friend';
+  static const String shoppingCart = '/shopping_cart';
+  static const String transactionHistory = '/profile/transaction_history';
+  static const String changeProfile = '/profile/edit';
 }
 
 class TabNavigator extends StatelessWidget {
@@ -49,6 +61,13 @@ class TabNavigator extends StatelessWidget {
       TabNavigatorRoutes.buyProductDetail: (context) => BuyProductDetailPage(),
       TabNavigatorRoutes.sellerUserProfile: (context) => SellerUserProfile(),
       TabNavigatorRoutes.userMessage: (context) => MessagePage(),
+      TabNavigatorRoutes.messageOverview: (context) => MessageOverviewPage(),
+      TabNavigatorRoutes.settingsOverview: (context) => SettingsOverviewPage(),
+      TabNavigatorRoutes.addFriend: (context) => AddFriendPage(),
+      TabNavigatorRoutes.shoppingCart: (context) => ShoppingCartPage(),
+      TabNavigatorRoutes.transactionHistory: (context) =>
+          TransactionHistoryPage(),
+      TabNavigatorRoutes.changeProfile: (context) => ChangeProfilePage(),
     };
   }
 
