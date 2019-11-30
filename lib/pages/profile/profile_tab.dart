@@ -25,7 +25,9 @@ class _ProfileTabState extends State<ProfileTab> {
           subtitle: Text("Edit"),
         ),
       ),
-      ProfileNavigationOption("Distance Settings", Icons.my_location,
+      ProfileNavigationOption(
+          "Personal Preferences",
+          Icons.settings_input_component,
           _routeToPage(TabNavigatorRoutes.settingsOverview)),
       ProfileNavigationOption("Messages", Icons.message,
           _routeToPage(TabNavigatorRoutes.messageOverview)),

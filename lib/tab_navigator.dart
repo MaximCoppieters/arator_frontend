@@ -5,6 +5,7 @@ import 'package:arator/pages/chat/message_page.dart';
 import 'package:arator/pages/profile/add_friend.dart';
 import 'package:arator/pages/profile/change_profile.dart';
 import 'package:arator/pages/profile/message_overview.dart';
+import 'package:arator/pages/profile/preferences_overview.dart';
 import 'package:arator/pages/profile/profile_tab.dart';
 import 'package:arator/pages/profile/settings_overview.dart';
 import 'package:arator/pages/profile/transaction_history.dart';
@@ -30,6 +31,7 @@ class TabNavigatorRoutes {
   static const String shoppingCart = '/shopping_cart';
   static const String transactionHistory = '/profile/transaction_history';
   static const String changeProfile = '/profile/edit';
+  static const String preferencesOverview = '/profile/preferences';
 }
 
 class TabNavigator extends StatelessWidget {
@@ -65,6 +67,8 @@ class TabNavigator extends StatelessWidget {
       TabNavigatorRoutes.settingsOverview: (context) => SettingsOverviewPage(),
       TabNavigatorRoutes.addFriend: (context) => AddFriendPage(),
       TabNavigatorRoutes.shoppingCart: (context) => ShoppingCartPage(),
+      TabNavigatorRoutes.preferencesOverview: (context) =>
+          PreferencesOverviewPage(),
       TabNavigatorRoutes.transactionHistory: (context) =>
           TransactionHistoryPage(),
       TabNavigatorRoutes.changeProfile: (context) => ChangeProfilePage(),
