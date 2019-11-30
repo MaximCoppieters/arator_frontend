@@ -1,7 +1,9 @@
 import 'package:arator/tab_navigator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'components/common/bottom_navigation.dart';
+import 'data/bloc/product_bloc.dart';
 
 class App extends StatefulWidget {
   @override
@@ -43,15 +45,19 @@ class AppState extends State<App> {
         // let system handle back button if we're on the first route
         return isFirstRouteInCurrentTab;
       },
-      child: Scaffold(
-        body: Stack(children: <Widget>[
-          _buildOffstageNavigator(TabItem.buy, TabNavigatorRoutes.buy),
-          _buildOffstageNavigator(TabItem.sell, TabNavigatorRoutes.sell),
-          _buildOffstageNavigator(TabItem.profile, TabNavigatorRoutes.profile),
-        ]),
-        bottomNavigationBar: BottomNavigation(
-          currentTab: _currentTab,
-          onSelectTab: _selectTab,
+      child: BlocProvider(
+        create: (BuildContext context) => ProductBloc(),
+        child: Scaffold(
+          body: Stack(children: <Widget>[
+            _buildOffstageNavigator(TabItem.buy, TabNavigatorRoutes.buy),
+            _buildOffstageNavigator(TabItem.sell, TabNavigatorRoutes.sell),
+            _buildOffstageNavigator(
+                TabItem.profile, TabNavigatorRoutes.profile),
+          ]),
+          bottomNavigationBar: BottomNavigation(
+            currentTab: _currentTab,
+            onSelectTab: _selectTab,
+          ),
         ),
       ),
     );

@@ -2,11 +2,8 @@ import 'package:arator/components/buy/increment_number_field.dart';
 import 'package:arator/components/common/page_body_container.dart';
 import 'package:arator/components/common/profile_review_row.dart';
 import 'package:arator/data/Produce.dart';
-import 'package:arator/data/ProduceModel.dart';
-import 'package:arator/data/ShippingUnitChoice.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
 
 class BuyProductDetailPage extends StatefulWidget {
   BuyProductDetailPage({Key key, this.title}) : super(key: key);
@@ -25,55 +22,52 @@ class _BuyProductDetailPage extends State<BuyProductDetailPage> {
     "assets/images/apples.jpg",
     "assets/images/cauliflower.jpg"
   ];
-  ShippingUnitChoice selectedShippingUnit;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ScopedModelDescendant<ProduceModel>(
-        builder: (context, child, produceModel) => SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              productImageCarousel(),
-              PageBodyContainer(
-                child: Column(
-                  children: <Widget>[
-                    ProfileReviewRow(produceModel),
-                  ],
-                ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            productImageCarousel(),
+            PageBodyContainer(
+              child: Column(
+                children: <Widget>[
+                  ProfileReviewRow(null),
+                ],
               ),
-              Divider(),
-              PageBodyContainer(
-                alignment: Alignment.topLeft,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Jonagold Apples",
-                      // produceModel.selectedProduce.species,
-                      style: TextStyle(
-                          fontSize: 16.0, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      "€21,4/kg",
-                      // produceModel.selectedProduce.getPricePerUnit(),
-                      style: TextStyle(fontSize: 16.0),
-                    ),
-                    Text(
-                      "24km away",
-                      //produceModel.selectedProduce.distance,
-                      style: TextStyle(fontSize: 14.0),
-                    ),
-                    SizedBox(
-                      height: 15.0,
-                    ),
-                    produceSections(),
-                  ],
-                ),
+            ),
+            Divider(),
+            PageBodyContainer(
+              alignment: Alignment.topLeft,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Jonagold Apples",
+                    // produceModel.selectedProduce.species,
+                    style:
+                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "€21,4/kg",
+                    // produceModel.selectedProduce.getPricePerUnit(),
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                  Text(
+                    "24km away",
+                    //produceModel.selectedProduce.distance,
+                    style: TextStyle(fontSize: 14.0),
+                  ),
+                  SizedBox(
+                    height: 15.0,
+                  ),
+                  produceSections(),
+                ],
               ),
-              purchaseSection(produceModel.selectedProduce),
-            ],
-          ),
+            ),
+            purchaseSection(null),
+          ],
         ),
       ),
     );
@@ -199,22 +193,19 @@ class _BuyProductDetailPage extends State<BuyProductDetailPage> {
   Widget purchaseAmountChoices(Produce produce) {
     return Container(
       child: Column(
-        children: produce.shippingUnitChoices
+        children: []
             .map((possibleShippingUnit) => RadioListTile(
-                  title: Text(
-                      "${possibleShippingUnit.amount.toString()} ${possibleShippingUnit.amountUnit}"),
+                  title: Text("Unit"),
                   activeColor: Theme.of(context).accentColor,
-                  subtitle: Text(produce.getPricePerUnit()),
+                  subtitle: Text(""),
                   secondary: Text("€ 4,0",
                       style: TextStyle(
                           fontSize: 16.0,
                           color: Theme.of(context).primaryColor)),
                   value: possibleShippingUnit,
-                  groupValue: selectedShippingUnit,
+                  groupValue: 1,
                   onChanged: (value) {
-                    setState(() {
-                      selectedShippingUnit = value;
-                    });
+                    setState(() => {});
                   },
                 ))
             .toList(),

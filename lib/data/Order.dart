@@ -1,7 +1,7 @@
 import 'Produce.dart';
 
 class Order {
-  List<Produce> produce;
+  List<Produce> products;
 
-  Order(this.produce);
+  Order(this.products);
 }
