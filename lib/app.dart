@@ -45,19 +45,15 @@ class AppState extends State<App> {
         // let system handle back button if we're on the first route
         return isFirstRouteInCurrentTab;
       },
-      child: BlocProvider(
-        create: (BuildContext context) => ProductBloc(),
-        child: Scaffold(
-          body: Stack(children: <Widget>[
-            _buildOffstageNavigator(TabItem.buy, TabNavigatorRoutes.buy),
-            _buildOffstageNavigator(TabItem.sell, TabNavigatorRoutes.sell),
-            _buildOffstageNavigator(
-                TabItem.profile, TabNavigatorRoutes.profile),
-          ]),
-          bottomNavigationBar: BottomNavigation(
-            currentTab: _currentTab,
-            onSelectTab: _selectTab,
-          ),
+      child: Scaffold(
+        body: Stack(children: <Widget>[
+          _buildOffstageNavigator(TabItem.buy, TabNavigatorRoutes.buy),
+          _buildOffstageNavigator(TabItem.sell, TabNavigatorRoutes.sell),
+          _buildOffstageNavigator(TabItem.profile, TabNavigatorRoutes.profile),
+        ]),
+        bottomNavigationBar: BottomNavigation(
+          currentTab: _currentTab,
+          onSelectTab: _selectTab,
         ),
       ),
     );

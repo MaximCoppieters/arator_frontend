@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:arator/data/repo/product_repo.dart';
 import 'package:bloc/bloc.dart';
+import '../Produce.dart';
 import './bloc.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
@@ -14,13 +15,17 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     ProductEvent event,
   ) async* {
     if (event is GetProducts) {
-      yield* _mapLoadTodosToState();
+      yield* _mapLoadProductsToState();
     } else if (event is AddProduct) {
-      yield* _mapLoadTodosToState();
+      _mapAddProductToState(event.product);
     }
   }
 
-  Stream<ProductState> _mapLoadTodosToState() async* {
+  Future<void> _mapAddProductToState(Produce product) async {
+    this.productRepository.getProducts();
+  }
+
+  Stream<ProductState> _mapLoadProductsToState() async* {
     try {
       final products = await this.productRepository.getProducts();
       yield ProductsLoaded(

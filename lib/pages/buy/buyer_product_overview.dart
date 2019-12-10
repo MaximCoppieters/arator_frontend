@@ -10,12 +10,11 @@ class BuyerProductOverview extends StatefulWidget {
 }
 
 class _BuyerProductOverviewState extends State<BuyerProductOverview> {
-  ProductBloc _productBloc = ProductBloc();
-
-  _BuyerProductOverviewState() {
-    _productBloc = BlocProvider.of<ProductBloc>(context);
-    _productBloc.mapEventToState(GetProducts());
-    print("fetching");
+  @override
+  void initState() {
+    final _productBloc = BlocProvider.of<ProductBloc>(context);
+    _productBloc.add(GetProducts());
+    super.initState();
   }
 
   @override
@@ -26,7 +25,7 @@ class _BuyerProductOverviewState extends State<BuyerProductOverview> {
       ),
       body: BlocBuilder<ProductBloc, ProductState>(
         builder: (context, state) {
-          if (state is ProductsLoading) {
+          if (state is ProductsLoading || state is InitialProductState) {
             return CircularProgressIndicator();
           } else if (state is ProductsLoaded) {
             return buildProductList(state.products);
@@ -54,7 +53,6 @@ class _BuyerProductOverviewState extends State<BuyerProductOverview> {
 
   @override
   void dispose() {
-    _productBloc.close();
     super.dispose();
   }
 }
