@@ -1,5 +1,6 @@
 import 'package:arator/app.dart';
 import 'package:arator/data/bloc/bloc.dart';
+import 'package:arator/pages/common/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
     return BlocProvider<ProductBloc>(
       create: (context) => ProductBloc(),
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Arator',
         theme: ThemeData(
             primaryColor: Colors.green,
             accentColor: Colors.deepOrange,
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
               body1: TextStyle(fontSize: 14.0, fontFamily: 'Helvetica'),
               button: TextStyle(fontSize: 14.0, fontFamily: 'Helvetica'),
             )),
-        home: App(),
+        home: LoginPage(),
       ),
     );
   }

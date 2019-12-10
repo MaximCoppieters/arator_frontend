@@ -18,6 +18,8 @@ import 'components/common/bottom_navigation.dart';
 
 class TabNavigatorRoutes {
   static const String root = '/';
+  static const String register = '/register';
+  static const String login = '/login';
   static const String buy = '/buy';
   static const String sell = '/sell';
   static const String profile = '/profile';

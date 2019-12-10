@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'components/common/bottom_navigation.dart';
-import 'data/bloc/product_bloc.dart';
 
-class App extends StatefulWidget {
+class TabbedAppView extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => AppState();
+  State<StatefulWidget> createState() => TabbedAppViewState();
 }
 
-class AppState extends State<App> {
+class TabbedAppViewState extends State<TabbedAppView> {
   TabItem _currentTab = TabItem.buy;
   Map<TabItem, GlobalKey<NavigatorState>> _navigatorKeys = {
     TabItem.buy: GlobalKey<NavigatorState>(),
