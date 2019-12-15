@@ -1,12 +1,15 @@
+import 'package:arator/data/UserCredentials.dart';
+import 'package:flutter/material.dart';
+
 import '../Address.dart';
 import '../Review.dart';
 import '../User.dart';
 
 class UserRepository {
-  Future<User> getUserWithEmail(String email) async {
+  Future<User> getUserWithCredentials(UserCredentials credentials) async {
     return Future.delayed(Duration(seconds: 1), () {
       return new User(
-        email: email,
+        email: credentials.email,
         userName: "Pedro Fernandez",
         profileImagePath: "assets/images/pedro.png",
         about: "Lorem ipsum dolor amani heala azpkada dspqdqs",
@@ -25,5 +28,28 @@ class UserRepository {
             country: "Belgium"),
       );
     });
+  }
+
+  Future<String> authenticate({
+    @required String username,
+    @required String password,
+  }) async {
+    await Future.delayed(Duration(seconds: 1));
+    return 'token';
+  }
+
+  Future<void> deleteToken() async {
+    await Future.delayed(Duration(seconds: 1));
+    return;
+  }
+
+  Future<void> persistToken(String token) async {
+    await Future.delayed(Duration(seconds: 1));
+    return;
+  }
+
+  Future<bool> hasToken() async {
+    await Future.delayed(Duration(seconds: 1));
+    return false;
   }
 }
