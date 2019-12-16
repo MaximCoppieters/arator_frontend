@@ -1,3 +1,4 @@
+import 'package:arator/utils/exceptions/authentication_exception.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class LoginLoading extends LoginState {
 }
 
 class LoginFailure extends LoginState {
-  final String error;
+  final AuthenticationException error;
 
   const LoginFailure({@required this.error});
 
@@ -24,5 +25,5 @@ class LoginFailure extends LoginState {
   List<Object> get props => [error];
 
   @override
-  String toString() => 'LoginFailure { error: $error }';
+  String toString() => 'LoginFailure { error: ${error.message} }';
 }

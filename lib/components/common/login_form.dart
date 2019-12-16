@@ -1,11 +1,12 @@
 import 'package:arator/data/UserCredentials.dart';
 import 'package:arator/data/bloc/bloc.dart';
 import 'package:arator/style/theme.dart' as Theme;
+import 'package:arator/utils/enums/login_field.dart';
+import 'package:arator/utils/exceptions/authentication_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter/material.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -19,6 +20,9 @@ class _LoginFormState extends State<LoginForm> {
   final FocusNode myFocusNodePassword = FocusNode();
   final FocusNode myFocusNodeEmail = FocusNode();
   final FocusNode myFocusNodeName = FocusNode();
+
+  String emailError = "";
+  String passwordError = "";
 
   TextEditingController loginEmailController = new TextEditingController();
   TextEditingController loginPasswordController = new TextEditingController();
@@ -56,77 +60,18 @@ class _LoginFormState extends State<LoginForm> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
-                child: Container(
-                  width: 300.0,
-                  height: 190.0,
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                        child: TextField(
-                          focusNode: myFocusNodeEmailLogin,
-                          controller: loginEmailController,
-                          keyboardType: TextInputType.emailAddress,
-                          style: TextStyle(
-                              fontFamily: "WorkSansSemiBold",
-                              fontSize: 16.0,
-                              color: Colors.black),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            icon: Icon(
-                              FontAwesomeIcons.envelope,
-                              color: Colors.black,
-                              size: 22.0,
-                            ),
-                            hintText: "Email Address",
-                            hintStyle: TextStyle(
-                                fontFamily: "WorkSansSemiBold", fontSize: 17.0),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 250.0,
-                        height: 1.0,
-                        color: Colors.grey[400],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                        child: TextField(
-                          focusNode: myFocusNodePasswordLogin,
-                          controller: loginPasswordController,
-                          obscureText: _obscureTextLogin,
-                          style: TextStyle(
-                              fontFamily: "WorkSansSemiBold",
-                              fontSize: 16.0,
-                              color: Colors.black),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            icon: Icon(
-                              FontAwesomeIcons.lock,
-                              size: 22.0,
-                              color: Colors.black,
-                            ),
-                            hintText: "Password",
-                            hintStyle: TextStyle(
-                                fontFamily: "WorkSansSemiBold", fontSize: 17.0),
-                            suffixIcon: GestureDetector(
-                              onTap: _toggleLogin,
-                              child: Icon(
-                                _obscureTextLogin
-                                    ? FontAwesomeIcons.eye
-                                    : FontAwesomeIcons.eyeSlash,
-                                size: 15.0,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                child: BlocBuilder<LoginBloc, LoginState>(
+                    bloc: _loginBloc,
+                    builder: (context, loginState) {
+                      if (loginState is LoginInitial ||
+                          loginState is LoginFailure) {
+                        return initialLoginForm();
+                      } else {
+                        if (loginState is LoginLoading) {
+                          return loadingLoginForm();
+                        }
+                      }
+                    }),
               ),
               Container(
                   margin: EdgeInsets.only(top: 170.0),
@@ -281,6 +226,148 @@ class _LoginFormState extends State<LoginForm> {
         ],
       ),
     );
+  }
+
+  Widget initialLoginForm() {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.0),
+          border: Border.all(color: Colors.white, width: 1.0)),
+      padding: EdgeInsets.all(5.0),
+      width: 310.0,
+      height: 200.0,
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(
+                  top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+              child: emailField(),
+            ),
+            Container(
+              width: 250.0,
+              height: 1.0,
+              color: Colors.grey[400],
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+              child: passwordField(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget loadingLoginForm() {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.0),
+          border: Border.all(color: Colors.greenAccent, width: 1.0)),
+      padding: EdgeInsets.all(5.0),
+      width: 310.0,
+      height: 200.0,
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(
+                  top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+              child: emailField(),
+            ),
+            Container(
+              width: 250.0,
+              height: 1.0,
+              color: Colors.grey[400],
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+              child: passwordField(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget passwordField() {
+    return BlocBuilder<LoginBloc, LoginState>(
+        bloc: _loginBloc,
+        builder: (context, snapshot) {
+          return TextField(
+            focusNode: myFocusNodePasswordLogin,
+            controller: loginPasswordController,
+            obscureText: _obscureTextLogin,
+            style: TextStyle(
+                fontFamily: "WorkSansSemiBold",
+                fontSize: 16.0,
+                color: Colors.black),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              icon: Icon(
+                FontAwesomeIcons.lock,
+                size: 22.0,
+                color: Colors.black,
+              ),
+              errorText: getFieldErrorText(LoginField.password),
+              errorStyle: TextStyle(height: 0.0),
+              hintText: "Password",
+              hintStyle:
+                  TextStyle(fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+              suffixIcon: GestureDetector(
+                onTap: _toggleLogin,
+                child: Icon(
+                  _obscureTextLogin
+                      ? FontAwesomeIcons.eye
+                      : FontAwesomeIcons.eyeSlash,
+                  size: 15.0,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
+  Widget emailField() {
+    return BlocBuilder<LoginBloc, LoginState>(
+        bloc: _loginBloc,
+        builder: (context, loginState) {
+          return TextField(
+            focusNode: myFocusNodeEmailLogin,
+            controller: loginEmailController,
+            keyboardType: TextInputType.emailAddress,
+            style: TextStyle(
+                fontFamily: "WorkSansSemiBold",
+                fontSize: 16.0,
+                color: Colors.black),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              icon: Icon(
+                FontAwesomeIcons.envelope,
+                color: Colors.black,
+                size: 22.0,
+              ),
+              hintText: "Email Address",
+              errorText: getFieldErrorText(LoginField.email),
+              errorStyle: TextStyle(height: 0.0),
+              hintStyle:
+                  TextStyle(fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+            ),
+          );
+        });
+  }
+
+  String getFieldErrorText(LoginField field) {
+    if (_loginBloc.state is LoginFailure) {
+      AuthenticationException error = _loginBloc.state.props[0];
+      if (error.field == field) {
+        return error.message;
+      }
+    }
+    return "";
   }
 
   void _toggleLogin() {

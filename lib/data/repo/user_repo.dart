@@ -2,6 +2,9 @@ import 'dart:io';
 
 import 'package:arator/data/UserCredentials.dart';
 import 'package:arator/data/repo/repo.dart';
+import 'package:arator/utils/enums/login_field.dart';
+import 'package:arator/utils/exceptions/authentication_exception.dart';
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -43,11 +46,10 @@ class UserRepository extends Repository {
         headers: {HttpHeaders.contentTypeHeader: "application/json"},
         body: json.encode(userCredentials.toJson()));
 
-    if (res.statusCode != 200) {
-      throw new HttpException("Haha");
-    }
-
     var body = jsonDecode(res.body);
+    if (res.statusCode != 200) {
+      throw new AuthenticationException.fromResponseBody(body);
+    }
 
     var token = body["token"];
 
