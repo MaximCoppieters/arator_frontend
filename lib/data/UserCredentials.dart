@@ -5,6 +5,14 @@ class UserCredentials {
 
   const UserCredentials({this.email, this.password, this.confirmPassword});
 
-  Map<String, dynamic> toJson() =>
-      {email: email, password: password, confirmPassword: confirmPassword};
+  Map<String, dynamic> toJson() {
+    var map = {
+      "email": email,
+      "password": password,
+    };
+    if (confirmPassword != null) {
+      map["confirmPassword"] = confirmPassword;
+    }
+    return map;
+  }
 }

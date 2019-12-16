@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
               body1: TextStyle(fontSize: 14.0, fontFamily: 'Helvetica'),
               button: TextStyle(fontSize: 14.0, fontFamily: 'Helvetica'),
             )),
-        home: TabbedAppView(),
+        home: App(),
       ),
     );
   }

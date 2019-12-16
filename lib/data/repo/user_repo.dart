@@ -1,11 +1,17 @@
+import 'dart:io';
+
 import 'package:arator/data/UserCredentials.dart';
+import 'package:arator/data/repo/repo.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+import 'dart:convert';
 
 import '../Address.dart';
 import '../Review.dart';
 import '../User.dart';
 
-class UserRepository {
+class UserRepository extends Repository {
   Future<User> getUserWithCredentials(UserCredentials credentials) async {
     return Future.delayed(Duration(seconds: 1), () {
       return new User(
@@ -31,11 +37,21 @@ class UserRepository {
   }
 
   Future<String> authenticate({
-    @required String username,
-    @required String password,
+    @required UserCredentials userCredentials,
   }) async {
-    await Future.delayed(Duration(seconds: 1));
-    return 'token';
+    var res = await http.post(baseUrl + "/login",
+        headers: {HttpHeaders.contentTypeHeader: "application/json"},
+        body: json.encode(userCredentials.toJson()));
+
+    if (res.statusCode != 200) {
+      throw new HttpException("Haha");
+    }
+
+    var body = jsonDecode(res.body);
+
+    var token = body["token"];
+
+    return token;
   }
 
   Future<void> deleteToken() async {

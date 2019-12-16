@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:arator/data/UserCredentials.dart';
 import 'package:arator/data/repo/user_repo.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -24,8 +25,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       try {
         final token = await userRepository.authenticate(
-          username: event.email,
-          password: event.password,
+          userCredentials: event.userCredentials,
         );
 
         authenticationBloc.add(LoggedIn(token: token));

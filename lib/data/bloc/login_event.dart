@@ -1,3 +1,4 @@
+import 'package:arator/data/UserCredentials.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
@@ -6,18 +7,15 @@ abstract class LoginEvent extends Equatable {
 }
 
 class LoginButtonPressed extends LoginEvent {
-  final String email;
-  final String password;
+  final UserCredentials userCredentials;
 
   const LoginButtonPressed({
-    @required this.email,
-    @required this.password,
+    @required this.userCredentials,
   });
 
   @override
-  List<Object> get props => [email, password];
+  List<Object> get props => [userCredentials];
 
   @override
-  String toString() =>
-      'LoginButtonPressed { username: $email, password: $password }';
+  String toString() => 'LoginButtonPressed { user: $userCredentials }';
 }
