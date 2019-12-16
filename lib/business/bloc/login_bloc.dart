@@ -1,9 +1,8 @@
 import 'dart:async';
-import 'package:arator/data/UserCredentials.dart';
 import 'package:arator/data/repo/user_repo.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import './bloc.dart';
+import 'bloc.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final UserRepository userRepository = new UserRepository();
@@ -31,7 +30,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         authenticationBloc.add(LoggedIn(token: token));
         yield LoginInitial();
       } catch (error) {
-        print(error);
         yield LoginFailure(error: error);
       }
     }

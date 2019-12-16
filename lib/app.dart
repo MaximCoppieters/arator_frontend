@@ -1,12 +1,10 @@
-import 'package:arator/data/bloc/authentication_bloc.dart';
-import 'package:arator/data/bloc/bloc.dart';
 import 'package:arator/pages/common/login_page.dart';
-import 'package:arator/tab_navigator.dart';
 import 'package:arator/tabbed_app_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'components/common/bottom_navigation.dart';
+import 'business/bloc/authentication_bloc.dart';
+import 'business/bloc/authentication_state.dart';
 
 class App extends StatefulWidget {
   @override

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:arator/data/User.dart';
 import 'package:arator/data/UserCredentials.dart';
 import 'package:bloc/bloc.dart';
-import './bloc.dart';
+import 'bloc.dart';
 import 'package:arator/data/repo/user_repo.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {

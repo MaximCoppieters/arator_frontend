@@ -1,6 +1,6 @@
+import 'package:arator/data/Produce.dart';
 import 'package:equatable/equatable.dart';
 
-import '../Produce.dart';
 
 abstract class ProductEvent extends Equatable {
   const ProductEvent();

@@ -2,12 +2,9 @@ import 'dart:io';
 
 import 'package:arator/data/UserCredentials.dart';
 import 'package:arator/data/repo/repo.dart';
-import 'package:arator/utils/enums/login_field.dart';
 import 'package:arator/utils/exceptions/authentication_exception.dart';
-import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
 import 'dart:convert';
 
 import '../Address.dart';
@@ -15,6 +12,10 @@ import '../Review.dart';
 import '../User.dart';
 
 class UserRepository extends Repository {
+  static final registerEndpoint = "/register";
+  static final loginEndpoint = "/login";
+  static final appJson = "application/json";
+
   Future<User> getUserWithCredentials(UserCredentials credentials) async {
     return Future.delayed(Duration(seconds: 1), () {
       return new User(
@@ -42,8 +43,8 @@ class UserRepository extends Repository {
   Future<String> authenticate({
     @required UserCredentials userCredentials,
   }) async {
-    var res = await http.post(baseUrl + "/login",
-        headers: {HttpHeaders.contentTypeHeader: "application/json"},
+    var res = await http.post(baseUrl + loginEndpoint,
+        headers: {HttpHeaders.contentTypeHeader: appJson},
         body: json.encode(userCredentials.toJson()));
 
     var body = jsonDecode(res.body);
@@ -54,6 +55,19 @@ class UserRepository extends Repository {
     var token = body["token"];
 
     return token;
+  }
+
+  Future<void> register({
+    @required UserCredentials userCredentials,
+  }) async {
+    var res = await http.post(baseUrl + registerEndpoint,
+        headers: {HttpHeaders.contentTypeHeader: appJson},
+        body: json.encode(userCredentials.toJson()));
+
+    var body = jsonDecode(res.body);
+    if (res.statusCode != 200) {
+      throw new AuthenticationException.fromResponseBody(body);
+    }
   }
 
   Future<void> deleteToken() async {

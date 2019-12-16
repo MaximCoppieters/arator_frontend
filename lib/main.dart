@@ -1,7 +1,9 @@
 import 'package:arator/app.dart';
-import 'package:arator/data/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'business/bloc/authentication_bloc.dart';
+import 'business/bloc/product_bloc.dart';
 
 void main() => runApp(MyApp());
 

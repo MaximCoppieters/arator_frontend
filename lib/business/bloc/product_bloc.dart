@@ -1,8 +1,8 @@
 import 'dart:async';
+import 'package:arator/data/Produce.dart';
 import 'package:arator/data/repo/product_repo.dart';
 import 'package:bloc/bloc.dart';
-import '../Produce.dart';
-import './bloc.dart';
+import 'bloc.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final ProductRepository productRepository = ProductRepository();

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:arator/data/repo/user_repo.dart';
 import 'package:bloc/bloc.dart';
-import './bloc.dart';
+import 'bloc.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {

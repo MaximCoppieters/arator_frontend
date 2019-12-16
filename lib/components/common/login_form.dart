@@ -1,5 +1,6 @@
+import 'package:arator/business/bloc/authentication_bloc.dart';
+import 'package:arator/business/bloc/bloc.dart';
 import 'package:arator/data/UserCredentials.dart';
-import 'package:arator/data/bloc/bloc.dart';
 import 'package:arator/style/theme.dart' as Theme;
 import 'package:arator/utils/enums/login_field.dart';
 import 'package:arator/utils/exceptions/authentication_exception.dart';
@@ -63,14 +64,48 @@ class _LoginFormState extends State<LoginForm> {
                 child: BlocBuilder<LoginBloc, LoginState>(
                     bloc: _loginBloc,
                     builder: (context, loginState) {
-                      if (loginState is LoginInitial ||
-                          loginState is LoginFailure) {
-                        return initialLoginForm();
-                      } else {
-                        if (loginState is LoginLoading) {
-                          return loadingLoginForm();
-                        }
-                      }
+                      BoxDecoration loginFormBoxDecoration;
+
+                      loginFormBoxDecoration = BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          border: Border.all(
+                              color: loginState is LoginLoading
+                                  ? Colors.green
+                                  : Colors.white,
+                              width: 3.0));
+                      return Container(
+                        decoration: loginFormBoxDecoration,
+                        padding: EdgeInsets.all(5.0),
+                        width: 310.0,
+                        height: 200.0,
+                        child: Container(
+                          child: Column(
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    top: 20.0,
+                                    bottom: 20.0,
+                                    left: 25.0,
+                                    right: 25.0),
+                                child: emailField(),
+                              ),
+                              Container(
+                                width: 250.0,
+                                height: 1.0,
+                                color: Colors.grey[400],
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    top: 20.0,
+                                    bottom: 20.0,
+                                    left: 25.0,
+                                    right: 25.0),
+                                child: passwordField(),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
                     }),
               ),
               Container(
@@ -233,38 +268,6 @@ class _LoginFormState extends State<LoginForm> {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0),
           border: Border.all(color: Colors.white, width: 1.0)),
-      padding: EdgeInsets.all(5.0),
-      width: 310.0,
-      height: 200.0,
-      child: Container(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(
-                  top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-              child: emailField(),
-            ),
-            Container(
-              width: 250.0,
-              height: 1.0,
-              color: Colors.grey[400],
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                  top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-              child: passwordField(),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget loadingLoginForm() {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.0),
-          border: Border.all(color: Colors.greenAccent, width: 1.0)),
       padding: EdgeInsets.all(5.0),
       width: 310.0,
       height: 200.0,
