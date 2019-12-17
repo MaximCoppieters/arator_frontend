@@ -1,11 +1,11 @@
 import 'package:arator/components/common/profile_picture.dart';
-import 'package:arator/data/model/Produce.dart';
+import 'package:arator/data/model/Product.dart';
 import 'package:arator/tab_navigator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BuyProduceOverviewCard extends StatelessWidget {
-  final Produce produce;
+  final Product produce;
   final bool omitHeader;
 
   BuyProduceOverviewCard(this.produce, {this.omitHeader = false});

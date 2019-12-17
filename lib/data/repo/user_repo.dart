@@ -15,7 +15,6 @@ import '../model/User.dart';
 class UserRepository extends Repository {
   static final registerEndpoint = "/signup";
   static final loginEndpoint = "/login";
-  static final appJson = "application/json";
   static final jwtStorageKey = "arator_jwt";
 
   final storage = new FlutterSecureStorage();
@@ -65,7 +64,7 @@ class UserRepository extends Repository {
   Future<Map<String, dynamic>> getAuthenticationJsonResponseFromEndpoint(
       UserCredentials credentials, String endpoint) async {
     var res = await http.post(baseUrl + endpoint,
-        headers: {HttpHeaders.contentTypeHeader: appJson},
+        headers: {HttpHeaders.contentTypeHeader: Repository.appJson},
         body: json.encode(credentials.toJson()));
 
     if (res.statusCode == 404) {

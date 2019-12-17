@@ -1,4 +1,4 @@
-import 'package:arator/data/model/Produce.dart';
+import 'package:arator/data/model/Product.dart';
 import 'package:equatable/equatable.dart';
 
 
@@ -21,7 +21,7 @@ class ProductsLoading extends ProductState {
 }
 
 class ProductsLoaded extends ProductState {
-  final List<Produce> products;
+  final List<Product> products;
 
   ProductsLoaded(this.products);
   @override

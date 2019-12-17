@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'Message.g.dart';
+
+@JsonSerializable(nullable: false)
 class Message {
   String senderUid;
   String receiverUid;
@@ -26,4 +31,8 @@ class Message {
     _message.message = map['message'];
     return _message;
   }
+
+  factory Message.fromJson(Map<String, dynamic> json) =>
+      _$MessageFromJson(json);
+  Map<String, dynamic> toJson() => _$MessageToJson(this);
 }

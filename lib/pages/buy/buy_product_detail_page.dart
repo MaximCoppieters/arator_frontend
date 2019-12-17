@@ -1,7 +1,7 @@
 import 'package:arator/components/buy/increment_number_field.dart';
 import 'package:arator/components/common/page_body_container.dart';
 import 'package:arator/components/common/profile_review_row.dart';
-import 'package:arator/data/model/Produce.dart';
+import 'package:arator/data/model/Product.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 
@@ -190,7 +190,7 @@ class _BuyProductDetailPage extends State<BuyProductDetailPage> {
     );
   }
 
-  Widget purchaseAmountChoices(Produce produce) {
+  Widget purchaseAmountChoices(Product produce) {
     return Container(
       child: Column(
         children: []
@@ -213,7 +213,7 @@ class _BuyProductDetailPage extends State<BuyProductDetailPage> {
     );
   }
 
-  Widget purchaseSection(Produce produce) {
+  Widget purchaseSection(Product produce) {
     return Container(
       padding: EdgeInsets.all(10),
       child: Column(

@@ -1,4 +1,4 @@
-import 'package:arator/data/model/Produce.dart';
+import 'package:arator/data/model/Product.dart';
 import 'package:equatable/equatable.dart';
 
 
@@ -7,7 +7,7 @@ abstract class ProductEvent extends Equatable {
 }
 
 class AddProduct extends ProductEvent {
-  final Produce product;
+  final Product product;
   AddProduct(this.product);
 
   @override

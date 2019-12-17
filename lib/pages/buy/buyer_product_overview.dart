@@ -2,7 +2,7 @@ import 'package:arator/business/bloc/product_bloc.dart';
 import 'package:arator/business/bloc/product_event.dart';
 import 'package:arator/business/bloc/product_state.dart';
 import 'package:arator/components/buy/buy_product_overview_card.dart';
-import 'package:arator/data/model/Produce.dart';
+import 'package:arator/data/model/Product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -39,7 +39,7 @@ class _BuyerProductOverviewState extends State<BuyerProductOverview> {
     );
   }
 
-  Widget buildProductList(List<Produce> products) {
+  Widget buildProductList(List<Product> products) {
     return Column(children: <Widget>[
       Expanded(
           child: GridView.builder(

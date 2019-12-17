@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:arator/business/bloc/bloc.dart';
 import 'package:arator/components/common/page_body_container.dart';
 import 'package:arator/components/common/profile_picture.dart';
 import 'package:arator/tab_navigator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileTab extends StatefulWidget {
   @override
@@ -11,6 +13,14 @@ class ProfileTab extends StatefulWidget {
 }
 
 class _ProfileTabState extends State<ProfileTab> {
+  AuthenticationBloc _authenticationBloc;
+
+  @override
+  void initState() {
+    _authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
+    super.initState();
+  }
+
   List<Widget> navigationOptions() {
     return [
       GestureDetector(
@@ -38,8 +48,42 @@ class _ProfileTabState extends State<ProfileTab> {
           _routeToPage(TabNavigatorRoutes.transactionHistory)),
       ProfileNavigationOption("Invite A Friend", Icons.person_add,
           _routeToPage(TabNavigatorRoutes.addFriend)),
-      ProfileNavigationOption("Log Out", Icons.exit_to_app, () => exit(0)),
+      ProfileNavigationOption(
+          "Log Out",
+          Icons.exit_to_app,
+          () => {
+                _logoutDialog(context),
+              })
     ];
+  }
+
+  Future<ConfirmAction> _logoutDialog(BuildContext context) async {
+    return showDialog<ConfirmAction>(
+      context: context,
+      barrierDismissible: false, // user must tap button for close dialog!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Are you sure you want to log out?'),
+          actions: <Widget>[
+            FlatButton(
+              textColor: Theme.of(context).primaryColor,
+              child: const Text('Yes'),
+              onPressed: () {
+                _authenticationBloc.add(LoggedOut());
+                Navigator.of(context).pop(ConfirmAction.YES);
+              },
+            ),
+            FlatButton(
+              textColor: Theme.of(context).primaryColor,
+              child: const Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop(ConfirmAction.NO);
+              },
+            )
+          ],
+        );
+      },
+    );
   }
 
   Function _routeToPage(String route) {
@@ -83,3 +127,5 @@ class ProfileNavigationOption extends StatelessWidget {
     );
   }
 }
+
+enum ConfirmAction { YES, NO }

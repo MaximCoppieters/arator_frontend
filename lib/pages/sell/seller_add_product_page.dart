@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:arator/components/common/page_body_container.dart';
-import 'package:arator/data/model/Produce.dart';
+import 'package:arator/data/model/Product.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
@@ -13,7 +13,7 @@ class SellerAddProductPage extends StatefulWidget {
 
 class _SellerAddProductPageState extends State<SellerAddProductPage> {
   File _image;
-  Produce _fruit;
+  Product _fruit;
   String _fruitClassText = "";
   TextEditingController _amountController;
   TextEditingController _unitController;
@@ -128,7 +128,7 @@ class _SellerAddProductPageState extends State<SellerAddProductPage> {
     );
   }
 
-  void save(Produce fruit) {
+  void save(Product fruit) {
     print("species:" + fruit.name);
   }
 }
