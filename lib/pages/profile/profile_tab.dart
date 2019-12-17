@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:arator/components/common/page_body_container.dart';
 import 'package:arator/components/common/profile_picture.dart';
-import 'package:arator/data/profile_navigation_option.dart';
 import 'package:arator/tab_navigator.dart';
 import 'package:flutter/material.dart';
 
@@ -61,6 +60,25 @@ class _ProfileTabState extends State<ProfileTab> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ProfileNavigationOption extends StatelessWidget {
+  final String title;
+  final IconData iconData;
+  final Function onTap;
+
+  ProfileNavigationOption(this.title, this.iconData, this.onTap);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: ListTile(
+        leading: Icon(iconData, color: Theme.of(context).primaryColor),
+        title: Text(title),
       ),
     );
   }

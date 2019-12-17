@@ -1,5 +1,5 @@
-import 'package:arator/data/Produce.dart';
-import 'package:arator/data/units/WeightUnits.dart';
+import 'package:arator/data/model/Produce.dart';
+import 'package:arator/data/model/units/WeightUnit.dart';
 
 class ProductRepository {
   List<Produce> _products = [
@@ -9,7 +9,7 @@ class ProductRepository {
         type: "Jonagold",
         description: "Beautiful",
         priceInDollar: 20.0,
-        weightUnit: WeightUnits.GRAM),
+        weightUnit: WeightUnit.GRAM),
   ];
 
   Future<List<Produce>> getProducts() async {

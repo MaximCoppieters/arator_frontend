@@ -1,4 +1,4 @@
-import 'package:arator/data/User.dart';
+import 'package:arator/data/model/User.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class UserState extends Equatable {

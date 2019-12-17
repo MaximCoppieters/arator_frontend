@@ -27,6 +27,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           userCredentials: event.userCredentials,
         );
 
+        userRepository.persistToken(token);
+
         authenticationBloc.add(LoggedIn(token: token));
         yield LoginInitial();
       } catch (error) {

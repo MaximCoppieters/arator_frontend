@@ -5,9 +5,13 @@ import 'bloc.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final UserRepository userRepository = new UserRepository();
+  String nameError;
+  String emailError;
+  String passwordError;
+  String confirmPasswordError;
 
   @override
-  RegisterState get initialState => InitialRegisterState();
+  RegisterState get initialState => RegisterInitial();
 
   @override
   Stream<RegisterState> mapEventToState(
@@ -15,13 +19,12 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   ) async* {
     if (event is RegisterButtonPressed) {
       yield RegisterLoading();
-
       try {
         await userRepository.register(
           userCredentials: event.userCredentials,
         );
-
-        yield RegisterInitial();
+        yield RegisterComplete();
+        print("complete");
       } catch (error) {
         yield RegisterFailure(error: error);
       }

@@ -1,8 +1,8 @@
-import 'package:arator/data/Order.dart';
-import 'package:arator/data/units/WeightUnits.dart';
+import 'package:arator/data/model/Order.dart';
+import 'package:arator/data/model/units/WeightUnit.dart';
 
-import '../Produce.dart';
-import '../User.dart';
+import '../model/Produce.dart';
+import '../model/User.dart';
 
 class OrderRepository {
   Future<List<Order>> getOrdersOfUser(User user) async {
@@ -14,7 +14,7 @@ class OrderRepository {
             type: "Jonagold",
             description: "Beautiful",
             priceInDollar: 20.0,
-            weightUnit: WeightUnits.GRAM),
+            weightUnit: WeightUnit.GRAM),
       ], buyer: user),
     ];
 

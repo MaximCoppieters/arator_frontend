@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:arator/data/User.dart';
+import 'package:arator/data/model/User.dart';
 import 'package:arator/data/UserCredentials.dart';
 import 'package:bloc/bloc.dart';
 import 'bloc.dart';

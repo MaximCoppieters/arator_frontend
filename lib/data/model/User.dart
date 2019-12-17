@@ -1,4 +1,4 @@
-import 'package:arator/data/Address.dart';
+import 'package:arator/data/model/Address.dart';
 
 import 'Produce.dart';
 import 'Review.dart';

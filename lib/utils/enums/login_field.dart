@@ -1,1 +1,1 @@
-enum LoginField { email, password, confirmPassword }
+enum LoginField { name, email, password, confirmPassword }

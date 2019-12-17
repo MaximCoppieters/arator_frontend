@@ -1,4 +1,4 @@
-import 'package:arator/data/Produce.dart';
+import 'package:arator/data/model/Produce.dart';
 import 'package:equatable/equatable.dart';
 
 

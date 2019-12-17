@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:arator/data/Produce.dart';
+import 'package:arator/data/model/Produce.dart';
 import 'package:arator/data/repo/product_repo.dart';
 import 'package:bloc/bloc.dart';
 import 'bloc.dart';

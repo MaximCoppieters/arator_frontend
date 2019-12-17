@@ -1,3 +1,3 @@
 abstract class Repository {
-  final String baseUrl = "http://0ac22562.ngrok.io/api";
+  final String baseUrl = "http://b219902c.ngrok.io/api";
 }

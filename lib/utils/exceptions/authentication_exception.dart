@@ -4,10 +4,14 @@ import 'package:enum_to_string/enum_to_string.dart';
 class AuthenticationException implements Exception {
   LoginField field;
   String message;
-  AuthenticationException(this.field, this.message);
+  AuthenticationException(this.message);
 
   AuthenticationException.fromResponseBody(
       Map<String, dynamic> errorResponseBody) {
+    if (errorResponseBody["error"] != null) {
+      errorResponseBody = errorResponseBody["error"];
+    }
+
     if (errorResponseBody["details"] == null) {
       this.field = LoginField.email;
       this.message = errorResponseBody["message"];
@@ -15,6 +19,15 @@ class AuthenticationException implements Exception {
       var errorDetails = errorResponseBody["details"][0];
       this.message = getErrorMessage(errorDetails);
       this.field = getErrorField(errorDetails);
+
+      reformulateErrorMessage();
+    }
+    this.message = this.message.replaceAll('"', '');
+  }
+
+  String reformulateErrorMessage() {
+    if (this.field == LoginField.confirmPassword) {
+      this.message = "Passwords don't match";
     }
   }
 

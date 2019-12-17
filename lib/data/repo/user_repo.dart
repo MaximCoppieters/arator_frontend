@@ -4,17 +4,21 @@ import 'package:arator/data/UserCredentials.dart';
 import 'package:arator/data/repo/repo.dart';
 import 'package:arator/utils/exceptions/authentication_exception.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import '../Address.dart';
-import '../Review.dart';
-import '../User.dart';
+import '../model/Address.dart';
+import '../model/Review.dart';
+import '../model/User.dart';
 
 class UserRepository extends Repository {
-  static final registerEndpoint = "/register";
+  static final registerEndpoint = "/signup";
   static final loginEndpoint = "/login";
   static final appJson = "application/json";
+  static final jwtStorageKey = "arator_jwt";
+
+  final storage = new FlutterSecureStorage();
 
   Future<User> getUserWithCredentials(UserCredentials credentials) async {
     return Future.delayed(Duration(seconds: 1), () {
@@ -43,14 +47,8 @@ class UserRepository extends Repository {
   Future<String> authenticate({
     @required UserCredentials userCredentials,
   }) async {
-    var res = await http.post(baseUrl + loginEndpoint,
-        headers: {HttpHeaders.contentTypeHeader: appJson},
-        body: json.encode(userCredentials.toJson()));
-
-    var body = jsonDecode(res.body);
-    if (res.statusCode != 200) {
-      throw new AuthenticationException.fromResponseBody(body);
-    }
+    Map<String, dynamic> body = await getAuthenticationJsonResponseFromEndpoint(
+        userCredentials, loginEndpoint);
 
     var token = body["token"];
 
@@ -60,28 +58,43 @@ class UserRepository extends Repository {
   Future<void> register({
     @required UserCredentials userCredentials,
   }) async {
-    var res = await http.post(baseUrl + registerEndpoint,
+    await getAuthenticationJsonResponseFromEndpoint(
+        userCredentials, registerEndpoint);
+  }
+
+  Future<Map<String, dynamic>> getAuthenticationJsonResponseFromEndpoint(
+      UserCredentials credentials, String endpoint) async {
+    var res = await http.post(baseUrl + endpoint,
         headers: {HttpHeaders.contentTypeHeader: appJson},
-        body: json.encode(userCredentials.toJson()));
+        body: json.encode(credentials.toJson()));
+
+    if (res.statusCode == 404) {
+      throw new AuthenticationException("Couldn't reach server");
+    }
+
+    // Succesful registry, no body required
+    if (res.statusCode == 201) return null;
 
     var body = jsonDecode(res.body);
     if (res.statusCode != 200) {
+      print("thrown");
       throw new AuthenticationException.fromResponseBody(body);
     }
+    return body;
   }
 
   Future<void> deleteToken() async {
-    await Future.delayed(Duration(seconds: 1));
+    storage.delete(key: jwtStorageKey);
     return;
   }
 
   Future<void> persistToken(String token) async {
-    await Future.delayed(Duration(seconds: 1));
+    storage.write(key: jwtStorageKey, value: token);
     return;
   }
 
   Future<bool> hasToken() async {
-    await Future.delayed(Duration(seconds: 1));
-    return false;
+    var token = await storage.read(key: jwtStorageKey);
+    return token != null && token.isNotEmpty;
   }
 }

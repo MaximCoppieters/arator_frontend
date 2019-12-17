@@ -1,7 +1,7 @@
 import 'package:arator/components/common/login_form.dart';
 import 'package:arator/components/common/register_form.dart';
 import 'package:arator/style/theme.dart' as Theme;
-import 'package:arator/utils/bubble_indication_painter.dart';
+import 'package:arator/pages/common/bubble_indication_painter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage>
                       ),
                       new ConstrainedBox(
                         constraints: const BoxConstraints.expand(),
-                        child: RegisterForm(),
+                        child: RegisterForm(_scaffoldKey),
                       ),
                     ],
                   ),
@@ -114,23 +114,6 @@ class _LoginPageState extends State<LoginPage>
     ]);
 
     _pageController = PageController();
-  }
-
-  void showInSnackBar(String value) {
-    FocusScope.of(context).requestFocus(new FocusNode());
-    _scaffoldKey.currentState?.removeCurrentSnackBar();
-    _scaffoldKey.currentState.showSnackBar(new SnackBar(
-      content: new Text(
-        value,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-            color: Colors.white,
-            fontSize: 16.0,
-            fontFamily: "WorkSansSemiBold"),
-      ),
-      backgroundColor: Colors.blue,
-      duration: Duration(seconds: 3),
-    ));
   }
 
   Widget _buildMenuBar(BuildContext context) {

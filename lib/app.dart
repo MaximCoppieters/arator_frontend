@@ -1,3 +1,4 @@
+import 'package:arator/business/bloc/authentication_event.dart';
 import 'package:arator/pages/common/login_page.dart';
 import 'package:arator/tabbed_app_view.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class AppState extends State<App> {
   @override
   void initState() {
     _authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
+    _authenticationBloc.add(AppStarted());
     super.initState();
   }
 

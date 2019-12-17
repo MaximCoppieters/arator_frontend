@@ -1,4 +1,4 @@
-import 'package:arator/data/units/WeightUnits.dart';
+import 'package:arator/data/model/units/WeightUnit.dart';
 import 'package:flutter/material.dart';
 
 import 'User.dart';
@@ -9,7 +9,7 @@ class Produce {
   final String type;
   final String description;
   final num priceInDollar;
-  final WeightUnits weightUnit;
+  final WeightUnit weightUnit;
   num amount = 1;
   User seller;
 

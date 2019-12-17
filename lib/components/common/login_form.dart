@@ -1,5 +1,6 @@
 import 'package:arator/business/bloc/authentication_bloc.dart';
 import 'package:arator/business/bloc/bloc.dart';
+import 'package:arator/components/common/login_form_box_decoration.dart';
 import 'package:arator/data/UserCredentials.dart';
 import 'package:arator/style/theme.dart' as Theme;
 import 'package:arator/utils/enums/login_field.dart';
@@ -15,15 +16,8 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  final FocusNode myFocusNodeEmailLogin = FocusNode();
-  final FocusNode myFocusNodePasswordLogin = FocusNode();
-
-  final FocusNode myFocusNodePassword = FocusNode();
-  final FocusNode myFocusNodeEmail = FocusNode();
-  final FocusNode myFocusNodeName = FocusNode();
-
-  String emailError = "";
-  String passwordError = "";
+  final FocusNode emailFocusNode = FocusNode();
+  final FocusNode passwordFocusNode = FocusNode();
 
   TextEditingController loginEmailController = new TextEditingController();
   TextEditingController loginPasswordController = new TextEditingController();
@@ -64,17 +58,9 @@ class _LoginFormState extends State<LoginForm> {
                 child: BlocBuilder<LoginBloc, LoginState>(
                     bloc: _loginBloc,
                     builder: (context, loginState) {
-                      BoxDecoration loginFormBoxDecoration;
-
-                      loginFormBoxDecoration = BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          border: Border.all(
-                              color: loginState is LoginLoading
-                                  ? Colors.green
-                                  : Colors.white,
-                              width: 3.0));
                       return Container(
-                        decoration: loginFormBoxDecoration,
+                        decoration: authFormDecoration(
+                            hasBorder: loginState is LoginLoading),
                         padding: EdgeInsets.all(5.0),
                         width: 310.0,
                         height: 200.0,
@@ -296,71 +282,57 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Widget passwordField() {
-    return BlocBuilder<LoginBloc, LoginState>(
-        bloc: _loginBloc,
-        builder: (context, snapshot) {
-          return TextField(
-            focusNode: myFocusNodePasswordLogin,
-            controller: loginPasswordController,
-            obscureText: _obscureTextLogin,
-            style: TextStyle(
-                fontFamily: "WorkSansSemiBold",
-                fontSize: 16.0,
-                color: Colors.black),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              icon: Icon(
-                FontAwesomeIcons.lock,
-                size: 22.0,
-                color: Colors.black,
-              ),
-              errorText: getFieldErrorText(LoginField.password),
-              errorStyle: TextStyle(height: 0.0),
-              hintText: "Password",
-              hintStyle:
-                  TextStyle(fontFamily: "WorkSansSemiBold", fontSize: 17.0),
-              suffixIcon: GestureDetector(
-                onTap: _toggleLogin,
-                child: Icon(
-                  _obscureTextLogin
-                      ? FontAwesomeIcons.eye
-                      : FontAwesomeIcons.eyeSlash,
-                  size: 15.0,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          );
-        });
+    return TextField(
+      focusNode: passwordFocusNode,
+      controller: loginPasswordController,
+      obscureText: _obscureTextLogin,
+      style: TextStyle(
+          fontFamily: "WorkSansSemiBold", fontSize: 16.0, color: Colors.black),
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        icon: Icon(
+          FontAwesomeIcons.lock,
+          size: 22.0,
+          color: Colors.black,
+        ),
+        errorText: getFieldErrorText(LoginField.password),
+        errorStyle: TextStyle(height: 0.0),
+        hintText: "Password",
+        hintStyle: TextStyle(fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+        suffixIcon: GestureDetector(
+          onTap: _toggleLogin,
+          child: Icon(
+            _obscureTextLogin
+                ? FontAwesomeIcons.eye
+                : FontAwesomeIcons.eyeSlash,
+            size: 15.0,
+            color: Colors.black,
+          ),
+        ),
+      ),
+    );
   }
 
   Widget emailField() {
-    return BlocBuilder<LoginBloc, LoginState>(
-        bloc: _loginBloc,
-        builder: (context, loginState) {
-          return TextField(
-            focusNode: myFocusNodeEmailLogin,
-            controller: loginEmailController,
-            keyboardType: TextInputType.emailAddress,
-            style: TextStyle(
-                fontFamily: "WorkSansSemiBold",
-                fontSize: 16.0,
-                color: Colors.black),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              icon: Icon(
-                FontAwesomeIcons.envelope,
-                color: Colors.black,
-                size: 22.0,
-              ),
-              hintText: "Email Address",
-              errorText: getFieldErrorText(LoginField.email),
-              errorStyle: TextStyle(height: 0.0),
-              hintStyle:
-                  TextStyle(fontFamily: "WorkSansSemiBold", fontSize: 17.0),
-            ),
-          );
-        });
+    return TextField(
+      focusNode: emailFocusNode,
+      controller: loginEmailController,
+      keyboardType: TextInputType.emailAddress,
+      style: TextStyle(
+          fontFamily: "WorkSansSemiBold", fontSize: 16.0, color: Colors.black),
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        icon: Icon(
+          FontAwesomeIcons.envelope,
+          color: Colors.black,
+          size: 22.0,
+        ),
+        hintText: "Email Address",
+        errorText: getFieldErrorText(LoginField.email),
+        errorStyle: TextStyle(height: 0.0),
+        hintStyle: TextStyle(fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+      ),
+    );
   }
 
   String getFieldErrorText(LoginField field) {

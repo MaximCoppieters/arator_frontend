@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:arator/components/common/page_body_container.dart';
-import 'package:arator/data/Produce.dart';
+import 'package:arator/data/model/Produce.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
