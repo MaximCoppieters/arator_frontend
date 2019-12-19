@@ -1,9 +1,10 @@
 import 'package:arator/business/bloc/bloc.dart';
 import 'package:arator/business/bloc/register_bloc.dart';
+import 'package:arator/components/UI.dart';
 import 'package:arator/components/common/login_form_box_decoration.dart';
-import 'package:arator/data/UserCredentials.dart';
-import 'package:arator/utils/enums/login_field.dart';
-import 'package:arator/utils/exceptions/authentication_exception.dart';
+import 'package:arator/data/model/UserCredentials.dart';
+import 'package:arator/utils/enums/input_name.dart';
+import 'package:arator/utils/exceptions/form_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:arator/style/theme.dart' as Theme;
 import 'package:flutter/services.dart';
@@ -50,12 +51,12 @@ class _RegisterFormState extends State<RegisterForm> {
     _registerBloc.listen((state) {
       print(state);
       if (state is RegisterFailure) {
-        AuthenticationException error = state.props[0];
+        FormException error = state.props[0];
         if (error.field == null) {
-          showInSnackBar(error.message);
+          UI.showInSnackBar(context, _scaffoldKey, error.message);
         }
       } else if (state is RegisterComplete) {
-        showInSnackBar("Account succesfully created");
+        UI.showInSnackBar(context, _scaffoldKey, "Account succesfully created");
       }
     });
     super.initState();
@@ -97,7 +98,7 @@ class _RegisterFormState extends State<RegisterForm> {
                                     focusNode: nameFocusNode,
                                     controller: signupNameController,
                                     hintText: "Name",
-                                    loginFieldType: LoginField.name,
+                                    loginFieldType: InputName.name,
                                     icon: FontAwesomeIcons.user,
                                     textCapitalization:
                                         TextCapitalization.words)),
@@ -116,7 +117,7 @@ class _RegisterFormState extends State<RegisterForm> {
                                     focusNode: emailFocusNode,
                                     controller: signupEmailController,
                                     hintText: "Email",
-                                    loginFieldType: LoginField.email,
+                                    loginFieldType: InputName.email,
                                     icon: FontAwesomeIcons.envelope,
                                     textCapitalization:
                                         TextCapitalization.none)),
@@ -135,7 +136,7 @@ class _RegisterFormState extends State<RegisterForm> {
                                     controller: signupPasswordController,
                                     focusNode: passwordFocusNode,
                                     obscureText: _obscureTextSignup,
-                                    loginFieldType: LoginField.password,
+                                    loginFieldType: InputName.password,
                                     hintText: "Password",
                                     onEyeTap: _toggleSignup)),
                             Container(
@@ -152,7 +153,7 @@ class _RegisterFormState extends State<RegisterForm> {
                                 child: passwordField(
                                     controller: signupConfirmPasswordController,
                                     focusNode: confirmPasswordFocusNode,
-                                    loginFieldType: LoginField.confirmPassword,
+                                    loginFieldType: InputName.confirmPassword,
                                     obscureText: _obscureTextSignupConfirm,
                                     hintText: "Confirmation",
                                     onEyeTap: _toggleSignupConfirm)),
@@ -221,7 +222,7 @@ class _RegisterFormState extends State<RegisterForm> {
       {FocusNode focusNode,
       TextEditingController controller,
       bool obscureText,
-      LoginField loginFieldType,
+      InputName loginFieldType,
       String hintText,
       Function onEyeTap}) {
     return BlocBuilder<RegisterBloc, RegisterState>(
@@ -266,14 +267,14 @@ class _RegisterFormState extends State<RegisterForm> {
     FocusNode focusNode,
     TextEditingController controller,
     String hintText,
-    LoginField loginFieldType,
+    InputName loginFieldType,
     IconData icon,
     textCapitalization: TextCapitalization.words,
   }) {
     return TextField(
       focusNode: focusNode,
       controller: controller,
-      keyboardType: loginFieldType == LoginField.email
+      keyboardType: loginFieldType == InputName.email
           ? TextInputType.emailAddress
           : TextInputType.text,
       style: TextStyle(
@@ -313,30 +314,13 @@ class _RegisterFormState extends State<RegisterForm> {
     });
   }
 
-  String getFieldErrorText(LoginField field) {
+  String getFieldErrorText(InputName field) {
     if (_registerBloc.state is RegisterFailure) {
-      AuthenticationException error = _registerBloc.state.props[0];
+      FormException error = _registerBloc.state.props[0];
       if (error.field == field) {
         return error.message;
       }
     }
     return "";
-  }
-
-  void showInSnackBar(String value) {
-    FocusScope.of(context).requestFocus(new FocusNode());
-    _scaffoldKey.currentState?.removeCurrentSnackBar();
-    _scaffoldKey.currentState.showSnackBar(new SnackBar(
-      content: new Text(
-        value,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-            color: Colors.white,
-            fontSize: 16.0,
-            fontFamily: "WorkSansSemiBold"),
-      ),
-      backgroundColor: Colors.orange,
-      duration: Duration(seconds: 3),
-    ));
   }
 }

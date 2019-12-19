@@ -73,12 +73,6 @@ class _SellerTabState extends State<SellerTab> {
                           SizedBox(
                             height: 5.0,
                           ),
-                          Container(
-                            alignment: Alignment.bottomCenter,
-                            child: Image.file(
-                              File("assets/images/apple.png"),
-                            ),
-                          ),
                         ],
                       )),
                     );

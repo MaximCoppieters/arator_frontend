@@ -10,11 +10,11 @@ class OrderRepository {
       Order(products: [
         Product(
             name: "Apples",
-            imagePath: "assets/images/apples.jpg",
+            imageUrl: "assets/images/apples.jpg",
             type: "Jonagold",
             description: "Beautiful",
             priceInEuro: 20.0,
-            weightUnit: WeightUnit.GRAM),
+            weightUnit: WeightUnit.Gram),
       ], buyer: user),
     ];
 

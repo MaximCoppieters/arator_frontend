@@ -100,12 +100,6 @@ class _LoginPageState extends State<LoginPage>
   }
 
   @override
-  void dispose() {
-    _pageController?.dispose();
-    super.dispose();
-  }
-
-  @override
   void initState() {
     super.initState();
     SystemChrome.setPreferredOrientations([
@@ -114,6 +108,12 @@ class _LoginPageState extends State<LoginPage>
     ]);
 
     _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController?.dispose();
+    super.dispose();
   }
 
   Widget _buildMenuBar(BuildContext context) {

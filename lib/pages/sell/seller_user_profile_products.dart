@@ -4,7 +4,6 @@ import 'package:arator/components/common/page_body_container.dart';
 import 'package:arator/components/common/profile_review_row.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
 
 class SellerUserProfileProducts extends StatelessWidget {
   @override
@@ -16,7 +15,6 @@ class SellerUserProfileProducts extends StatelessWidget {
           child: Column(
             children: <Widget>[
               ProfileReviewRow(
-                null,
                 shouldNavigate: false,
               ),
               SizedBox(

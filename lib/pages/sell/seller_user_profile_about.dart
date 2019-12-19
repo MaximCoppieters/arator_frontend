@@ -2,7 +2,6 @@ import 'package:arator/components/common/IconText.dart';
 import 'package:arator/components/common/message_follow_button_row.dart';
 import 'package:arator/components/common/page_body_container.dart';
 import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
 
 class SellerUserProfileAbout extends StatelessWidget {
   @override

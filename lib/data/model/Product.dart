@@ -1,33 +1,38 @@
+import 'dart:typed_data';
+
 import 'package:arator/data/model/units/WeightUnit.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import 'Model.dart';
 import 'User.dart';
 
 part 'Product.g.dart';
 
-@JsonSerializable(nullable: false)
-class Product {
+@JsonSerializable()
+class Product implements Model {
   String id;
   final String name;
-  final String imagePath;
   final String type;
+  final String imageUrl;
   final String description;
   final num priceInEuro;
   final WeightUnit weightUnit;
-  final num amount;
+  final int amount;
   final User seller;
+  dynamic imageBinary;
 
   Product(
-      {@required this.name,
-      this.imagePath,
+      {this.id,
+      @required this.name,
+      this.imageUrl,
       this.type,
       this.description,
       this.priceInEuro,
       this.weightUnit,
       this.seller,
       this.amount,
-      this.id});
+      this.imageBinary});
 
   factory Product.fromJson(Map<String, dynamic> json) =>
       _$ProductFromJson(json);

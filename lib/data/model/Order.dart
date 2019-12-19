@@ -1,3 +1,4 @@
+import 'Model.dart';
 import 'Product.dart';
 import 'User.dart';
 
@@ -5,8 +6,8 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'Order.g.dart';
 
-@JsonSerializable(nullable: false)
-class Order {
+@JsonSerializable()
+class Order implements Model {
   List<Product> products;
   User buyer;
   User seller;

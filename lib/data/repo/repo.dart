@@ -1,4 +1,10 @@
+import 'package:arator/utils/exceptions/form_exception.dart';
+import 'package:arator/utils/validation_error_parser.dart';
+
 abstract class Repository {
-  final String baseUrl = "http://b219902c.ngrok.io/api";
-  static final appJson = "application/json";
+  parseAndThrowException(Map<String, dynamic> errorBody) {
+    var errorParser = ValidationErrorParser(errorBody);
+    throw new FormException(
+        field: errorParser.field, message: errorParser.errorMessage);
+  }
 }

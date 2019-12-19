@@ -1,4 +1,4 @@
-import 'package:arator/utils/exceptions/authentication_exception.dart';
+import 'package:arator/utils/exceptions/form_exception.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +17,7 @@ class LoginLoading extends LoginState {
 }
 
 class LoginFailure extends LoginState {
-  final AuthenticationException error;
+  final FormException error;
 
   const LoginFailure({@required this.error});
 

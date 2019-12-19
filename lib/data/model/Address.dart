@@ -1,9 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import 'Model.dart';
+
 part 'Address.g.dart';
 
-@JsonSerializable(nullable: false)
-class Address {
+@JsonSerializable()
+class Address implements Model {
   String street;
   String number;
   String postalCode;

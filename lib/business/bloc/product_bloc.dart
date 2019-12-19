@@ -17,22 +17,30 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     if (event is GetProducts) {
       yield* _mapLoadProductsToState();
     } else if (event is AddProduct) {
-      _mapAddProductToState(event.product);
+      yield* _mapAddProductToState(event.product);
     }
   }
 
-  Future<void> _mapAddProductToState(Product product) async {
-    this.productRepository.getProducts();
+  Stream<ProductState> _mapAddProductToState(Product product) async* {
+    yield ProductsLoading();
+    try {
+      await this.productRepository.addProduct(product);
+      yield ProductAdded();
+    } catch (error) {
+      yield AddProductFailed(error);
+    }
   }
 
   Stream<ProductState> _mapLoadProductsToState() async* {
+    yield ProductsLoading();
     try {
       final products = await this.productRepository.getProducts();
+      print(products);
       yield ProductsLoaded(
         products.toList(),
       );
-    } catch (_) {
-      yield ProductsNotLoaded();
+    } catch (error) {
+      yield ProductsFailedLoading(error);
     }
   }
 }

@@ -1,4 +1,4 @@
-import 'package:arator/utils/exceptions/authentication_exception.dart';
+import 'package:arator/utils/exceptions/form_exception.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +17,7 @@ class RegisterLoading extends RegisterState {
 }
 
 class RegisterFailure extends RegisterState {
-  final AuthenticationException error;
+  final FormException error;
 
   const RegisterFailure({@required this.error});
 

@@ -8,26 +8,29 @@ part of 'User.dart';
 
 User _$UserFromJson(Map<String, dynamic> json) {
   return User(
+    id: json['_id'] as String,
     email: json['email'] as String,
-    userName: json['userName'] as String,
-    profileImagePath: json['profileImagePath'] as String,
+    name: json['name'] as String,
+    profileImageUrl: json['profileImageUrl'] as String,
     reviews: (json['reviews'] as List)
-        .map((e) => Review.fromJson(e as Map<String, dynamic>))
-        .toList(),
-    address: Address.fromJson(json['address'] as Map<String, dynamic>),
+        ?.map((e) =>
+            e == null ? null : Review.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+    address: json['address'] == null
+        ? null
+        : Address.fromJson(json['address'] as Map<String, dynamic>),
     about: json['about'] as String,
-  )
-    ..description = json['description'] as String
-    ..products = (json['products'] as List)
-        .map((e) => Product.fromJson(e as Map<String, dynamic>))
-        .toList();
+  )..products = (json['products'] as List)
+      ?.map(
+          (e) => e == null ? null : Product.fromJson(e as Map<String, dynamic>))
+      ?.toList();
 }
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+      '_id': instance.id,
       'email': instance.email,
-      'userName': instance.userName,
-      'profileImagePath': instance.profileImagePath,
-      'description': instance.description,
+      'name': instance.name,
+      'profileImageUrl': instance.profileImageUrl,
       'address': instance.address,
       'about': instance.about,
       'products': instance.products,

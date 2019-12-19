@@ -33,7 +33,7 @@ class _BuyProductDetailPage extends State<BuyProductDetailPage> {
             PageBodyContainer(
               child: Column(
                 children: <Widget>[
-                  ProfileReviewRow(null),
+                  ProfileReviewRow(),
                 ],
               ),
             ),

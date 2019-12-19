@@ -1,6 +1,5 @@
 import 'package:arator/tab_navigator.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:scoped_model/scoped_model.dart';
 
 class ProfilePicture extends StatelessWidget {
   final String imageUrl;
@@ -20,7 +19,7 @@ class ProfilePicture extends StatelessWidget {
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(50.0),
-        child: Container(width: size, child: Image.asset(imageUrl)),
+        child: Container(width: size, child: Image.network(imageUrl)),
       ),
     );
   }

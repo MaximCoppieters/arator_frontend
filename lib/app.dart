@@ -12,6 +12,11 @@ class App extends StatefulWidget {
   State<StatefulWidget> createState() => AppState();
 }
 
+abstract class AppInfo {
+  static final baseUrl = "http://161d85a5.ngrok.io";
+  static final apiBaseUrl = baseUrl + "/api";
+}
+
 class AppState extends State<App> {
   AuthenticationBloc _authenticationBloc;
 

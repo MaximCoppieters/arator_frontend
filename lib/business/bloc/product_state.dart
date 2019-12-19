@@ -1,6 +1,6 @@
 import 'package:arator/data/model/Product.dart';
+import 'package:arator/utils/exceptions/form_exception.dart';
 import 'package:equatable/equatable.dart';
-
 
 abstract class ProductState extends Equatable {
   const ProductState();
@@ -31,10 +31,27 @@ class ProductsLoaded extends ProductState {
   String toString() => 'ProductsLoaded { products: $products }';
 }
 
-class ProductsNotLoaded extends ProductState {
+class ProductsFailedLoading extends ProductState {
+  final FormException error;
+  ProductsFailedLoading(this.error);
   @override
   String toString() => 'Products failed to load';
+  @override
+  List<Object> get props => [error];
+}
 
+class ProductAdded extends ProductState {
   @override
   List<Object> get props => [];
+}
+
+class AddProductFailed extends ProductState {
+  final FormException error;
+  AddProductFailed(this.error);
+
+  @override
+  String toString() => 'Failed to add product';
+
+  @override
+  List<Object> get props => [error];
 }

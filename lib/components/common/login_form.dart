@@ -1,10 +1,10 @@
 import 'package:arator/business/bloc/authentication_bloc.dart';
 import 'package:arator/business/bloc/bloc.dart';
 import 'package:arator/components/common/login_form_box_decoration.dart';
-import 'package:arator/data/UserCredentials.dart';
+import 'package:arator/data/model/UserCredentials.dart';
 import 'package:arator/style/theme.dart' as Theme;
-import 'package:arator/utils/enums/login_field.dart';
-import 'package:arator/utils/exceptions/authentication_exception.dart';
+import 'package:arator/utils/enums/input_name.dart';
+import 'package:arator/utils/exceptions/form_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -295,7 +295,7 @@ class _LoginFormState extends State<LoginForm> {
           size: 22.0,
           color: Colors.black,
         ),
-        errorText: getFieldErrorText(LoginField.password),
+        errorText: getFieldErrorText(InputName.password),
         errorStyle: TextStyle(height: 0.0),
         hintText: "Password",
         hintStyle: TextStyle(fontFamily: "WorkSansSemiBold", fontSize: 17.0),
@@ -328,16 +328,16 @@ class _LoginFormState extends State<LoginForm> {
           size: 22.0,
         ),
         hintText: "Email Address",
-        errorText: getFieldErrorText(LoginField.email),
+        errorText: getFieldErrorText(InputName.email),
         errorStyle: TextStyle(height: 0.0),
         hintStyle: TextStyle(fontFamily: "WorkSansSemiBold", fontSize: 17.0),
       ),
     );
   }
 
-  String getFieldErrorText(LoginField field) {
+  String getFieldErrorText(InputName field) {
     if (_loginBloc.state is LoginFailure) {
-      AuthenticationException error = _loginBloc.state.props[0];
+      FormException error = _loginBloc.state.props[0];
       if (error.field == field) {
         return error.message;
       }

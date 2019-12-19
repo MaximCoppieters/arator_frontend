@@ -2,22 +2,20 @@ import 'package:arator/components/common/profile_picture.dart';
 import 'package:arator/components/common/star_rating_buttons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
 
 class ProfileReviewRow extends StatelessWidget {
-  final Model model;
   final bool shouldNavigate;
 
-  ProfileReviewRow(this.model, {this.shouldNavigate = true});
+  ProfileReviewRow({this.shouldNavigate = true});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
         ProfilePicture(
-          "assets/images/pedro.jpg",
-          // produceModel.selectedProduce.seller.profileImagePath,
-          50.0, shouldNavigate: shouldNavigate,
+          "",
+          50.0,
+          shouldNavigate: shouldNavigate,
         ),
         Padding(
           padding: EdgeInsets.only(right: 10.0),

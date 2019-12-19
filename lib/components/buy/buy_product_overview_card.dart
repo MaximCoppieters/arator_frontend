@@ -1,3 +1,4 @@
+import 'package:arator/business/app_image.dart';
 import 'package:arator/components/common/profile_picture.dart';
 import 'package:arator/data/model/Product.dart';
 import 'package:arator/tab_navigator.dart';
@@ -5,10 +6,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BuyProduceOverviewCard extends StatelessWidget {
-  final Product produce;
+  final Product product;
   final bool omitHeader;
 
-  BuyProduceOverviewCard(this.produce, {this.omitHeader = false});
+  BuyProduceOverviewCard(this.product, {this.omitHeader = false});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class BuyProduceOverviewCard extends StatelessWidget {
             Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                 child: omitHeader ? Container() : headerProfileRow()),
-            Image.asset("assets/images/apples.jpg",
+            Image.network(AppImage.formUrl(product.imageUrl),
                 height: 150.0, fit: BoxFit.fitHeight),
             Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
@@ -30,7 +31,7 @@ class BuyProduceOverviewCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text("20.0",
+                      Text(product.priceInEuro.toString(),
                           style: TextStyle(
                               color: Theme.of(context).accentColor,
                               fontSize:
@@ -71,11 +72,11 @@ class BuyProduceOverviewCard extends StatelessWidget {
   Widget headerProfileRow() {
     return Row(
       children: <Widget>[
-        ProfilePicture("assets/images/pedro.jpg", 25.0),
+        ProfilePicture(AppImage.formUrl(product.seller.profileImageUrl), 25.0),
         Padding(
           padding: EdgeInsets.only(left: 7.5),
         ),
-        Text("Pedro Fernandez"),
+        Text(product.seller.name),
       ],
     );
   }

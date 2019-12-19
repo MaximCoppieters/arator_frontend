@@ -10,7 +10,9 @@ Review _$ReviewFromJson(Map<String, dynamic> json) {
   return Review(
     json['rating'] as int,
     json['content'] as String,
-    User.fromJson(json['reviewer'] as Map<String, dynamic>),
+    json['reviewer'] == null
+        ? null
+        : User.fromJson(json['reviewer'] as Map<String, dynamic>),
   );
 }
 

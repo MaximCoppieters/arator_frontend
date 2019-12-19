@@ -1,12 +1,13 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import 'Model.dart';
 import 'Product.dart';
 import 'User.dart';
 
 part 'Review.g.dart';
 
-@JsonSerializable(nullable: false)
-class Review {
+@JsonSerializable()
+class Review implements Model {
   final String content;
   final int rating;
   final User reviewer;

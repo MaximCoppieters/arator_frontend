@@ -1,4 +1,4 @@
-import 'package:arator/data/UserCredentials.dart';
+import 'package:arator/data/model/UserCredentials.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
