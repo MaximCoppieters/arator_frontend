@@ -6,7 +6,7 @@ import 'package:arator/pages/profile/add_friend.dart';
 import 'package:arator/pages/profile/change_profile.dart';
 import 'package:arator/pages/profile/message_overview.dart';
 import 'package:arator/pages/profile/preferences_overview.dart';
-import 'package:arator/pages/profile/profile_tab.dart';
+import 'package:arator/pages/profile/profile_overview.dart';
 import 'package:arator/pages/profile/settings_overview.dart';
 import 'package:arator/pages/profile/transaction_history.dart';
 import 'package:arator/pages/sell/seller_add_product_page.dart';
@@ -60,7 +60,7 @@ class TabNavigator extends StatelessWidget {
       TabNavigatorRoutes.root: (context) => BuyerProductOverview(),
       TabNavigatorRoutes.buy: (context) => BuyerProductOverview(),
       TabNavigatorRoutes.sell: (context) => SellerProductOverview(),
-      TabNavigatorRoutes.profile: (context) => ProfileTab(),
+      TabNavigatorRoutes.profile: (context) => ProfileOverview(),
       TabNavigatorRoutes.sellerAddProduct: (context) => SellerAddProductPage(),
       TabNavigatorRoutes.buyProductDetail: (context) => BuyProductDetailPage(),
       TabNavigatorRoutes.sellerUserProfile: (context) => SellerUserProfile(),

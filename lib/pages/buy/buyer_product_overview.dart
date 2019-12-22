@@ -52,7 +52,7 @@ class _BuyerProductOverviewState extends State<BuyerProductOverview> {
           return BuyProduceOverviewCard(products[index]);
         },
         gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-            childAspectRatio: 0.8, crossAxisCount: 2),
+            childAspectRatio: 0.7, crossAxisCount: 2),
       )),
     ]);
   }

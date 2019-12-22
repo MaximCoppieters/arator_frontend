@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'business/bloc/authentication_bloc.dart';
 import 'business/bloc/authentication_state.dart';
+import 'business/bloc/user_bloc.dart';
+import 'business/bloc/user_event.dart';
 
 class App extends StatefulWidget {
   @override
@@ -19,11 +21,17 @@ abstract class AppInfo {
 
 class AppState extends State<App> {
   AuthenticationBloc _authenticationBloc;
+  UserBloc _userBloc;
 
   @override
   void initState() {
     _authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
+    _userBloc = BlocProvider.of<UserBloc>(context);
     _authenticationBloc.add(AppStarted());
+    _authenticationBloc.listen((authenticationState) => {
+          if (authenticationState is AuthenticationAuthenticated)
+            {_userBloc.add(LoadUser())}
+        });
     super.initState();
   }
 

@@ -3,21 +3,26 @@ import 'dart:io';
 import 'package:arator/business/bloc/bloc.dart';
 import 'package:arator/components/common/page_body_container.dart';
 import 'package:arator/components/common/profile_picture.dart';
+import 'package:arator/data/model/User.dart';
 import 'package:arator/tab_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ProfileTab extends StatefulWidget {
+import '../../app.dart';
+
+class ProfileOverview extends StatefulWidget {
   @override
-  _ProfileTabState createState() => _ProfileTabState();
+  _ProfileOverviewState createState() => _ProfileOverviewState();
 }
 
-class _ProfileTabState extends State<ProfileTab> {
+class _ProfileOverviewState extends State<ProfileOverview> {
   AuthenticationBloc _authenticationBloc;
+  UserBloc _userBloc;
 
   @override
   void initState() {
     _authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
+    _userBloc = BlocProvider.of<UserBloc>(context);
     super.initState();
   }
 
@@ -25,14 +30,24 @@ class _ProfileTabState extends State<ProfileTab> {
     return [
       GestureDetector(
         onTap: _routeToPage(TabNavigatorRoutes.changeProfile),
-        child: ListTile(
-          leading: ProfilePicture(
-            "/public/images/default_profile.png",
-            50.0,
-          ),
-          title: Text("Pedro Fernandez"),
-          subtitle: Text("Edit"),
-        ),
+        child: BlocBuilder<UserBloc, UserState>(
+            bloc: _userBloc,
+            builder: (context, userState) {
+              if (userState is UserLoaded) {
+                User user = userState.props[0];
+                return ListTile(
+                    leading: ProfilePicture(
+                      AppInfo.baseUrl + user.profileImageUrl,
+                      50.0,
+                    ),
+                    title: Text(user.name),
+                    subtitle: Text("Edit"));
+              } else if (userState is UserLoadFailed) {
+                return Text("User could not be loaded");
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            }),
       ),
       ProfileNavigationOption(
           "Personal Preferences",

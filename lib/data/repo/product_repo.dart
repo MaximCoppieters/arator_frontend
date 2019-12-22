@@ -29,9 +29,15 @@ class ProductRepository extends Repository {
       throw new FormException(message: "No products were found");
     }
 
-    List<Product> products = productsJson
-        .map((productJson) => Product.fromJson(productJson))
-        .toList();
+    List<Product> products = [];
+    try {
+      for (dynamic productJson in productsJson) {
+        Product product = Product.fromJson(productJson);
+        products.add(product);
+      }
+    } catch (err) {
+      print(err);
+    }
     return products;
   }
 

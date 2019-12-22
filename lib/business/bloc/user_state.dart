@@ -10,7 +10,7 @@ class InitialUserState extends UserState {
   List<Object> get props => [];
 }
 
-class LoadingUserDetails extends UserState {
+class UserLoading extends UserState {
   @override
   List<Object> get props => [];
 }
@@ -20,7 +20,7 @@ class UserLoaded extends UserState {
   UserLoaded(this.user);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [user];
 }
 
 class UserLoadFailed extends UserState {

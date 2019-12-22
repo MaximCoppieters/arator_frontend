@@ -46,7 +46,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       yield ProductsLoaded(
         personalProducts.toList(),
       );
-      print(personalProducts);
     } catch (error) {
       print(error);
       yield ProductsFailedLoading(error);

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'business/bloc/authentication_bloc.dart';
 import 'business/bloc/product_bloc.dart';
+import 'business/bloc/user_bloc.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,7 +17,8 @@ class MyApp extends StatelessWidget {
           create: (context) => ProductBloc(),
         ),
         BlocProvider<AuthenticationBloc>(
-            create: (context) => AuthenticationBloc())
+            create: (context) => AuthenticationBloc()),
+        BlocProvider<UserBloc>(create: (context) => UserBloc())
       ],
       child: MaterialApp(
         title: 'Arator',
