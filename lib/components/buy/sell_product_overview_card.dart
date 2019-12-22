@@ -1,4 +1,5 @@
 import 'package:arator/data/model/Product.dart';
+import 'package:arator/tab_navigator.dart';
 import 'package:flutter/material.dart';
 
 import '../../app.dart';
@@ -10,7 +11,10 @@ class SellProductOverviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => {Navigator.of(context).pushNamed("/seller_product_detail")},
+      onTap: () {
+        TabNavigator.push(context, TabNavigatorRoutes.sellerProductDetail,
+            object: product);
+      },
       child: Card(
           clipBehavior: Clip.antiAlias,
           child: Column(

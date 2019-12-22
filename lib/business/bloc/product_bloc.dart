@@ -37,18 +37,6 @@ abstract class ProductBloc extends Bloc<ProductEvent, ProductState> {
       yield AddProductFailed(error);
     }
   }
-
-  Stream<ProductState> _mapLoadProductsForSaleToState() async* {
-    yield ProductsLoading();
-    try {
-      final products = await this.productRepository.getProducts();
-      yield ProductsLoaded(
-        products.toList(),
-      );
-    } catch (error) {
-      yield ProductsFailedLoading(error);
-    }
-  }
 }
 
 class BuyerProductBloc extends ProductBloc {

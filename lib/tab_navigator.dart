@@ -10,6 +10,7 @@ import 'package:arator/pages/profile/profile_overview.dart';
 import 'package:arator/pages/profile/settings_overview.dart';
 import 'package:arator/pages/profile/transaction_history.dart';
 import 'package:arator/pages/sell/seller_add_product_page.dart';
+import 'package:arator/pages/sell/seller_product_detail_page.dart';
 import 'package:arator/pages/sell/seller_product_overview.dart';
 import 'package:arator/pages/sell/seller_user_profile.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ class TabNavigatorRoutes {
   static const String transactionHistory = '/profile/transaction_history';
   static const String changeProfile = '/profile/edit';
   static const String preferencesOverview = '/profile/preferences';
+  static const String sellerProductDetail = '/seller_product_detail';
 }
 
 class TabNavigator extends StatelessWidget {
@@ -42,8 +44,8 @@ class TabNavigator extends StatelessWidget {
   final TabItem tabItem;
   final String initialRoute;
 
-  static void push(BuildContext context, String route) {
-    var routeBuilders = _routeBuilders(context);
+  static void push(BuildContext context, String route, {dynamic object}) {
+    var routeBuilders = _routeBuilders(context, object: object);
 
     Navigator.push(
       context,
@@ -53,15 +55,16 @@ class TabNavigator extends StatelessWidget {
     );
   }
 
-  static Map<String, WidgetBuilder> _routeBuilders(
-    BuildContext context,
-  ) {
+  static Map<String, WidgetBuilder> _routeBuilders(BuildContext context,
+      {dynamic object}) {
     return {
       TabNavigatorRoutes.root: (context) => BuyerProductOverview(),
       TabNavigatorRoutes.buy: (context) => BuyerProductOverview(),
       TabNavigatorRoutes.sell: (context) => SellerProductOverview(),
       TabNavigatorRoutes.profile: (context) => ProfileOverview(),
       TabNavigatorRoutes.sellerAddProduct: (context) => SellerAddProductPage(),
+      TabNavigatorRoutes.sellerProductDetail: (context) =>
+          SellerProductDetail(product: object),
       TabNavigatorRoutes.buyProductDetail: (context) => BuyProductDetailPage(),
       TabNavigatorRoutes.sellerUserProfile: (context) => SellerUserProfile(),
       TabNavigatorRoutes.userMessage: (context) => MessagePage(),
