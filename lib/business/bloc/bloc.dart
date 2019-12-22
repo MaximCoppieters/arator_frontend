@@ -13,3 +13,6 @@ export 'login_state.dart';
 export 'register_bloc.dart';
 export 'register_event.dart';
 export 'register_state.dart';
+export 'user_bloc.dart';
+export 'user_event.dart';
+export 'user_state.dart';

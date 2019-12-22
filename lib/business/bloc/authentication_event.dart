@@ -1,3 +1,4 @@
+import 'package:arator/data/model/User.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class AuthenticationEvent extends Equatable {
@@ -13,14 +14,15 @@ class AppStarted extends AuthenticationEvent {
 
 class LoggedIn extends AuthenticationEvent {
   final String token;
+  final User user;
 
-  LoggedIn({this.token});
+  LoggedIn({this.token, this.user});
 
   @override
   String toString() => 'LoggedIn { token: $token }';
 
   @override
-  List<Object> get props => [token];
+  List<Object> get props => [token, user];
 }
 
 class LoggedOut extends AuthenticationEvent {

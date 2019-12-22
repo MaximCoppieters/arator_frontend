@@ -18,7 +18,7 @@ class _BuyerProductOverviewState extends State<BuyerProductOverview> {
   @override
   void initState() {
     _productBloc = BlocProvider.of<ProductBloc>(context);
-    _productBloc.add(GetProducts());
+    _productBloc.add(GetPersonalProducts());
     super.initState();
   }
 

@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:arator/tab_navigator.dart';
 import 'package:arator/utils/enums/input_name.dart';
-import 'package:arator/utils/enums/product_field.dart';
 import 'package:arator/utils/exceptions/form_exception.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:arator/business/bloc/bloc.dart';
@@ -33,6 +33,13 @@ class _SellerAddProductPageState extends State<SellerAddProductPage> {
   @override
   void initState() {
     _productBloc = BlocProvider.of<ProductBloc>(context);
+    _productBloc.add(ResetProductEvent());
+
+    _productBloc.listen((state) {
+      if (state is ProductAdded) {
+        TabNavigator.push(context, TabNavigatorRoutes.sell);
+      }
+    });
     super.initState();
   }
 
@@ -68,7 +75,7 @@ class _SellerAddProductPageState extends State<SellerAddProductPage> {
               : 700.0,
           child: BlocBuilder<ProductBloc, ProductState>(
               bloc: _productBloc,
-              builder: (context, snapshot) {
+              builder: (context, productState) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -90,7 +97,12 @@ class _SellerAddProductPageState extends State<SellerAddProductPage> {
                             : Image.file(_image),
                       ),
                     ),
-                    Text(getFieldErrorText(InputName.imageBinary)),
+                    Text(
+                      getFieldErrorText(InputName.imageUrl),
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontSize: Theme.of(context).textTheme.title.fontSize),
+                    ),
                     Container(
                       height: 20.0,
                     ),
@@ -173,8 +185,7 @@ class _SellerAddProductPageState extends State<SellerAddProductPage> {
                       child: Text("Add Product"),
                       onPressed: () async {
                         Product product = new Product(
-                            name: "",
-                            imageUrl: "apples.png",
+                            name: "test",
                             type: "Jonagold",
                             description: _descriptionController.text,
                             priceInEuro: _priceController.numberValue,
@@ -182,12 +193,14 @@ class _SellerAddProductPageState extends State<SellerAddProductPage> {
                             amount: _amountController.text.isEmpty
                                 ? 0
                                 : num.parse(_amountController.text),
-                            imageBinary: _imageBinary);
+                            image: _image);
 
                         _productBloc.add(AddProduct(product));
-                        // Navigator.of(context).pushNamed("/seller-tab");
                       },
-                    )
+                    ),
+                    productState is ProductsLoading
+                        ? CircularProgressIndicator()
+                        : Container(),
                   ],
                 );
               }),

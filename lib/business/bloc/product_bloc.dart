@@ -14,10 +14,14 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   Stream<ProductState> mapEventToState(
     ProductEvent event,
   ) async* {
-    if (event is GetProducts) {
-      yield* _mapLoadProductsToState();
+    if (event is GetProductsForSale) {
+      yield* _mapLoadPersonalProductsToState();
+    } else if (event is GetPersonalProducts) {
+      yield* _mapLoadProductsForSaleToState();
     } else if (event is AddProduct) {
       yield* _mapAddProductToState(event.product);
+    } else if (event is ResetProductEvent) {
+      yield InitialProductState();
     }
   }
 
@@ -26,16 +30,33 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     try {
       await this.productRepository.addProduct(product);
       yield ProductAdded();
+      yield InitialProductState();
+      print("added");
     } catch (error) {
+      print(error);
       yield AddProductFailed(error);
     }
   }
 
-  Stream<ProductState> _mapLoadProductsToState() async* {
+  Stream<ProductState> _mapLoadPersonalProductsToState() async* {
+    yield ProductsLoading();
+    try {
+      final personalProducts =
+          await this.productRepository.getPersonalProducts();
+      yield ProductsLoaded(
+        personalProducts.toList(),
+      );
+      print(personalProducts);
+    } catch (error) {
+      print(error);
+      yield ProductsFailedLoading(error);
+    }
+  }
+
+  Stream<ProductState> _mapLoadProductsForSaleToState() async* {
     yield ProductsLoading();
     try {
       final products = await this.productRepository.getProducts();
-      print(products);
       yield ProductsLoaded(
         products.toList(),
       );

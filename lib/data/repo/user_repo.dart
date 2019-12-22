@@ -1,4 +1,6 @@
 import 'package:arator/data/AppStorage.dart';
+import 'package:arator/data/model/AuthenticationDetails.dart';
+import 'package:arator/data/model/User.dart';
 import 'package:arator/data/model/UserCredentials.dart';
 import 'package:arator/data/repo/repo.dart';
 import 'package:arator/utils/app_http_client.dart';
@@ -10,6 +12,7 @@ class UserRepository extends Repository {
   static final registerEndpoint = "/signup";
   static final loginEndpoint = "/login";
   static final jwtStorageKey = "arator_jwt";
+  static final userEndpoint = "/user";
 
   final storage = new AppStorage();
   final httpClient = AppHttpClient();
@@ -18,20 +21,18 @@ class UserRepository extends Repository {
     @required UserCredentials userCredentials,
   }) async {
     Map<String, dynamic> body =
-        await postAuthenticationJsonResponse(userCredentials, loginEndpoint);
+        await _postAuthentication(userCredentials, loginEndpoint);
 
-    var token = body["token"];
-
-    return token;
+    return body["token"];
   }
 
   Future<void> register({
     @required UserCredentials userCredentials,
   }) async {
-    await postAuthenticationJsonResponse(userCredentials, registerEndpoint);
+    await _postAuthentication(userCredentials, registerEndpoint);
   }
 
-  Future<Map<String, dynamic>> postAuthenticationJsonResponse(
+  Future<Map<String, dynamic>> _postAuthentication(
       UserCredentials credentials, String endpoint) async {
     var res = await httpClient.postJson(endpoint: endpoint, body: credentials);
 
@@ -44,7 +45,7 @@ class UserRepository extends Repository {
 
     var body = jsonDecode(res.body);
     if (res.statusCode != 200) {
-      throw new FormException();
+      parseAndThrowException(body);
     }
     return body;
   }
@@ -62,5 +63,15 @@ class UserRepository extends Repository {
   Future<bool> hasToken() async {
     var token = await storage.get(key: AppStorageKey.JWT);
     return token != null && token.isNotEmpty;
+  }
+
+  Future<User> getUserDetails() async {
+    var res = await httpClient.getJson(endpoint: userEndpoint);
+
+    if (res.statusCode == 400) {
+      throw Exception("User details not found");
+    }
+
+    return User.fromJson(jsonDecode(res.body));
   }
 }

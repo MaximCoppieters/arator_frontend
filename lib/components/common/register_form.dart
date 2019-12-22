@@ -49,7 +49,6 @@ class _RegisterFormState extends State<RegisterForm> {
   void initState() {
     _registerBloc = new RegisterBloc();
     _registerBloc.listen((state) {
-      print(state);
       if (state is RegisterFailure) {
         FormException error = state.props[0];
         if (error.field == null) {

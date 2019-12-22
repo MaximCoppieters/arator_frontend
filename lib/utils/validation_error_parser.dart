@@ -9,8 +9,8 @@ class ValidationErrorParser {
 
   ValidationErrorParser(this._errorBody) {
     _removeErrorNestingIfPresent(_errorBody);
-    field = _parseErrorField(_errorBody["details"]);
-    errorMessage = _parseErrorMessage(_errorBody["details"]);
+    field = _parseErrorField(_errorBody["details"][0]);
+    errorMessage = _parseErrorMessage(_errorBody);
   }
 
   bool _inputWasWrong() {

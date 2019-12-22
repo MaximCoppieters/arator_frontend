@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:arator/data/model/units/WeightUnit.dart';
@@ -20,7 +21,7 @@ class Product implements Model {
   final WeightUnit weightUnit;
   final int amount;
   final User seller;
-  dynamic imageBinary;
+  dynamic image;
 
   Product(
       {this.id,
@@ -32,7 +33,7 @@ class Product implements Model {
       this.weightUnit,
       this.seller,
       this.amount,
-      this.imageBinary});
+      this.image});
 
   factory Product.fromJson(Map<String, dynamic> json) =>
       _$ProductFromJson(json);

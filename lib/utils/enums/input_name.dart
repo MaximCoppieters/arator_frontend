@@ -6,5 +6,7 @@ enum InputName {
   description,
   priceInEuro,
   amount,
+  imageUrl,
+  type,
   imageBinary
 }

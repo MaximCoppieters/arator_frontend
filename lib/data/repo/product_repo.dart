@@ -8,11 +8,16 @@ import 'package:arator/utils/exceptions/form_exception.dart';
 import 'package:http/http.dart';
 
 class ProductRepository extends Repository {
-  static final productEndpoint = "/product";
+  static final productsEndpoint = "/product";
+  static final userProductsEndpoint = "/product/personal";
   final AppHttpClient _httpClient = AppHttpClient();
 
   Future<List<Product>> getProducts() async {
-    Response res = await _httpClient.getJson(endpoint: productEndpoint);
+    return _getProductsAtEndpoint(productsEndpoint);
+  }
+
+  Future<List<Product>> _getProductsAtEndpoint(String endpoint) async {
+    Response res = await _httpClient.getJson(endpoint: endpoint);
 
     if (res.statusCode != 200) {
       throw new FormException(message: "Unable to access server");
@@ -27,17 +32,20 @@ class ProductRepository extends Repository {
     List<Product> products = productsJson
         .map((productJson) => Product.fromJson(productJson))
         .toList();
-    products.forEach((product) => {print(jsonEncode(product.seller))});
     return products;
   }
 
+  Future<List<Product>> getPersonalProducts() async {
+    return _getProductsAtEndpoint(userProductsEndpoint);
+  }
+
   Future<void> addProduct(Product product) async {
-    Response res =
-        await _httpClient.postJson(endpoint: productEndpoint, body: product);
+    StreamedResponse res = await _httpClient.postProduct(
+        endpoint: productsEndpoint, body: product);
 
     if (res.statusCode != 201) {
-      print(res.body);
-      throw new FormException(field: InputName.priceInEuro, message: "wrong");
+      var error = jsonDecode(await res.stream.bytesToString());
+      parseAndThrowException(error);
     }
   }
 }

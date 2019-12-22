@@ -27,7 +27,7 @@ class _ProfileTabState extends State<ProfileTab> {
         onTap: _routeToPage(TabNavigatorRoutes.changeProfile),
         child: ListTile(
           leading: ProfilePicture(
-            "assets/images/pedro.jpg",
+            "/public/images/default_profile.png",
             50.0,
           ),
           title: Text("Pedro Fernandez"),

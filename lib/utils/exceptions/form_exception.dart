@@ -6,4 +6,9 @@ class FormException implements Exception {
   final String message;
 
   FormException({this.field, @required this.message});
+
+  @override
+  String toString() {
+    return "FormException: { field: $field, message: $message }";
+  }
 }

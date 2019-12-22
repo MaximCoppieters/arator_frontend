@@ -19,7 +19,7 @@ Product _$ProductFromJson(Map<String, dynamic> json) {
         ? null
         : User.fromJson(json['seller'] as Map<String, dynamic>),
     amount: json['amount'] as int,
-    imageBinary: json['imageBinary'],
+    image: json['image'],
   );
 }
 
@@ -33,7 +33,7 @@ Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
       'weightUnit': _$WeightUnitEnumMap[instance.weightUnit],
       'amount': instance.amount,
       'seller': instance.seller,
-      'imageBinary': instance.imageBinary,
+      'image': instance.image,
     };
 
 T _$enumDecode<T>(
