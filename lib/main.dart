@@ -13,12 +13,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<ProductBloc>(
-          create: (context) => ProductBloc(),
-        ),
         BlocProvider<AuthenticationBloc>(
             create: (context) => AuthenticationBloc()),
-        BlocProvider<UserBloc>(create: (context) => UserBloc())
+        BlocProvider<UserBloc>(create: (context) => UserBloc()),
+        BlocProvider<BuyerProductBloc>(create: (context) => BuyerProductBloc()),
+        BlocProvider<SellerProductBloc>(
+            create: (context) => SellerProductBloc())
       ],
       child: MaterialApp(
         title: 'Arator',

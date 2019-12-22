@@ -4,7 +4,7 @@ import 'package:arator/data/repo/product_repo.dart';
 import 'package:bloc/bloc.dart';
 import 'bloc.dart';
 
-class ProductBloc extends Bloc<ProductEvent, ProductState> {
+abstract class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final ProductRepository productRepository = ProductRepository();
 
   @override
@@ -14,16 +14,16 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   Stream<ProductState> mapEventToState(
     ProductEvent event,
   ) async* {
-    if (event is GetProductsForSale) {
-      yield* _mapLoadPersonalProductsToState();
-    } else if (event is GetPersonalProducts) {
-      yield* _mapLoadProductsForSaleToState();
+    if (event is GetProducts) {
+      yield* _mapLoadProductsToState();
     } else if (event is AddProduct) {
       yield* _mapAddProductToState(event.product);
     } else if (event is ResetProductEvent) {
       yield InitialProductState();
     }
   }
+
+  Stream<ProductState> _mapLoadProductsToState();
 
   Stream<ProductState> _mapAddProductToState(Product product) async* {
     yield ProductsLoading();
@@ -38,7 +38,37 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     }
   }
 
-  Stream<ProductState> _mapLoadPersonalProductsToState() async* {
+  Stream<ProductState> _mapLoadProductsForSaleToState() async* {
+    yield ProductsLoading();
+    try {
+      final products = await this.productRepository.getProducts();
+      yield ProductsLoaded(
+        products.toList(),
+      );
+    } catch (error) {
+      yield ProductsFailedLoading(error);
+    }
+  }
+}
+
+class BuyerProductBloc extends ProductBloc {
+  @override
+  Stream<ProductState> _mapLoadProductsToState() async* {
+    yield ProductsLoading();
+    try {
+      final products = await this.productRepository.getProducts();
+      yield ProductsLoaded(
+        products.toList(),
+      );
+    } catch (error) {
+      yield ProductsFailedLoading(error);
+    }
+  }
+}
+
+class SellerProductBloc extends ProductBloc {
+  @override
+  Stream<ProductState> _mapLoadProductsToState() async* {
     yield ProductsLoading();
     try {
       final personalProducts =
@@ -48,18 +78,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       );
     } catch (error) {
       print(error);
-      yield ProductsFailedLoading(error);
-    }
-  }
-
-  Stream<ProductState> _mapLoadProductsForSaleToState() async* {
-    yield ProductsLoading();
-    try {
-      final products = await this.productRepository.getProducts();
-      yield ProductsLoaded(
-        products.toList(),
-      );
-    } catch (error) {
       yield ProductsFailedLoading(error);
     }
   }

@@ -1,4 +1,6 @@
 import 'package:arator/business/bloc/bloc.dart';
+import 'package:arator/components/buy/sell_product_overview_card.dart';
+import 'package:arator/data/model/Product.dart';
 import 'package:arator/tab_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,8 +15,8 @@ class _SellerProductOverviewState extends State<SellerProductOverview> {
 
   @override
   void initState() {
-    _productBloc = BlocProvider.of<ProductBloc>(context);
-    _productBloc.add(GetPersonalProducts());
+    _productBloc = BlocProvider.of<SellerProductBloc>(context);
+    _productBloc.add(GetProducts());
     super.initState();
   }
 
@@ -27,7 +29,7 @@ class _SellerProductOverviewState extends State<SellerProductOverview> {
             {TabNavigator.push(context, TabNavigatorRoutes.sellerAddProduct)},
       ),
       body: Container(
-        child: BlocBuilder<ProductBloc, ProductState>(
+        child: BlocBuilder<SellerProductBloc, ProductState>(
             bloc: _productBloc,
             builder: (context, productState) {
               return CustomScrollView(
@@ -64,38 +66,7 @@ class _SellerProductOverviewState extends State<SellerProductOverview> {
                     ),
                   ),
                   SliverPadding(
-                    sliver: productState is ProductsLoading
-                        ? SliverFillRemaining(
-                            child: Center(child: CircularProgressIndicator()),
-                          )
-                        : SliverGrid(
-                            gridDelegate:
-                                SliverGridDelegateWithMaxCrossAxisExtent(
-                                    maxCrossAxisExtent: 200.0,
-                                    mainAxisSpacing: 30.0,
-                                    crossAxisSpacing: 10.0,
-                                    childAspectRatio: 1.5),
-                            delegate: SliverChildBuilderDelegate(
-                                (BuildContext context, int index) {
-                              return GestureDetector(
-                                onTap: () => {
-                                  Navigator.of(context)
-                                      .pushNamed("/seller_product_detail")
-                                },
-                                child: Card(
-                                    child: Column(
-                                  children: <Widget>[
-                                    Text(
-                                      "species",
-                                      style: TextStyle(fontSize: 20.0),
-                                    ),
-                                    SizedBox(
-                                      height: 5.0,
-                                    ),
-                                  ],
-                                )),
-                              );
-                            }, childCount: 1)),
+                    sliver: getContent(productState),
                     padding: EdgeInsets.all(2),
                   ),
                 ],
@@ -103,5 +74,32 @@ class _SellerProductOverviewState extends State<SellerProductOverview> {
             }),
       ),
     );
+  }
+
+  Widget getContent(ProductState productState) {
+    if (productState is ProductsFailedLoading) {
+      return SliverFillRemaining(
+          child: Center(
+        child: Text("Unable to get products from server"),
+      ));
+    } else if (productState is ProductsLoaded) {
+      List<Product> products =
+          productState is ProductsLoaded ? productState.props[0] : [];
+
+      return SliverGrid(
+          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 200.0,
+              mainAxisSpacing: 30.0,
+              crossAxisSpacing: 10.0,
+              childAspectRatio: 1.3),
+          delegate:
+              SliverChildBuilderDelegate((BuildContext context, int index) {
+            return SellProductOverviewCard(products[index]);
+          }, childCount: products.length));
+    } else {
+      return SliverFillRemaining(
+        child: Center(child: CircularProgressIndicator()),
+      );
+    }
   }
 }

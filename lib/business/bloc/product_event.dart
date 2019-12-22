@@ -13,7 +13,7 @@ class AddProduct extends ProductEvent {
   List<Object> get props => [product];
 }
 
-class GetProductsForSale extends ProductEvent {
+class GetProducts extends ProductEvent {
   @override
   List<Object> get props => [];
 }

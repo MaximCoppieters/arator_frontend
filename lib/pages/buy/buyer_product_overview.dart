@@ -17,8 +17,8 @@ class _BuyerProductOverviewState extends State<BuyerProductOverview> {
 
   @override
   void initState() {
-    _productBloc = BlocProvider.of<ProductBloc>(context);
-    _productBloc.add(GetPersonalProducts());
+    _productBloc = BlocProvider.of<BuyerProductBloc>(context);
+    _productBloc.add(GetProducts());
     super.initState();
   }
 
@@ -28,7 +28,7 @@ class _BuyerProductOverviewState extends State<BuyerProductOverview> {
       appBar: AppBar(
         title: Text("Product Overview"),
       ),
-      body: BlocBuilder<ProductBloc, ProductState>(
+      body: BlocBuilder<BuyerProductBloc, ProductState>(
         builder: (context, state) {
           if (state is ProductsFailedLoading) {
             FormException error = state.props[0];

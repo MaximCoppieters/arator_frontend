@@ -32,7 +32,7 @@ class _SellerAddProductPageState extends State<SellerAddProductPage> {
 
   @override
   void initState() {
-    _productBloc = BlocProvider.of<ProductBloc>(context);
+    _productBloc = BlocProvider.of<SellerProductBloc>(context);
     _productBloc.add(ResetProductEvent());
 
     _productBloc.listen((state) {
