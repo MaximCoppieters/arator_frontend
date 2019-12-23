@@ -140,10 +140,9 @@ class _LoginFormState extends State<LoginForm> {
                 child: Text(
                   "Forgot Password?",
                   style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      color: Colors.white,
-                      fontSize: 16.0,
-                      fontFamily: "WorkSansMedium"),
+                    decoration: TextDecoration.underline,
+                    fontSize: 16.0,
+                  ),
                 )),
           ),
           Padding(
@@ -155,8 +154,8 @@ class _LoginFormState extends State<LoginForm> {
                   decoration: BoxDecoration(
                     gradient: new LinearGradient(
                         colors: [
-                          Colors.white10,
-                          Colors.white,
+                          Colors.black12,
+                          Colors.black,
                         ],
                         begin: const FractionalOffset(0.0, 0.0),
                         end: const FractionalOffset(1.0, 1.0),
@@ -170,18 +169,15 @@ class _LoginFormState extends State<LoginForm> {
                   padding: EdgeInsets.only(left: 15.0, right: 15.0),
                   child: Text(
                     "Or",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.0,
-                        fontFamily: "WorkSansMedium"),
+                    style: TextStyle(fontSize: 16.0),
                   ),
                 ),
                 Container(
                   decoration: BoxDecoration(
                     gradient: new LinearGradient(
                         colors: [
-                          Colors.white,
-                          Colors.white10,
+                          Colors.black,
+                          Colors.black12,
                         ],
                         begin: const FractionalOffset(0.0, 0.0),
                         end: const FractionalOffset(1.0, 1.0),
@@ -275,8 +271,7 @@ class _LoginFormState extends State<LoginForm> {
       focusNode: passwordFocusNode,
       controller: loginPasswordController,
       obscureText: _obscureTextLogin,
-      style: TextStyle(
-          fontFamily: "WorkSansSemiBold", fontSize: 16.0, color: Colors.black),
+      style: TextStyle(fontSize: 16.0, color: Colors.black),
       decoration: InputDecoration(
         border: InputBorder.none,
         icon: Icon(
@@ -287,7 +282,7 @@ class _LoginFormState extends State<LoginForm> {
         errorText: getFieldErrorText(InputName.password),
         errorStyle: TextStyle(height: 0.0),
         hintText: "Password",
-        hintStyle: TextStyle(fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+        hintStyle: TextStyle(fontSize: 17.0),
         suffixIcon: GestureDetector(
           onTap: _toggleLogin,
           child: Icon(
@@ -307,8 +302,7 @@ class _LoginFormState extends State<LoginForm> {
       focusNode: emailFocusNode,
       controller: loginEmailController,
       keyboardType: TextInputType.emailAddress,
-      style: TextStyle(
-          fontFamily: "WorkSansSemiBold", fontSize: 16.0, color: Colors.black),
+      style: TextStyle(fontSize: 16.0, color: Colors.black),
       decoration: InputDecoration(
         border: InputBorder.none,
         icon: Icon(
@@ -319,7 +313,7 @@ class _LoginFormState extends State<LoginForm> {
         hintText: "Email Address",
         errorText: getFieldErrorText(InputName.email),
         errorStyle: TextStyle(height: 0.0),
-        hintStyle: TextStyle(fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+        hintStyle: TextStyle(fontSize: 17.0),
       ),
     );
   }

@@ -4,7 +4,6 @@ import 'package:arator/components/UI.dart';
 import 'package:arator/components/common/login_form_box_decoration.dart';
 import 'package:arator/components/elements/button.dart';
 import 'package:arator/data/model/UserCredentials.dart';
-import 'package:arator/style/theme.dart';
 import 'package:arator/utils/enums/input_name.dart';
 import 'package:arator/utils/exceptions/form_exception.dart';
 import 'package:flutter/material.dart';
@@ -168,11 +167,11 @@ class _RegisterFormState extends State<RegisterForm> {
                   padding: const EdgeInsets.symmetric(
                       vertical: 10.0, horizontal: 42.0),
                   child: Text(
-                    "SIGN UP",
+                    "Sign Up",
                     style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25.0,
-                        fontFamily: "WorkSansBold"),
+                      color: Colors.white,
+                      fontSize: 25.0,
+                    ),
                   ),
                 ),
                 onPressed: () {
@@ -207,10 +206,7 @@ class _RegisterFormState extends State<RegisterForm> {
             focusNode: focusNode,
             controller: controller,
             obscureText: obscureText,
-            style: TextStyle(
-                fontFamily: "WorkSansSemiBold",
-                fontSize: 16.0,
-                color: Colors.black),
+            style: TextStyle(fontSize: 16.0, color: Colors.black),
             decoration: InputDecoration(
               border: InputBorder.none,
               icon: Icon(
@@ -221,8 +217,7 @@ class _RegisterFormState extends State<RegisterForm> {
               errorText: getFieldErrorText(loginFieldType),
               errorStyle: TextStyle(height: 0.0),
               hintText: hintText,
-              hintStyle:
-                  TextStyle(fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+              hintStyle: TextStyle(fontSize: 17.0),
               suffixIcon: GestureDetector(
                 onTap: onEyeTap,
                 child: Icon(
@@ -252,8 +247,7 @@ class _RegisterFormState extends State<RegisterForm> {
       keyboardType: loginFieldType == InputName.email
           ? TextInputType.emailAddress
           : TextInputType.text,
-      style: TextStyle(
-          fontFamily: "WorkSansSemiBold", fontSize: 16.0, color: Colors.black),
+      style: TextStyle(fontSize: 16.0, color: Colors.black),
       decoration: InputDecoration(
         border: InputBorder.none,
         icon: Icon(
@@ -264,7 +258,7 @@ class _RegisterFormState extends State<RegisterForm> {
         hintText: hintText,
         errorText: getFieldErrorText(loginFieldType),
         errorStyle: TextStyle(height: 0.0),
-        hintStyle: TextStyle(fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+        hintStyle: TextStyle(fontSize: 17.0),
       ),
     );
   }
