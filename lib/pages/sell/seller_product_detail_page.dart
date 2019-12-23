@@ -1,6 +1,8 @@
 import 'package:arator/data/model/Product.dart';
 import 'package:flutter/material.dart';
 
+import '../../app.dart';
+
 class SellerProductDetail extends StatefulWidget {
   final Product product;
   SellerProductDetail({this.product});
@@ -20,6 +22,11 @@ class _SellerProductDetailState extends State<SellerProductDetail> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(child: Text(product.name));
+    return Scaffold(
+      body: Hero(
+        tag: "sell-product-detail",
+        child: Image.network(AppInfo.baseUrl + product.imageUrl),
+      ),
+    );
   }
 }

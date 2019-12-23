@@ -8,10 +8,10 @@ Map<TabItem, String> tabName = {
   TabItem.profile: 'profile',
 };
 
-Map<TabItem, MaterialColor> activeTabColor = {
-  TabItem.buy: Colors.blue,
+Map<TabItem, Color> activeTabColor = {
+  TabItem.buy: Colors.green,
   TabItem.sell: Colors.orange,
-  TabItem.profile: Colors.green,
+  TabItem.profile: Colors.black87,
 };
 
 Map<TabItem, IconData> tabIcons = {

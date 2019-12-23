@@ -1,3 +1,4 @@
+import 'package:arator/business/app_image.dart';
 import 'package:arator/data/model/Address.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -16,9 +17,13 @@ class User implements Model {
   String profileImageUrl;
   Address address;
   String about;
+  num ratingCount;
+  num averageRating;
 
   List<Product> products;
   List<Review> reviews;
+  num reviewCount;
+  num reviewAverage;
 
   User(
       {this.id,
@@ -26,8 +31,12 @@ class User implements Model {
       this.name,
       this.profileImageUrl,
       this.reviews,
+      this.reviewCount,
       this.address,
       this.about});
+
+  get averageRatingRounded => averageRating.round();
+  get profileImagePath => AppImage.formUrl(profileImageUrl);
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   Map<String, dynamic> toJson() => _$UserToJson(this);

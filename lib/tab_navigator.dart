@@ -3,8 +3,8 @@ import 'package:arator/pages/buy/buyer_product_overview.dart';
 import 'package:arator/pages/buy/shopping_cart.dart';
 import 'package:arator/pages/chat/message_page.dart';
 import 'package:arator/pages/profile/add_friend.dart';
-import 'package:arator/pages/profile/change_profile.dart';
 import 'package:arator/pages/profile/message_overview.dart';
+import 'package:arator/pages/profile/personal_profile_detail.dart';
 import 'package:arator/pages/profile/preferences_overview.dart';
 import 'package:arator/pages/profile/profile_overview.dart';
 import 'package:arator/pages/profile/settings_overview.dart';
@@ -33,7 +33,7 @@ class TabNavigatorRoutes {
   static const String addFriend = '/profile/add_friend';
   static const String shoppingCart = '/shopping_cart';
   static const String transactionHistory = '/profile/transaction_history';
-  static const String changeProfile = '/profile/edit';
+  static const String personalProfileDetail = '/profile/edit';
   static const String preferencesOverview = '/profile/preferences';
   static const String sellerProductDetail = '/seller_product_detail';
 }
@@ -65,7 +65,8 @@ class TabNavigator extends StatelessWidget {
       TabNavigatorRoutes.sellerAddProduct: (context) => SellerAddProductPage(),
       TabNavigatorRoutes.sellerProductDetail: (context) =>
           SellerProductDetail(product: object),
-      TabNavigatorRoutes.buyProductDetail: (context) => BuyProductDetailPage(),
+      TabNavigatorRoutes.buyProductDetail: (context) =>
+          BuyProductDetailPage(product: object),
       TabNavigatorRoutes.sellerUserProfile: (context) => SellerUserProfile(),
       TabNavigatorRoutes.userMessage: (context) => MessagePage(),
       TabNavigatorRoutes.messageOverview: (context) => MessageOverviewPage(),
@@ -76,7 +77,8 @@ class TabNavigator extends StatelessWidget {
           PreferencesOverviewPage(),
       TabNavigatorRoutes.transactionHistory: (context) =>
           TransactionHistoryPage(),
-      TabNavigatorRoutes.changeProfile: (context) => ChangeProfilePage(),
+      TabNavigatorRoutes.personalProfileDetail: (context) =>
+          PersonalProfileDetailPage(),
     };
   }
 

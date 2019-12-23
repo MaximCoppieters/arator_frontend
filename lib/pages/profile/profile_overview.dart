@@ -28,27 +28,31 @@ class _ProfileOverviewState extends State<ProfileOverview> {
 
   List<Widget> navigationOptions() {
     return [
-      GestureDetector(
-        onTap: _routeToPage(TabNavigatorRoutes.changeProfile),
-        child: BlocBuilder<UserBloc, UserState>(
-            bloc: _userBloc,
-            builder: (context, userState) {
-              if (userState is UserLoaded) {
-                User user = userState.props[0];
-                return ListTile(
-                    leading: ProfilePicture(
-                      AppInfo.baseUrl + user.profileImageUrl,
-                      50.0,
+      BlocBuilder<UserBloc, UserState>(
+          bloc: _userBloc,
+          builder: (context, userState) {
+            if (userState is UserLoaded) {
+              User user = userState.props[0];
+              return Card(
+                child: ListTile(
+                    onTap:
+                        _routeToPage(TabNavigatorRoutes.personalProfileDetail),
+                    leading: Hero(
+                      tag: "user-profile-detail",
+                      child: ProfilePicture(
+                        user.profileImagePath,
+                        50.0,
+                      ),
                     ),
                     title: Text(user.name),
-                    subtitle: Text("Edit"));
-              } else if (userState is UserLoadFailed) {
-                return Text("User could not be loaded");
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-            }),
-      ),
+                    subtitle: Text("Check my profile")),
+              );
+            } else if (userState is UserLoadFailed) {
+              return Text("User could not be loaded");
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          }),
       ProfileNavigationOption(
           "Personal Preferences",
           Icons.settings_input_component,
@@ -133,9 +137,9 @@ class ProfileNavigationOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
+    return Card(
       child: ListTile(
+        onTap: onTap,
         leading: Icon(iconData, color: Theme.of(context).primaryColor),
         title: Text(title),
       ),

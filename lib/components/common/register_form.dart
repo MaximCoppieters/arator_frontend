@@ -2,11 +2,12 @@ import 'package:arator/business/bloc/bloc.dart';
 import 'package:arator/business/bloc/register_bloc.dart';
 import 'package:arator/components/UI.dart';
 import 'package:arator/components/common/login_form_box_decoration.dart';
+import 'package:arator/components/elements/button.dart';
 import 'package:arator/data/model/UserCredentials.dart';
+import 'package:arator/style/theme.dart';
 import 'package:arator/utils/enums/input_name.dart';
 import 'package:arator/utils/exceptions/form_exception.dart';
 import 'package:flutter/material.dart';
-import 'package:arator/style/theme.dart' as Theme;
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -161,54 +162,29 @@ class _RegisterFormState extends State<RegisterForm> {
                       );
                     }),
               ),
-              Container(
-                margin: EdgeInsets.only(top: 340.0),
-                decoration: new BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      color: Theme.Colors.loginGradientStart,
-                      offset: Offset(1.0, 6.0),
-                      blurRadius: 20.0,
-                    ),
-                    BoxShadow(
-                      color: Theme.Colors.loginGradientEnd,
-                      offset: Offset(1.0, 6.0),
-                      blurRadius: 20.0,
-                    ),
-                  ],
-                  gradient: new LinearGradient(
-                      colors: [Colors.green, Colors.green[200]],
-                      begin: const FractionalOffset(0.2, 0.2),
-                      end: const FractionalOffset(1.0, 1.0),
-                      stops: [0.0, 1.0],
-                      tileMode: TileMode.clamp),
+              AppButton(
+                margin: EdgeInsets.only(top: 360.0),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 42.0),
+                  child: Text(
+                    "SIGN UP",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25.0,
+                        fontFamily: "WorkSansBold"),
+                  ),
                 ),
-                child: MaterialButton(
-                    highlightColor: Colors.transparent,
-                    splashColor: Theme.Colors.loginGradientEnd,
-                    //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 42.0),
-                      child: Text(
-                        "SIGN UP",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25.0,
-                            fontFamily: "WorkSansBold"),
-                      ),
-                    ),
-                    onPressed: () {
-                      _registerBloc.add(RegisterButtonPressed(
-                        userCredentials: UserCredentials(
-                            name: this.signupNameController.text,
-                            email: this.signupEmailController.text,
-                            password: this.signupPasswordController.text,
-                            confirmPassword:
-                                this.signupConfirmPasswordController.text),
-                      ));
-                    }),
+                onPressed: () {
+                  _registerBloc.add(RegisterButtonPressed(
+                    userCredentials: UserCredentials(
+                        name: this.signupNameController.text,
+                        email: this.signupEmailController.text,
+                        password: this.signupPasswordController.text,
+                        confirmPassword:
+                            this.signupConfirmPasswordController.text),
+                  ));
+                },
               ),
             ],
           ),

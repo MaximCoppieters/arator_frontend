@@ -2,6 +2,7 @@ import 'package:arator/business/bloc/bloc.dart';
 import 'package:arator/components/buy/sell_product_overview_card.dart';
 import 'package:arator/data/model/Product.dart';
 import 'package:arator/tab_navigator.dart';
+import 'package:arator/utils/exceptions/form_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -78,10 +79,21 @@ class _SellerProductOverviewState extends State<SellerProductOverview> {
 
   Widget getContent(ProductState productState) {
     if (productState is ProductsFailedLoading) {
+      FormException error = productState.props[0];
       return SliverFillRemaining(
           child: Center(
-        child: Text("Unable to get products from server"),
-      ));
+              child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(error.message),
+          RaisedButton(
+            child: Text("Retry"),
+            onPressed: () {
+              _productBloc.add(GetProducts());
+            },
+          ),
+        ],
+      )));
     } else if (productState is ProductsLoaded) {
       List<Product> products =
           productState is ProductsLoaded ? productState.props[0] : [];

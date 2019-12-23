@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:arator/business/app_image.dart';
 import 'package:arator/data/model/units/WeightUnit.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -34,6 +35,8 @@ class Product implements Model {
       this.seller,
       this.amount,
       this.image});
+
+  get imagePath => AppImage.formUrl(imageUrl);
 
   factory Product.fromJson(Map<String, dynamic> json) =>
       _$ProductFromJson(json);

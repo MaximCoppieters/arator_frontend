@@ -32,7 +32,19 @@ class _BuyerProductOverviewState extends State<BuyerProductOverview> {
         builder: (context, state) {
           if (state is ProductsFailedLoading) {
             FormException error = state.props[0];
-            return Center(child: Text(error.message));
+            return Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(error.message),
+                RaisedButton(
+                  child: Text("Retry"),
+                  onPressed: () {
+                    _productBloc.add(GetProducts());
+                  },
+                ),
+              ],
+            ));
           } else if (state is ProductsLoaded) {
             return buildProductList(state.products);
           } else {

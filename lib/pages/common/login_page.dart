@@ -1,7 +1,7 @@
 import 'package:arator/components/common/login_form.dart';
 import 'package:arator/components/common/register_form.dart';
-import 'package:arator/style/theme.dart' as Theme;
 import 'package:arator/pages/common/bubble_indication_painter.dart';
+import 'package:arator/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -39,8 +39,8 @@ class _LoginPageState extends State<LoginPage>
             decoration: new BoxDecoration(
               gradient: new LinearGradient(
                   colors: [
-                    Theme.Colors.loginGradientStart,
-                    Theme.Colors.loginGradientEnd
+                    AratorTheme.loginGradientStart,
+                    AratorTheme.loginGradientEnd
                   ],
                   begin: const FractionalOffset(0.0, 0.0),
                   end: const FractionalOffset(1.0, 1.0),
@@ -82,7 +82,7 @@ class _LoginPageState extends State<LoginPage>
                     children: <Widget>[
                       new ConstrainedBox(
                         constraints: const BoxConstraints.expand(),
-                        child: LoginForm(),
+                        child: LoginForm(_scaffoldKey),
                       ),
                       new ConstrainedBox(
                         constraints: const BoxConstraints.expand(),

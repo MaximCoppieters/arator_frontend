@@ -27,8 +27,15 @@ class SellProductOverviewCard extends StatelessWidget {
               SizedBox(
                 height: 5.0,
               ),
-              Image.network(AppInfo.baseUrl + product.imageUrl,
-                  fit: BoxFit.fill)
+              Expanded(
+                child: Hero(
+                  tag: "sell-product-detail",
+                  child: Image.network(
+                    product.imagePath,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              )
             ],
           )),
     );

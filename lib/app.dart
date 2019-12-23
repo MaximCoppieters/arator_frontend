@@ -15,7 +15,7 @@ class App extends StatefulWidget {
 }
 
 abstract class AppInfo {
-  static final baseUrl = "http://b45d5599.ngrok.io";
+  static final baseUrl = "http://24648ae0.ngrok.io";
   static final apiBaseUrl = baseUrl + "/api";
 }
 

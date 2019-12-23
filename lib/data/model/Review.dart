@@ -8,11 +8,11 @@ part 'Review.g.dart';
 
 @JsonSerializable()
 class Review implements Model {
-  final String content;
+  final String comment;
   final int rating;
   final User reviewer;
 
-  Review(this.rating, this.content, this.reviewer);
+  Review(this.rating, this.comment, this.reviewer);
 
   factory Review.fromJson(Map<String, dynamic> json) => _$ReviewFromJson(json);
   Map<String, dynamic> toJson() => _$ReviewToJson(this);

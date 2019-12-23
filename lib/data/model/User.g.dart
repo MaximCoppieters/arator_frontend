@@ -16,14 +16,19 @@ User _$UserFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             e == null ? null : Review.fromJson(e as Map<String, dynamic>))
         ?.toList(),
+    reviewCount: json['reviewCount'] as num,
     address: json['address'] == null
         ? null
         : Address.fromJson(json['address'] as Map<String, dynamic>),
     about: json['about'] as String,
-  )..products = (json['products'] as List)
-      ?.map(
-          (e) => e == null ? null : Product.fromJson(e as Map<String, dynamic>))
-      ?.toList();
+  )
+    ..ratingCount = json['ratingCount'] as num
+    ..averageRating = json['averageRating'] as num
+    ..products = (json['products'] as List)
+        ?.map((e) =>
+            e == null ? null : Product.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..reviewAverage = json['reviewAverage'] as num;
 }
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -33,6 +38,10 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'profileImageUrl': instance.profileImageUrl,
       'address': instance.address,
       'about': instance.about,
+      'ratingCount': instance.ratingCount,
+      'averageRating': instance.averageRating,
       'products': instance.products,
       'reviews': instance.reviews,
+      'reviewCount': instance.reviewCount,
+      'reviewAverage': instance.reviewAverage,
     };

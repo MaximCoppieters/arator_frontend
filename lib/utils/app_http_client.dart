@@ -31,12 +31,18 @@ class AppHttpClient {
 
   Future<Response> postJson({String endpoint, Model body}) async {
     var jwtToken = await _storage.get(key: AppStorageKey.JWT);
-    var res = await post(_baseUrl + endpoint,
-        headers: {
-          HttpHeaders.contentTypeHeader: appJson,
-          HttpHeaders.authorizationHeader: bearerJwtToken(jwtToken)
-        },
-        body: json.encode(body.toJson()));
+    var requestHeaders = {HttpHeaders.contentTypeHeader: appJson};
+    if (jwtToken != null) {
+      requestHeaders[HttpHeaders.authorizationHeader] = jwtToken;
+    }
+    var res;
+    try {
+      res = await post(_baseUrl + endpoint,
+          headers: requestHeaders, body: json.encode(body.toJson()));
+    } catch (err) {
+      print(err);
+      res = Response("", 404);
+    }
 
     return res;
   }

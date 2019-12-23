@@ -5,23 +5,24 @@ import 'package:arator/data/model/Product.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 
-class BuyProductDetailPage extends StatefulWidget {
-  BuyProductDetailPage({Key key, this.title}) : super(key: key);
+import '../../app.dart';
 
-  final String title;
+class BuyProductDetailPage extends StatefulWidget {
+  Product product;
+  BuyProductDetailPage({this.product});
 
   @override
-  _BuyProductDetailPage createState() => _BuyProductDetailPage();
+  _BuyProductDetailPageState createState() =>
+      _BuyProductDetailPageState(product: product);
 }
 
-class _BuyProductDetailPage extends State<BuyProductDetailPage> {
+class _BuyProductDetailPageState extends State<BuyProductDetailPage> {
+  Product product;
+  _BuyProductDetailPageState({this.product});
+
   String selected = "blue";
   bool favourite = false;
   int currentImageIndex = 0;
-  List<String> imageUrls = [
-    "assets/images/apples.jpg",
-    "assets/images/cauliflower.jpg"
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class _BuyProductDetailPage extends State<BuyProductDetailPage> {
             PageBodyContainer(
               child: Column(
                 children: <Widget>[
-                  ProfileReviewRow(),
+                  ProfileReviewRow(user: product.seller),
                 ],
               ),
             ),
@@ -44,13 +45,12 @@ class _BuyProductDetailPage extends State<BuyProductDetailPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "Jonagold Apples",
-                    // produceModel.selectedProduce.species,
+                    "${product.type} ${product.name}",
                     style:
                         TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "€21,4/kg",
+                    "${product.priceInEuro}",
                     // produceModel.selectedProduce.getPricePerUnit(),
                     style: TextStyle(fontSize: 16.0),
                   ),
@@ -79,16 +79,19 @@ class _BuyProductDetailPage extends State<BuyProductDetailPage> {
         SizedBox(
             height: 260.0,
             width: double.infinity,
-            child: Carousel(
-              dotBgColor: Colors.transparent,
-              dotSize: 5.0,
-              autoplay: false,
-              images: imageUrls
-                  .map((url) => Image.asset(
-                        url,
-                        fit: BoxFit.fitWidth,
-                      ))
-                  .toList(),
+            child: Hero(
+              tag: "buy-product-detail",
+              child: Carousel(
+                dotBgColor: Colors.transparent,
+                dotSize: 5.0,
+                autoplay: false,
+                images: [product.imagePath]
+                    .map((url) => Image.network(
+                          url,
+                          fit: BoxFit.fitWidth,
+                        ))
+                    .toList(),
+              ),
             )),
         Positioned(
             child: BackButton(
@@ -108,7 +111,6 @@ class _BuyProductDetailPage extends State<BuyProductDetailPage> {
           SizedBox(
             height: 10.0,
           ),
-          producePropertySection(),
         ],
       ),
     );
@@ -116,77 +118,8 @@ class _BuyProductDetailPage extends State<BuyProductDetailPage> {
 
   Widget produceDescription() {
     return Text(
-      "Jonagold apples have an under blush which varies in color from greenish yellow to rosy orange depending on the strain and the temperature the apples are grown in. The skin is also covered with red spotting and vertical striping. Large in size its flesh is crisp, juicy and creamy yellow in color.",
+      product.description,
       style: TextStyle(color: Theme.of(context).textTheme.body2.color),
-    );
-  }
-
-  Widget producePropertySection() {
-    return Container(
-      child: Row(
-        children: <Widget>[
-          Container(
-            child: Image.asset(
-              "assets/images/pesticide_free.png",
-              fit: BoxFit.fitWidth,
-            ),
-            width: 50.0,
-          ),
-          SizedBox(
-            width: 20.0,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Text("Plant Health: ",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 18.0)),
-                  Text(
-                    "86%",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                        color: Colors.green,
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.bold),
-                  )
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  Text("Water Efficiency: ",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 18.0)),
-                  Text(
-                    "78%",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  Text("Harvest Date: ",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 18.0)),
-                  Text(
-                    "2019-10-24",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                        color: Colors.orange,
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ],
-          )
-        ],
-      ),
     );
   }
 

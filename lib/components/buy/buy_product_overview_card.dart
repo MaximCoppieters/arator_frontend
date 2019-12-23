@@ -14,16 +14,22 @@ class BuyProduceOverviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () =>
-          {TabNavigator.push(context, TabNavigatorRoutes.buyProductDetail)},
+      onTap: () => {
+        TabNavigator.push(context, TabNavigatorRoutes.buyProductDetail,
+            object: product)
+      },
       child: Card(
         child: Column(
           children: <Widget>[
             Container(
+                color: Theme.of(context).primaryColor,
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                 child: omitHeader ? Container() : headerProfileRow()),
-            Image.network(AppImage.formUrl(product.imageUrl),
-                height: 150.0, fit: BoxFit.fitHeight),
+            Hero(
+              tag: "buy-product-detail",
+              child: Image.network(product.imagePath,
+                  height: 150.0, fit: BoxFit.fitHeight),
+            ),
             Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                 alignment: Alignment.topLeft,
@@ -76,7 +82,10 @@ class BuyProduceOverviewCard extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(left: 7.5),
         ),
-        Text(product.seller.name),
+        Text(
+          product.seller.name,
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
       ],
     );
   }
