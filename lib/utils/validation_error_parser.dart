@@ -1,4 +1,5 @@
 import 'package:arator/utils/enums/input_name.dart';
+import 'package:arator/utils/exceptions/form_exception.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 
 class ValidationErrorParser {
@@ -8,16 +9,21 @@ class ValidationErrorParser {
   String errorMessage;
 
   ValidationErrorParser(this._errorBody) {
-    _removeErrorNestingIfPresent(_errorBody);
-    field = _parseErrorField(_errorBody["details"][0]);
-    errorMessage = _parseErrorMessage(_errorBody);
+    _removeErrorNestingIfPresent();
+    try {
+      field = _parseErrorField();
+      errorMessage = _parseErrorMessage();
+    } catch (error) {
+      throw new FormException(message: error.message);
+    }
   }
 
   bool _inputWasWrong() {
     return _errorBody["details"] == null;
   }
 
-  InputName _parseErrorField(Map<String, dynamic> errorDetails) {
+  InputName _parseErrorField() {
+    var errorDetails = this._errorBody["details"][0];
     if (_inputWasWrong()) {
       return null;
     } else {
@@ -26,15 +32,15 @@ class ValidationErrorParser {
     }
   }
 
-  String _parseErrorMessage(Map<String, dynamic> errorBody) {
+  String _parseErrorMessage() {
     if (this._errorFormField == InputName.confirmPassword) {
       return "Passwords don't match";
     }
 
     if (_inputWasWrong()) {
-      return errorBody["message"];
+      return this._errorBody["message"];
     } else {
-      var errorMessage = errorBody["details"][0]["message"];
+      var errorMessage = this._errorBody["details"][0]["message"];
       return _cleanUpErrorMessage(errorMessage);
     }
   }
@@ -43,9 +49,9 @@ class ValidationErrorParser {
     return errorMessage.replaceAll('"', '');
   }
 
-  void _removeErrorNestingIfPresent(Map<String, dynamic> errorBody) {
-    if (errorBody["error"] != null) {
-      errorBody = errorBody["error"];
+  void _removeErrorNestingIfPresent() {
+    if (this._errorBody["error"] != null) {
+      this._errorBody = this._errorBody["error"];
     }
   }
 }

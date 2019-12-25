@@ -1,6 +1,9 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-enum AppStorageKey { JWT }
+enum AppStorageKey {
+  JWT,
+  LocationSetting,
+}
 
 class AppStorage {
   final storage = new FlutterSecureStorage();

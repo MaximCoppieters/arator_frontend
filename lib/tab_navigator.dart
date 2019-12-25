@@ -3,11 +3,11 @@ import 'package:arator/pages/buy/buyer_product_overview.dart';
 import 'package:arator/pages/buy/shopping_cart.dart';
 import 'package:arator/pages/chat/message_page.dart';
 import 'package:arator/pages/profile/add_friend.dart';
+import 'package:arator/pages/profile/location_preferences.dart';
 import 'package:arator/pages/profile/message_overview.dart';
 import 'package:arator/pages/profile/personal_profile_detail.dart';
 import 'package:arator/pages/profile/preferences_overview.dart';
 import 'package:arator/pages/profile/profile_overview.dart';
-import 'package:arator/pages/profile/settings_overview.dart';
 import 'package:arator/pages/profile/transaction_history.dart';
 import 'package:arator/pages/sell/seller_add_product_page.dart';
 import 'package:arator/pages/sell/seller_product_detail_page.dart';
@@ -29,7 +29,7 @@ class TabNavigatorRoutes {
   static const String sellerUserProfile = '/sell/user_profile';
   static const String userMessage = '/message/user';
   static const String messageOverview = '/profile/message_overview';
-  static const String settingsOverview = '/profile/settings';
+  static const String locationPreferences = '/profile/settings';
   static const String addFriend = '/profile/add_friend';
   static const String shoppingCart = '/shopping_cart';
   static const String transactionHistory = '/profile/transaction_history';
@@ -70,7 +70,8 @@ class TabNavigator extends StatelessWidget {
       TabNavigatorRoutes.sellerUserProfile: (context) => SellerUserProfile(),
       TabNavigatorRoutes.userMessage: (context) => MessagePage(),
       TabNavigatorRoutes.messageOverview: (context) => MessageOverviewPage(),
-      TabNavigatorRoutes.settingsOverview: (context) => SettingsOverviewPage(),
+      TabNavigatorRoutes.locationPreferences: (context) =>
+          LocationPreferencesPage(),
       TabNavigatorRoutes.addFriend: (context) => AddFriendPage(),
       TabNavigatorRoutes.shoppingCart: (context) => ShoppingCartPage(),
       TabNavigatorRoutes.preferencesOverview: (context) =>

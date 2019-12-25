@@ -16,7 +16,7 @@ class AppHttpClient {
     var jwtToken = await _storage.get(key: AppStorageKey.JWT);
     var req = MultipartRequest("POST", Uri.parse(_baseUrl + endpoint));
     req.headers
-        .addAll({HttpHeaders.authorizationHeader: bearerJwtToken(jwtToken)});
+        .addAll({HttpHeaders.authorizationHeader: _bearerJwtToken(jwtToken)});
     body.toJson().forEach((String field, dynamic value) => {
           if (field != "image") {req.fields[field] = value.toString()}
         });
@@ -30,35 +30,45 @@ class AppHttpClient {
   }
 
   Future<Response> postJson({String endpoint, Model body}) async {
-    var jwtToken = await _storage.get(key: AppStorageKey.JWT);
-    var requestHeaders = {HttpHeaders.contentTypeHeader: appJson};
-    if (jwtToken != null) {
-      requestHeaders[HttpHeaders.authorizationHeader] = jwtToken;
-    }
-    var res;
-    try {
-      res = await post(_baseUrl + endpoint,
-          headers: requestHeaders, body: json.encode(body.toJson()));
-    } catch (err) {
-      print(err);
-      res = Response("", 404);
-    }
+    var postRequest = post(_fullApiUrl(endpoint),
+        headers: await _jsonHeaders(), body: json.encode(body.toJson()));
+    return _trySendRequest(postRequest);
+  }
 
-    return res;
+  Future<Response> putJson({String endpoint, Model body}) async {
+    var putRequest = put(_fullApiUrl(endpoint),
+        headers: await _jsonHeaders(), body: json.encode(body.toJson()));
+    return _trySendRequest(putRequest);
   }
 
   Future<Response> getJson({String endpoint}) async {
-    var jwtToken = await _storage.get(key: AppStorageKey.JWT);
-
-    var res = await get(_baseUrl + endpoint, headers: {
-      HttpHeaders.contentTypeHeader: appJson,
-      HttpHeaders.authorizationHeader: bearerJwtToken(jwtToken)
-    });
-
-    return res;
+    var getRequest = get(_fullApiUrl(endpoint), headers: await _jsonHeaders());
+    return _trySendRequest(getRequest);
   }
 
-  String bearerJwtToken(jwtToken) {
+  _fullApiUrl(String endpoint) {
+    return _baseUrl + endpoint;
+  }
+
+  Future<Response> _trySendRequest(Future<Response> request) async {
+    try {
+      return await request;
+    } catch (err) {
+      return Response("Server not found", 404);
+    }
+  }
+
+  Future<Map<String, String>> _jsonHeaders() async {
+    var jwtToken = await _storage.get(key: AppStorageKey.JWT);
+    var requestHeaders = {HttpHeaders.contentTypeHeader: appJson};
+    if (jwtToken != null) {
+      requestHeaders[HttpHeaders.authorizationHeader] =
+          _bearerJwtToken(jwtToken);
+    }
+    return requestHeaders;
+  }
+
+  String _bearerJwtToken(jwtToken) {
     return "Bearer " + jwtToken;
   }
 }

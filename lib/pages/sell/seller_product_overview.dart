@@ -1,5 +1,6 @@
 import 'package:arator/business/bloc/bloc.dart';
 import 'package:arator/components/buy/sell_product_overview_card.dart';
+import 'package:arator/components/elements/button.dart';
 import 'package:arator/data/model/Product.dart';
 import 'package:arator/tab_navigator.dart';
 import 'package:arator/utils/exceptions/form_exception.dart';
@@ -86,7 +87,7 @@ class _SellerProductOverviewState extends State<SellerProductOverview> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(error.message),
-          RaisedButton(
+          AppButton(
             child: Text("Retry"),
             onPressed: () {
               _productBloc.add(GetProducts());

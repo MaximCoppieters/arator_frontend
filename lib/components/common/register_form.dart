@@ -3,6 +3,7 @@ import 'package:arator/business/bloc/register_bloc.dart';
 import 'package:arator/components/UI.dart';
 import 'package:arator/components/common/login_form_box_decoration.dart';
 import 'package:arator/components/elements/button.dart';
+import 'package:arator/components/elements/text_field.dart';
 import 'package:arator/data/model/UserCredentials.dart';
 import 'package:arator/utils/enums/input_name.dart';
 import 'package:arator/utils/exceptions/form_exception.dart';
@@ -27,19 +28,11 @@ class _RegisterFormState extends State<RegisterForm> {
   final FocusNode nameFocusNode = FocusNode();
   final FocusNode confirmPasswordFocusNode = FocusNode();
 
-  bool _obscureTextSignup = true;
-  bool _obscureTextSignupConfirm = true;
-
   TextEditingController signupEmailController = new TextEditingController();
   TextEditingController signupNameController = new TextEditingController();
   TextEditingController signupPasswordController = new TextEditingController();
   TextEditingController signupConfirmPasswordController =
       new TextEditingController();
-
-  String nameError = "";
-  String emailError = "";
-  String passwordError = "";
-  String confirmPasswordError = "";
 
   RegisterBloc _registerBloc;
 
@@ -93,12 +86,13 @@ class _RegisterFormState extends State<RegisterForm> {
                                     bottom: 20.0,
                                     left: 25.0,
                                     right: 25.0),
-                                child: formTextField(
+                                child: AppTextField(
                                     focusNode: nameFocusNode,
                                     controller: signupNameController,
                                     hintText: "Name",
-                                    loginFieldType: InputName.name,
-                                    icon: FontAwesomeIcons.user,
+                                    errorText:
+                                        getFieldErrorText(InputName.name),
+                                    decorationIconData: FontAwesomeIcons.user,
                                     textCapitalization:
                                         TextCapitalization.words)),
                             Container(
@@ -112,14 +106,14 @@ class _RegisterFormState extends State<RegisterForm> {
                                     bottom: 20.0,
                                     left: 25.0,
                                     right: 25.0),
-                                child: formTextField(
-                                    focusNode: emailFocusNode,
-                                    controller: signupEmailController,
-                                    hintText: "Email",
-                                    loginFieldType: InputName.email,
-                                    icon: FontAwesomeIcons.envelope,
-                                    textCapitalization:
-                                        TextCapitalization.none)),
+                                child: AppTextField(
+                                  hintText: "Email Address",
+                                  focusNode: emailFocusNode,
+                                  controller: signupEmailController,
+                                  keyboardType: TextInputType.emailAddress,
+                                  decorationIconData: FontAwesomeIcons.envelope,
+                                  errorText: getFieldErrorText(InputName.email),
+                                )),
                             Container(
                               width: 250.0,
                               height: 1.0,
@@ -131,13 +125,15 @@ class _RegisterFormState extends State<RegisterForm> {
                                     bottom: 20.0,
                                     left: 25.0,
                                     right: 25.0),
-                                child: passwordField(
-                                    controller: signupPasswordController,
-                                    focusNode: passwordFocusNode,
-                                    obscureText: _obscureTextSignup,
-                                    loginFieldType: InputName.password,
-                                    hintText: "Password",
-                                    onEyeTap: _toggleSignup)),
+                                child: AppTextField(
+                                  focusNode: passwordFocusNode,
+                                  controller: signupPasswordController,
+                                  isPassword: true,
+                                  errorText:
+                                      getFieldErrorText(InputName.password),
+                                  hintText: "Password",
+                                  decorationIconData: FontAwesomeIcons.lock,
+                                )),
                             Container(
                               width: 250.0,
                               height: 1.0,
@@ -149,13 +145,15 @@ class _RegisterFormState extends State<RegisterForm> {
                                     bottom: 20.0,
                                     left: 25.0,
                                     right: 25.0),
-                                child: passwordField(
-                                    controller: signupConfirmPasswordController,
-                                    focusNode: confirmPasswordFocusNode,
-                                    loginFieldType: InputName.confirmPassword,
-                                    obscureText: _obscureTextSignupConfirm,
-                                    hintText: "Confirmation",
-                                    onEyeTap: _toggleSignupConfirm)),
+                                child: AppTextField(
+                                  focusNode: confirmPasswordFocusNode,
+                                  controller: signupConfirmPasswordController,
+                                  isPassword: true,
+                                  errorText: getFieldErrorText(
+                                      InputName.confirmPassword),
+                                  hintText: "Confirmation",
+                                  decorationIconData: FontAwesomeIcons.lock,
+                                )),
                           ],
                         ),
                       );
@@ -192,95 +190,12 @@ class _RegisterFormState extends State<RegisterForm> {
     );
   }
 
-  Widget passwordField(
-      {FocusNode focusNode,
-      TextEditingController controller,
-      bool obscureText,
-      InputName loginFieldType,
-      String hintText,
-      Function onEyeTap}) {
-    return BlocBuilder<RegisterBloc, RegisterState>(
-        bloc: _registerBloc,
-        builder: (context, registerState) {
-          return TextField(
-            focusNode: focusNode,
-            controller: controller,
-            obscureText: obscureText,
-            style: TextStyle(fontSize: 16.0, color: Colors.black),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              icon: Icon(
-                FontAwesomeIcons.lock,
-                size: 22.0,
-                color: Colors.black,
-              ),
-              errorText: getFieldErrorText(loginFieldType),
-              errorStyle: TextStyle(height: 0.0),
-              hintText: hintText,
-              hintStyle: TextStyle(fontSize: 17.0),
-              suffixIcon: GestureDetector(
-                onTap: onEyeTap,
-                child: Icon(
-                  obscureText
-                      ? FontAwesomeIcons.eye
-                      : FontAwesomeIcons.eyeSlash,
-                  size: 15.0,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          );
-        });
-  }
-
-  Widget formTextField({
-    FocusNode focusNode,
-    TextEditingController controller,
-    String hintText,
-    InputName loginFieldType,
-    IconData icon,
-    textCapitalization: TextCapitalization.words,
-  }) {
-    return TextField(
-      focusNode: focusNode,
-      controller: controller,
-      keyboardType: loginFieldType == InputName.email
-          ? TextInputType.emailAddress
-          : TextInputType.text,
-      style: TextStyle(fontSize: 16.0, color: Colors.black),
-      decoration: InputDecoration(
-        border: InputBorder.none,
-        icon: Icon(
-          icon,
-          color: Colors.black,
-          size: 22.0,
-        ),
-        hintText: hintText,
-        errorText: getFieldErrorText(loginFieldType),
-        errorStyle: TextStyle(height: 0.0),
-        hintStyle: TextStyle(fontSize: 17.0),
-      ),
-    );
-  }
-
   @override
   void dispose() {
     passwordFocusNode.dispose();
     emailFocusNode.dispose();
     nameFocusNode.dispose();
     super.dispose();
-  }
-
-  void _toggleSignup() {
-    setState(() {
-      _obscureTextSignup = !_obscureTextSignup;
-    });
-  }
-
-  void _toggleSignupConfirm() {
-    setState(() {
-      _obscureTextSignupConfirm = !_obscureTextSignupConfirm;
-    });
   }
 
   String getFieldErrorText(InputName field) {

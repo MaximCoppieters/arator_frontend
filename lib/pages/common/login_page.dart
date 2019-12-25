@@ -137,9 +137,9 @@ class _LoginPageState extends State<LoginPage>
                 child: Text(
                   "Existing",
                   style: TextStyle(
-                      color: left,
-                      fontSize: 16.0,
-                      fontFamily: "WorkSansSemiBold"),
+                    color: left,
+                    fontSize: 16.0,
+                  ),
                 ),
               ),
             ),
@@ -151,10 +151,7 @@ class _LoginPageState extends State<LoginPage>
                 onPressed: _onSignUpButtonPress,
                 child: Text(
                   "New",
-                  style: TextStyle(
-                      color: right,
-                      fontSize: 16.0,
-                      fontFamily: "WorkSansSemiBold"),
+                  style: TextStyle(color: right, fontSize: 16.0),
                 ),
               ),
             ),

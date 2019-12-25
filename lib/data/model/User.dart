@@ -1,5 +1,6 @@
 import 'package:arator/business/app_image.dart';
 import 'package:arator/data/model/Address.dart';
+import 'package:arator/data/model/UserSettings.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'Model.dart';
@@ -25,6 +26,8 @@ class User implements Model {
   num reviewCount;
   num reviewAverage;
 
+  UserSettings userSettings;
+
   User(
       {this.id,
       this.email,
@@ -33,7 +36,8 @@ class User implements Model {
       this.reviews,
       this.reviewCount,
       this.address,
-      this.about});
+      this.about,
+      this.userSettings});
 
   get averageRatingRounded => averageRating.round();
   get profileImagePath => AppImage.formUrl(profileImageUrl);

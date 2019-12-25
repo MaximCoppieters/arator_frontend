@@ -1,3 +1,4 @@
+import 'package:arator/style/theme.dart';
 import 'package:flutter/material.dart';
 
 enum TabItem { buy, sell, profile }
@@ -9,8 +10,8 @@ Map<TabItem, String> tabName = {
 };
 
 Map<TabItem, Color> activeTabColor = {
-  TabItem.buy: Colors.green,
-  TabItem.sell: Colors.orange,
+  TabItem.buy: AratorTheme.primaryColor,
+  TabItem.sell: AratorTheme.secondaryColor,
   TabItem.profile: Colors.black87,
 };
 

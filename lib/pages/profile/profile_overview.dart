@@ -53,14 +53,12 @@ class _ProfileOverviewState extends State<ProfileOverview> {
               return Center(child: CircularProgressIndicator());
             }
           }),
-      ProfileNavigationOption(
-          "Personal Preferences",
-          Icons.settings_input_component,
-          _routeToPage(TabNavigatorRoutes.settingsOverview)),
+      ProfileNavigationOption("Location Preferences", Icons.gps_fixed,
+          _routeToPage(TabNavigatorRoutes.locationPreferences)),
       ProfileNavigationOption("Messages", Icons.message,
           _routeToPage(TabNavigatorRoutes.messageOverview)),
       ProfileNavigationOption("Settings", Icons.settings,
-          _routeToPage(TabNavigatorRoutes.settingsOverview)),
+          _routeToPage(TabNavigatorRoutes.locationPreferences)),
       ProfileNavigationOption("Shopping Cart", Icons.shopping_basket,
           _routeToPage(TabNavigatorRoutes.shoppingCart)),
       ProfileNavigationOption("Transaction History", Icons.play_arrow,

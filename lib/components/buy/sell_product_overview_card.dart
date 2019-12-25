@@ -19,10 +19,18 @@ class SellProductOverviewCard extends StatelessWidget {
           clipBehavior: Clip.antiAlias,
           child: Column(
             children: <Widget>[
-              Text(
-                product.name,
-                style: TextStyle(
-                    fontSize: Theme.of(context).textTheme.title.fontSize),
+              Container(
+                color: Theme.of(context).colorScheme.secondary,
+                padding: EdgeInsets.symmetric(vertical: 5.0),
+                width: double.infinity,
+                child: Text(
+                  product.name,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: Theme.of(context).textTheme.title.fontSize,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.onSecondary),
+                ),
               ),
               SizedBox(
                 height: 5.0,

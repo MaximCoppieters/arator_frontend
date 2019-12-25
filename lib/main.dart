@@ -1,4 +1,5 @@
 import 'package:arator/app.dart';
+import 'package:arator/business/bloc/bloc.dart';
 import 'package:arator/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,7 +20,10 @@ class Arator extends StatelessWidget {
         BlocProvider<UserBloc>(create: (context) => UserBloc()),
         BlocProvider<BuyerProductBloc>(create: (context) => BuyerProductBloc()),
         BlocProvider<SellerProductBloc>(
-            create: (context) => SellerProductBloc())
+            create: (context) => SellerProductBloc()),
+        BlocProvider<UserSettingsBloc>(
+          create: (context) => UserSettingsBloc(),
+        )
       ],
       child: MaterialApp(
         title: 'Arator',

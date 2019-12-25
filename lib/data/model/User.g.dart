@@ -21,6 +21,9 @@ User _$UserFromJson(Map<String, dynamic> json) {
         ? null
         : Address.fromJson(json['address'] as Map<String, dynamic>),
     about: json['about'] as String,
+    userSettings: json['userSettings'] == null
+        ? null
+        : UserSettings.fromJson(json['userSettings'] as Map<String, dynamic>),
   )
     ..ratingCount = json['ratingCount'] as num
     ..averageRating = json['averageRating'] as num
@@ -44,4 +47,5 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'reviews': instance.reviews,
       'reviewCount': instance.reviewCount,
       'reviewAverage': instance.reviewAverage,
+      'userSettings': instance.userSettings,
     };

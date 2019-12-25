@@ -27,6 +27,7 @@ dependencies:
   build_runner: ^1.0.0
   enum_to_string: ^1.0.8
   flutter_masked_text: ^0.8.0
+  geolocator: ^5.1.5
   flutter:
     sdk: flutter
 

@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:arator/data/AppStorage.dart';
 import 'package:arator/data/model/AuthenticationDetails.dart';
 import 'package:arator/data/model/User.dart';
 import 'package:arator/data/model/UserCredentials.dart';
+import 'package:arator/data/model/UserSettings.dart';
 import 'package:arator/data/repo/repo.dart';
 import 'package:arator/utils/app_http_client.dart';
 import 'package:arator/utils/exceptions/form_exception.dart';
@@ -13,6 +16,7 @@ class UserRepository extends Repository {
   static final loginEndpoint = "/login";
   static final jwtStorageKey = "arator_jwt";
   static final userEndpoint = "/user";
+  static final userSettingsEndpoint = "/user/settings";
 
   final storage = new AppStorage();
   final httpClient = AppHttpClient();
@@ -73,5 +77,16 @@ class UserRepository extends Repository {
     }
 
     return User.fromJson(jsonDecode(res.body));
+  }
+
+  Future<void> updateUserSettings({
+    @required UserSettings userSettings,
+  }) async {
+    var res = await httpClient.putJson(
+        endpoint: userSettingsEndpoint, body: userSettings);
+
+    if (res.statusCode != 200) {
+      throw FormException(message: "Couldn't update user settings");
+    }
   }
 }

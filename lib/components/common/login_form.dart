@@ -2,6 +2,7 @@ import 'package:arator/business/bloc/authentication_bloc.dart';
 import 'package:arator/business/bloc/bloc.dart';
 import 'package:arator/components/common/login_form_box_decoration.dart';
 import 'package:arator/components/elements/button.dart';
+import 'package:arator/components/elements/text_field.dart';
 import 'package:arator/data/model/UserCredentials.dart';
 import 'package:arator/style/theme.dart';
 import 'package:arator/utils/enums/input_name.dart';
@@ -28,8 +29,6 @@ class _LoginFormState extends State<LoginForm> {
 
   TextEditingController loginEmailController = new TextEditingController();
   TextEditingController loginPasswordController = new TextEditingController();
-
-  bool _obscureTextLogin = true;
 
   Color left = Colors.black;
   Color right = Colors.white;
@@ -90,7 +89,14 @@ class _LoginFormState extends State<LoginForm> {
                                     bottom: 20.0,
                                     left: 25.0,
                                     right: 25.0),
-                                child: emailField(),
+                                child: AppTextField(
+                                  hintText: "Email Address",
+                                  focusNode: emailFocusNode,
+                                  controller: loginEmailController,
+                                  keyboardType: TextInputType.emailAddress,
+                                  decorationIconData: FontAwesomeIcons.envelope,
+                                  errorText: getFieldErrorText(InputName.email),
+                                ),
                               ),
                               Container(
                                 width: 250.0,
@@ -98,13 +104,19 @@ class _LoginFormState extends State<LoginForm> {
                                 color: Colors.grey[400],
                               ),
                               Padding(
-                                padding: EdgeInsets.only(
-                                    top: 20.0,
-                                    bottom: 20.0,
-                                    left: 25.0,
-                                    right: 25.0),
-                                child: passwordField(),
-                              ),
+                                  padding: EdgeInsets.only(
+                                      top: 20.0,
+                                      bottom: 20.0,
+                                      left: 25.0,
+                                      right: 25.0),
+                                  child: AppTextField(
+                                      focusNode: passwordFocusNode,
+                                      controller: loginPasswordController,
+                                      isPassword: true,
+                                      hintText: "Password",
+                                      decorationIconData: FontAwesomeIcons.lock,
+                                      errorText: getFieldErrorText(
+                                          InputName.password))),
                             ],
                           ),
                         ),
@@ -234,90 +246,6 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  Widget initialLoginForm() {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.0),
-          border: Border.all(color: Colors.white, width: 1.0)),
-      padding: EdgeInsets.all(5.0),
-      width: 310.0,
-      height: 200.0,
-      child: Container(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(
-                  top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-              child: emailField(),
-            ),
-            Container(
-              width: 250.0,
-              height: 1.0,
-              color: Colors.grey[400],
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                  top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-              child: passwordField(),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget passwordField() {
-    return TextField(
-      focusNode: passwordFocusNode,
-      controller: loginPasswordController,
-      obscureText: _obscureTextLogin,
-      style: TextStyle(fontSize: 16.0, color: Colors.black),
-      decoration: InputDecoration(
-        border: InputBorder.none,
-        icon: Icon(
-          FontAwesomeIcons.lock,
-          size: 22.0,
-          color: Colors.black,
-        ),
-        errorText: getFieldErrorText(InputName.password),
-        errorStyle: TextStyle(height: 0.0),
-        hintText: "Password",
-        hintStyle: TextStyle(fontSize: 17.0),
-        suffixIcon: GestureDetector(
-          onTap: _toggleLogin,
-          child: Icon(
-            _obscureTextLogin
-                ? FontAwesomeIcons.eye
-                : FontAwesomeIcons.eyeSlash,
-            size: 15.0,
-            color: Colors.black,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget emailField() {
-    return TextField(
-      focusNode: emailFocusNode,
-      controller: loginEmailController,
-      keyboardType: TextInputType.emailAddress,
-      style: TextStyle(fontSize: 16.0, color: Colors.black),
-      decoration: InputDecoration(
-        border: InputBorder.none,
-        icon: Icon(
-          FontAwesomeIcons.envelope,
-          color: Colors.black,
-          size: 22.0,
-        ),
-        hintText: "Email Address",
-        errorText: getFieldErrorText(InputName.email),
-        errorStyle: TextStyle(height: 0.0),
-        hintStyle: TextStyle(fontSize: 17.0),
-      ),
-    );
-  }
-
   String getFieldErrorText(InputName field) {
     if (_loginBloc.state is LoginFailure) {
       FormException error = _loginBloc.state.props[0];
@@ -326,11 +254,5 @@ class _LoginFormState extends State<LoginForm> {
       }
     }
     return "";
-  }
-
-  void _toggleLogin() {
-    setState(() {
-      _obscureTextLogin = !_obscureTextLogin;
-    });
   }
 }
