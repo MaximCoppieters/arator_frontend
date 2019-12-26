@@ -10,13 +10,16 @@ class AddressConfiguration extends StatefulWidget {
 class _AddressConfigurationState extends State<AddressConfiguration> {
   @override
   Widget build(BuildContext context) {
-    return PageBodyContainer(
+    return Container(
+        color: Theme.of(context).colorScheme.background,
         child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Container(
-            width: double.infinity, height: 200.0, child: MapAddressPicker())
-      ],
-    ));
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+                width: double.infinity,
+                height: 200.0,
+                child: MapAddressPicker())
+          ],
+        ));
   }
 }

@@ -28,7 +28,7 @@ class AppNavigationListTile extends StatelessWidget {
                   bottom: withBottomBorder ? _borderSide() : BorderSide.none))
           : null,
       child: ListTile(
-        onTap: () => {TabNavigator.push(context, route)},
+        onTap: () => {TabNavigator.push(context, route, animateRoute: true)},
         contentPadding: EdgeInsets.only(left: 30.0, right: 10.0),
         title: Text(titleText, style: AratorTheme.styles.titleStyle),
         trailing: Row(

@@ -14,6 +14,7 @@ import 'package:arator/pages/sell/seller_add_product_page.dart';
 import 'package:arator/pages/sell/seller_product_detail_page.dart';
 import 'package:arator/pages/sell/seller_product_overview.dart';
 import 'package:arator/pages/sell/seller_user_profile.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'components/common/bottom_navigation.dart';
@@ -46,15 +47,26 @@ class TabNavigator extends StatelessWidget {
   final TabItem tabItem;
   final String initialRoute;
 
-  static void push(BuildContext context, String route, {dynamic object}) {
+  static void push(BuildContext context, String route,
+      {dynamic object, bool animateRoute = false}) {
     var routeBuilders = _routeBuilders(context, object: object);
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
+    Route pageRoute;
+    if (animateRoute) {
+      pageRoute = _animatedRoute(routeBuilders, route);
+      print("hey");
+    } else {
+      pageRoute = MaterialPageRoute(
         builder: (context) => routeBuilders[route](context),
-      ),
-    );
+      );
+    }
+    Navigator.push(context, pageRoute);
+  }
+
+  static Route _animatedRoute(
+      Map<String, WidgetBuilder> routeBuilders, String route) {
+    return CupertinoPageRoute(
+        builder: (context) => routeBuilders[route](context));
   }
 
   static Map<String, WidgetBuilder> _routeBuilders(BuildContext context,

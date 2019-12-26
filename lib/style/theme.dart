@@ -6,6 +6,7 @@ class AratorTheme {
   static final secondaryColor = Colors.deepOrange;
   static final primaryAccentColor = Color(0xb0d8a4);
   static final onPrimary = Colors.white;
+  static final background = Colors.green[50];
   static final onBackground = Colors.black;
   static final onBackgroundLight = Colors.black54;
   static final onSecondary = Colors.white;
@@ -24,13 +25,13 @@ class AratorTheme {
   static get theme {
     return ThemeData(
         accentColor: secondaryColor,
-        backgroundColor: Colors.green[50],
+        backgroundColor: background,
         primaryColor: primaryColor,
         colorScheme: ColorScheme(
             brightness: Brightness.light,
             primary: primaryColor,
             onPrimary: Colors.white,
-            background: Colors.grey[50],
+            background: background,
             error: Colors.red,
             onBackground: onBackground,
             onError: onError,
