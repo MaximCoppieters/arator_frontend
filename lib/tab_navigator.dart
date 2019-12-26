@@ -3,11 +3,12 @@ import 'package:arator/pages/buy/buyer_product_overview.dart';
 import 'package:arator/pages/buy/shopping_cart.dart';
 import 'package:arator/pages/chat/message_page.dart';
 import 'package:arator/pages/profile/add_friend.dart';
+import 'package:arator/pages/profile/address_configuration.dart';
 import 'package:arator/pages/profile/location_preferences.dart';
 import 'package:arator/pages/profile/message_overview.dart';
 import 'package:arator/pages/profile/personal_profile_detail.dart';
-import 'package:arator/pages/profile/preferences_overview.dart';
 import 'package:arator/pages/profile/profile_overview.dart';
+import 'package:arator/pages/profile/settings_overview.dart';
 import 'package:arator/pages/profile/transaction_history.dart';
 import 'package:arator/pages/sell/seller_add_product_page.dart';
 import 'package:arator/pages/sell/seller_product_detail_page.dart';
@@ -29,13 +30,14 @@ class TabNavigatorRoutes {
   static const String sellerUserProfile = '/sell/user_profile';
   static const String userMessage = '/message/user';
   static const String messageOverview = '/profile/message_overview';
-  static const String locationPreferences = '/profile/settings';
+  static const String locationPreferences = '/profile/preferences/location';
   static const String addFriend = '/profile/add_friend';
   static const String shoppingCart = '/shopping_cart';
   static const String transactionHistory = '/profile/transaction_history';
   static const String personalProfileDetail = '/profile/edit';
-  static const String preferencesOverview = '/profile/preferences';
   static const String sellerProductDetail = '/seller_product_detail';
+  static const String settingsOverview = '/profile/settings';
+  static const String addressConfiguration = "/profile/address";
 }
 
 class TabNavigator extends StatelessWidget {
@@ -74,12 +76,13 @@ class TabNavigator extends StatelessWidget {
           LocationPreferencesPage(),
       TabNavigatorRoutes.addFriend: (context) => AddFriendPage(),
       TabNavigatorRoutes.shoppingCart: (context) => ShoppingCartPage(),
-      TabNavigatorRoutes.preferencesOverview: (context) =>
-          PreferencesOverviewPage(),
       TabNavigatorRoutes.transactionHistory: (context) =>
           TransactionHistoryPage(),
       TabNavigatorRoutes.personalProfileDetail: (context) =>
           PersonalProfileDetailPage(),
+      TabNavigatorRoutes.settingsOverview: (context) => SettingsOverview(),
+      TabNavigatorRoutes.addressConfiguration: (context) =>
+          AddressConfiguration(),
     };
   }
 

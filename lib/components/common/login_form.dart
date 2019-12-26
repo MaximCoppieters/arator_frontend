@@ -130,7 +130,7 @@ class _LoginFormState extends State<LoginForm> {
                         vertical: 10.0, horizontal: 42.0),
                     child: Text(
                       "Login",
-                      style: AratorTheme.authButtonTextStyle,
+                      style: AratorTheme.styles.authButtonTextStyle,
                     ),
                   ),
                   onPressed: () => {

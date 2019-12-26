@@ -4,7 +4,10 @@ import 'package:arator/business/bloc/user_settings_bloc.dart';
 import 'package:arator/business/bloc/user_settings_state.dart';
 import 'package:arator/business/bloc/user_state.dart';
 import 'package:arator/components/common/page_body_container.dart';
+import 'package:arator/components/elements/navigation_list_tile.dart';
 import 'package:arator/data/model/User.dart';
+import 'package:arator/style/theme.dart';
+import 'package:arator/tab_navigator.dart';
 import 'package:arator/utils/exceptions/form_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,111 +40,124 @@ class _LocationPreferencesPageState extends State<LocationPreferencesPage> {
       appBar: AppBar(
         title: Text("Location Preferences"),
       ),
-      body: BlocBuilder<UserBloc, UserState>(
-          bloc: _userBloc,
-          builder: (context, userState) {
-            if (userState is UserLoaded) {
-              this._user = userState.props[0];
+      body: SingleChildScrollView(
+        child: BlocBuilder<UserBloc, UserState>(
+            bloc: _userBloc,
+            builder: (context, userState) {
+              if (userState is UserLoaded) {
+                this._user = userState.props[0];
 
-              return BlocBuilder<UserSettingsBloc, UserSettingsState>(
-                  bloc: _userSettingsBloc,
-                  builder: (context, userSettingsState) {
-                    return Column(
-                      children: <Widget>[
-                        Card(
-                            child: Column(
-                          children: <Widget>[
-                            PageBodyContainer(
+                return BlocBuilder<UserSettingsBloc, UserSettingsState>(
+                    bloc: _userSettingsBloc,
+                    builder: (context, userSettingsState) {
+                      return Column(
+                        children: <Widget>[
+                          Card(
+                              child: Column(
+                            children: <Widget>[
+                              PageBodyContainer(
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text("Buying",
+                                        style: AratorTheme
+                                            .styles.settingsHeadlineStyle),
+                                    Text(
+                                      "Find products in range",
+                                      style: AratorTheme.styles.titleStyle,
+                                    ),
+                                    Container(
+                                      child: Slider(
+                                          value: _productDistanceThreshold,
+                                          label: _productDistanceThreshold
+                                              .toString(),
+                                          onChanged: (value) => {
+                                                setState(() => {
+                                                      _productDistanceThreshold =
+                                                          value
+                                                              .round()
+                                                              .toDouble()
+                                                    })
+                                              },
+                                          onChangeEnd: (value) => {
+                                                _user.userSettings
+                                                        .maxProductDistance =
+                                                    _productDistanceThreshold,
+                                                _userSettingsBloc.add(
+                                                    ChangeUserSettings(
+                                                        _user.userSettings))
+                                              },
+                                          divisions: 50,
+                                          min: _productDistanceMin,
+                                          max: _productDistanceMax),
+                                    ),
+                                    Text(
+                                        "Max seller distance: ${_productDistanceThreshold.toString()} km"),
+                                  ],
+                                ),
+                              ),
+                              Divider(),
+                              PageBodyContainer(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text("Find products from",
+                                        style: AratorTheme.styles.titleStyle),
+                                    RadioListTile(
+                                      title: Text("GPS Location"),
+                                      activeColor:
+                                          Theme.of(context).colorScheme.primary,
+                                      value: false,
+                                      groupValue:
+                                          _user.userSettings.useGpsLocation,
+                                      onChanged: changeGpsLocation,
+                                    ),
+                                    RadioListTile(
+                                      activeColor:
+                                          Theme.of(context).colorScheme.primary,
+                                      value: true,
+                                      groupValue:
+                                          _user.userSettings.useGpsLocation,
+                                      onChanged: changeGpsLocation,
+                                      title: Text('My Address'),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )),
+                          Card(
+                              child: Container(
+                            width: double.infinity,
+                            child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text("My Address",
-                                    style: preferenceTitleStyle()),
+                                PageBodyContainer(
+                                    child: Text("Selling",
+                                        style: AratorTheme
+                                            .styles.settingsHeadlineStyle)),
+                                AppNavigationListTile(
+                                  route:
+                                      TabNavigatorRoutes.addressConfiguration,
+                                  titleText: "Address",
+                                  withTopBorder: true,
+                                  trailingText: "",
+                                )
                               ],
-                            )),
-                            PageBodyContainer(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    "Find products in range",
-                                    style: preferenceTitleStyle(),
-                                  ),
-                                  Container(
-                                    child: Slider(
-                                        value: _productDistanceThreshold,
-                                        label: _productDistanceThreshold
-                                            .toString(),
-                                        onChanged: (value) => {
-                                              setState(() => {
-                                                    _productDistanceThreshold =
-                                                        value.round().toDouble()
-                                                  })
-                                            },
-                                        onChangeEnd: (value) => {
-                                              _user.userSettings
-                                                      .maxProductDistance =
-                                                  _productDistanceThreshold,
-                                              _userSettingsBloc.add(
-                                                  ChangeUserSettings(
-                                                      _user.userSettings))
-                                            },
-                                        divisions: 50,
-                                        min: _productDistanceMin,
-                                        max: _productDistanceMax),
-                                  ),
-                                  Text(
-                                      "Max seller distance: ${_productDistanceThreshold.toString()} km"),
-                                ],
-                              ),
                             ),
-                            Divider(),
-                            PageBodyContainer(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text("Find products from",
-                                      style: preferenceTitleStyle()),
-                                  RadioListTile(
-                                    title: Text("GPS Location"),
-                                    activeColor:
-                                        Theme.of(context).colorScheme.primary,
-                                    value: false,
-                                    groupValue:
-                                        _user.userSettings.useGpsLocation,
-                                    onChanged: changeGpsLocation,
-                                  ),
-                                  RadioListTile(
-                                    activeColor:
-                                        Theme.of(context).colorScheme.primary,
-                                    value: true,
-                                    groupValue:
-                                        _user.userSettings.useGpsLocation,
-                                    onChanged: changeGpsLocation,
-                                    title: Text('My Address'),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        )),
-                        showUserSettingsProgress(userSettingsState),
-                      ],
-                    );
-                  });
-            } else if (userState is UserLoadFailed) {
-              return Text("User could not be loaded");
-            } else {
-              return Center(child: CircularProgressIndicator());
-            }
-          }),
+                          )),
+                          showUserSettingsProgress(userSettingsState),
+                        ],
+                      );
+                    });
+              } else if (userState is UserLoadFailed) {
+                return Text("User could not be loaded");
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            }),
+      ),
     );
-  }
-
-  TextStyle preferenceTitleStyle() {
-    return TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: Theme.of(context).textTheme.title.fontSize);
   }
 
   changeGpsLocation(value) {

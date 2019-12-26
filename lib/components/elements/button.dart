@@ -16,12 +16,12 @@ class AppButton extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(5.0)),
           boxShadow: <BoxShadow>[
             BoxShadow(
-              color: AratorTheme.loginGradientStart,
+              color: AratorTheme.authGradientStart,
               offset: Offset(1.0, 6.0),
               blurRadius: 20.0,
             ),
             BoxShadow(
-              color: AratorTheme.loginGradientEnd,
+              color: AratorTheme.authGradientEnd,
               offset: Offset(1.0, 6.0),
               blurRadius: 20.0,
             ),

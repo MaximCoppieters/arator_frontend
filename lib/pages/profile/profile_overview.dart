@@ -58,7 +58,7 @@ class _ProfileOverviewState extends State<ProfileOverview> {
       ProfileNavigationOption("Messages", Icons.message,
           _routeToPage(TabNavigatorRoutes.messageOverview)),
       ProfileNavigationOption("Settings", Icons.settings,
-          _routeToPage(TabNavigatorRoutes.locationPreferences)),
+          _routeToPage(TabNavigatorRoutes.settingsOverview)),
       ProfileNavigationOption("Shopping Cart", Icons.shopping_basket,
           _routeToPage(TabNavigatorRoutes.shoppingCart)),
       ProfileNavigationOption("Transaction History", Icons.play_arrow,

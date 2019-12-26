@@ -1,3 +1,4 @@
+import 'package:arator/style/styles.dart';
 import 'package:flutter/material.dart';
 
 class AratorTheme {
@@ -5,15 +6,20 @@ class AratorTheme {
   static final secondaryColor = Colors.deepOrange;
   static final primaryAccentColor = Color(0xb0d8a4);
   static final onPrimary = Colors.white;
-  static final onBackground = Colors.black12;
+  static final onBackground = Colors.black;
+  static final onBackgroundLight = Colors.black54;
   static final onSecondary = Colors.white;
   static final onError = Colors.white;
+  static final onSurface = Colors.black;
+  static final surface = Colors.white;
 
-  static const Color loginGradientStart = const Color(0xFFFFFF);
-  static const Color loginGradientEnd = const Color(0xb0d8a4);
+  static final authGradientStart = Color(0xFFFFFF);
+  static final authGradientEnd = Color(0xb0d8a4);
 
-  static final TextStyle authButtonTextStyle =
-      TextStyle(color: onPrimary, fontSize: 24.0);
+  static final titleFontSize = 14.0;
+  static final headLineFontSize = 16.0;
+
+  static final AppStyles styles = AppStyles();
 
   static get theme {
     return ThemeData(
@@ -26,14 +32,14 @@ class AratorTheme {
             onPrimary: Colors.white,
             background: Colors.grey[50],
             error: Colors.red,
-            onBackground: Colors.black12,
-            onError: Colors.white,
+            onBackground: onBackground,
+            onError: onError,
             secondary: secondaryColor,
-            onSecondary: Colors.white,
+            onSecondary: onSecondary,
             primaryVariant: Colors.green[800],
             secondaryVariant: Colors.deepOrange[600],
-            surface: Colors.white,
-            onSurface: Colors.black12),
+            surface: surface,
+            onSurface: onSurface),
         scaffoldBackgroundColor: Colors.green[50],
         buttonTheme: ButtonThemeData(
             buttonColor: primaryColor, textTheme: ButtonTextTheme.primary),

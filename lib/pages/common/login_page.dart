@@ -39,8 +39,8 @@ class _LoginPageState extends State<LoginPage>
             decoration: new BoxDecoration(
               gradient: new LinearGradient(
                   colors: [
-                    AratorTheme.loginGradientStart,
-                    AratorTheme.loginGradientEnd
+                    AratorTheme.authGradientStart,
+                    AratorTheme.authGradientEnd
                   ],
                   begin: const FractionalOffset(0.0, 0.0),
                   end: const FractionalOffset(1.0, 1.0),
