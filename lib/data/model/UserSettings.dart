@@ -11,7 +11,11 @@ class UserSettings implements Model {
 
   UserSettings({this.maxProductDistance, this.useGpsLocation});
 
-  factory UserSettings.fromJson(Map<String, dynamic> json) =>
-      _$UserSettingsFromJson(json);
+  factory UserSettings.fromJson(dynamic json) {
+    if (json is Map) {
+      return _$UserSettingsFromJson(json);
+    }
+    return null;
+  }
   Map<String, dynamic> toJson() => _$UserSettingsToJson(this);
 }

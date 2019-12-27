@@ -18,11 +18,6 @@ class GetProducts extends ProductEvent {
   List<Object> get props => [];
 }
 
-class GetPersonalProducts extends ProductEvent {
-  @override
-  List<Object> get props => [];
-}
-
 class ResetProductEvent extends ProductEvent {
   @override
   List<Object> get props => [];

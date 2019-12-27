@@ -32,18 +32,18 @@ class AppHttpClient {
   Future<Response> postJson({String endpoint, Model body}) async {
     var postRequest = post(_fullApiUrl(endpoint),
         headers: await _jsonHeaders(), body: json.encode(body.toJson()));
-    return _trySendRequest(postRequest);
+    return await _trySendRequest(postRequest);
   }
 
   Future<Response> putJson({String endpoint, Model body}) async {
     var putRequest = put(_fullApiUrl(endpoint),
         headers: await _jsonHeaders(), body: json.encode(body.toJson()));
-    return _trySendRequest(putRequest);
+    return await _trySendRequest(putRequest);
   }
 
   Future<Response> getJson({String endpoint}) async {
     var getRequest = get(_fullApiUrl(endpoint), headers: await _jsonHeaders());
-    return _trySendRequest(getRequest);
+    return await _trySendRequest(getRequest);
   }
 
   _fullApiUrl(String endpoint) {

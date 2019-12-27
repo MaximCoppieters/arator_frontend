@@ -60,8 +60,8 @@ class _LocationPreferencesPageState extends State<LocationPreferencesPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text("Buying",
-                                        style: AratorTheme
-                                            .styles.settingsHeadlineStyle),
+                                        style:
+                                            AratorTheme.styles.headlineStyle),
                                     Text(
                                       "Find products in range",
                                       style: AratorTheme.styles.titleStyle,
@@ -134,12 +134,12 @@ class _LocationPreferencesPageState extends State<LocationPreferencesPage> {
                               children: <Widget>[
                                 PageBodyContainer(
                                     child: Text("Selling",
-                                        style: AratorTheme
-                                            .styles.settingsHeadlineStyle)),
+                                        style:
+                                            AratorTheme.styles.headlineStyle)),
                                 AppNavigationListTile(
                                   route:
                                       TabNavigatorRoutes.addressConfiguration,
-                                  titleText: "Address",
+                                  titleText: "Configure Address",
                                   withTopBorder: true,
                                   trailingText: "",
                                 )

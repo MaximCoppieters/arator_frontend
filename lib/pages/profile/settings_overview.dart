@@ -9,6 +9,6 @@ class SettingsOverview extends StatefulWidget {
 class _SettingsOverviewState extends State<SettingsOverview> {
   @override
   Widget build(BuildContext context) {
-    return MapAddressPicker();
+    return Container();
   }
 }

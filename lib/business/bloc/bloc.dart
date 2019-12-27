@@ -18,3 +18,6 @@ export 'user_event.dart';
 export 'user_state.dart';
 export 'user_settings_bloc.dart';
 export 'user_settings_event.dart';
+export 'location_bloc.dart';
+export 'location_event.dart';
+export 'location_state.dart';

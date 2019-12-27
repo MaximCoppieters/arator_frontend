@@ -18,7 +18,7 @@ class AppTextField extends StatefulWidget {
       this.errorText,
       this.hintText,
       this.decorationIconData,
-      this.textCapitalization,
+      this.textCapitalization = TextCapitalization.none,
       this.keyboardType = TextInputType.text}) {}
 
   @override

@@ -23,6 +23,9 @@ class Arator extends StatelessWidget {
             create: (context) => SellerProductBloc()),
         BlocProvider<UserSettingsBloc>(
           create: (context) => UserSettingsBloc(),
+        ),
+        BlocProvider<LocationBloc>(
+          create: (context) => LocationBloc(),
         )
       ],
       child: MaterialApp(

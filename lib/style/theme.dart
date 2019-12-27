@@ -22,28 +22,29 @@ class AratorTheme {
 
   static final AppStyles styles = AppStyles();
 
+  static final colorScheme = ColorScheme(
+      brightness: Brightness.light,
+      primary: primaryColor,
+      onPrimary: Colors.white,
+      background: background,
+      error: Colors.red,
+      onBackground: onBackground,
+      onError: onError,
+      secondary: secondaryColor,
+      onSecondary: onSecondary,
+      primaryVariant: Colors.green[800],
+      secondaryVariant: Colors.deepOrange[600],
+      surface: surface,
+      onSurface: onSurface);
+
   static get theme {
     return ThemeData(
         accentColor: secondaryColor,
         backgroundColor: background,
         primaryColor: primaryColor,
-        colorScheme: ColorScheme(
-            brightness: Brightness.light,
-            primary: primaryColor,
-            onPrimary: Colors.white,
-            background: background,
-            error: Colors.red,
-            onBackground: onBackground,
-            onError: onError,
-            secondary: secondaryColor,
-            onSecondary: onSecondary,
-            primaryVariant: Colors.green[800],
-            secondaryVariant: Colors.deepOrange[600],
-            surface: surface,
-            onSurface: onSurface),
+        colorScheme: colorScheme,
         scaffoldBackgroundColor: Colors.green[50],
-        buttonTheme: ButtonThemeData(
-            buttonColor: primaryColor, textTheme: ButtonTextTheme.primary),
+        buttonTheme: ButtonThemeData(colorScheme: colorScheme),
         appBarTheme: AppBarTheme(
             color: Colors.grey[50],
             elevation: 0,

@@ -7,7 +7,6 @@ import 'package:arator/data/model/Product.dart';
 import 'package:arator/utils/exceptions/form_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
 
 class BuyerProductOverview extends StatefulWidget {
   @override
@@ -21,11 +20,6 @@ class _BuyerProductOverviewState extends State<BuyerProductOverview> {
   void initState() {
     _productBloc = BlocProvider.of<BuyerProductBloc>(context);
     _productBloc.add(GetProducts());
-    final geolocator = Geolocator()..forceAndroidLocationManager;
-
-    geolocator
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-        .then((Position position) => {print(position)});
     super.initState();
   }
 

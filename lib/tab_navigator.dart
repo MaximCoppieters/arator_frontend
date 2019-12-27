@@ -54,7 +54,6 @@ class TabNavigator extends StatelessWidget {
     Route pageRoute;
     if (animateRoute) {
       pageRoute = _animatedRoute(routeBuilders, route);
-      print("hey");
     } else {
       pageRoute = MaterialPageRoute(
         builder: (context) => routeBuilders[route](context),

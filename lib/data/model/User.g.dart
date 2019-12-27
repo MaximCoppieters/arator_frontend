@@ -17,13 +17,12 @@ User _$UserFromJson(Map<String, dynamic> json) {
             e == null ? null : Review.fromJson(e as Map<String, dynamic>))
         ?.toList(),
     reviewCount: json['reviewCount'] as num,
-    address: json['address'] == null
-        ? null
-        : Address.fromJson(json['address'] as Map<String, dynamic>),
+    address:
+        json['address'] == null ? null : UserAddress.fromJson(json['address']),
     about: json['about'] as String,
     userSettings: json['userSettings'] == null
         ? null
-        : UserSettings.fromJson(json['userSettings'] as Map<String, dynamic>),
+        : UserSettings.fromJson(json['userSettings']),
   )
     ..ratingCount = json['ratingCount'] as num
     ..averageRating = json['averageRating'] as num

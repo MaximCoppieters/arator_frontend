@@ -5,7 +5,7 @@ class AppStyles {
   final TextStyle authButtonTextStyle =
       TextStyle(color: AratorTheme.onPrimary, fontSize: 24.0);
 
-  final settingsHeadlineStyle = TextStyle(
+  final headlineStyle = TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: AratorTheme.headLineFontSize,
       color: AratorTheme.onBackground);
