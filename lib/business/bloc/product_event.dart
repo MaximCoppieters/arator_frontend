@@ -14,8 +14,10 @@ class AddProduct extends ProductEvent {
 }
 
 class GetProducts extends ProductEvent {
+  final List<num> location;
+  GetProducts({this.location});
   @override
-  List<Object> get props => [];
+  List<Object> get props => [location];
 }
 
 class ResetProductEvent extends ProductEvent {

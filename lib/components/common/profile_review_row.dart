@@ -4,8 +4,6 @@ import 'package:arator/data/model/User.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../app.dart';
-
 class ProfileReviewRow extends StatelessWidget {
   final bool shouldNavigate;
   final User user;
@@ -14,10 +12,10 @@ class ProfileReviewRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return (Row(
       children: <Widget>[
         ProfilePicture(
-          AppInfo.baseUrl + user.profileImageUrl,
+          user,
           50.0,
           shouldNavigate: shouldNavigate,
         ),
@@ -46,6 +44,6 @@ class ProfileReviewRow extends StatelessWidget {
           ],
         ),
       ],
-    );
+    ));
   }
 }

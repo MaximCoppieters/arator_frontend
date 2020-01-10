@@ -1,8 +1,6 @@
-import 'package:arator/business/bloc/bloc.dart';
 import 'package:arator/data/model/MapLocation.dart';
 import 'package:arator/utils/exceptions/gps_exception.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/rendering.dart';
 
 abstract class LocationState extends Equatable {
   const LocationState();

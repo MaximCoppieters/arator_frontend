@@ -1,4 +1,3 @@
-import 'package:arator/components/maps/map_address_picker.dart';
 import 'package:flutter/material.dart';
 
 class SettingsOverview extends StatefulWidget {

@@ -1,6 +1,3 @@
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:arator/business/app_image.dart';
 import 'package:arator/data/model/units/WeightUnit.dart';
 import 'package:flutter/material.dart';

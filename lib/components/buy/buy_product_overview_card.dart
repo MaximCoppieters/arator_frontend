@@ -1,4 +1,3 @@
-import 'package:arator/business/app_image.dart';
 import 'package:arator/components/common/profile_picture.dart';
 import 'package:arator/data/model/Product.dart';
 import 'package:arator/tab_navigator.dart';
@@ -21,10 +20,26 @@ class BuyProduceOverviewCard extends StatelessWidget {
       child: Card(
         child: Column(
           children: <Widget>[
-            Container(
-                color: Theme.of(context).primaryColor,
-                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                child: omitHeader ? Container() : headerProfileRow()),
+            omitHeader
+                ? Container()
+                : Container(
+                    color: Theme.of(context).colorScheme.primary,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                    child: Row(
+                      children: <Widget>[
+                        ProfilePicture(product.seller, 25.0),
+                        Padding(
+                          padding: EdgeInsets.only(left: 7.5),
+                        ),
+                        Text(
+                          product.seller.name,
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    )),
             Hero(
               tag: "buy-product-detail",
               child: Image.network(product.imagePath,
@@ -72,21 +87,6 @@ class BuyProduceOverviewCard extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Widget headerProfileRow() {
-    return Row(
-      children: <Widget>[
-        ProfilePicture(AppImage.formUrl(product.seller.profileImageUrl), 25.0),
-        Padding(
-          padding: EdgeInsets.only(left: 7.5),
-        ),
-        Text(
-          product.seller.name,
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-      ],
     );
   }
 }

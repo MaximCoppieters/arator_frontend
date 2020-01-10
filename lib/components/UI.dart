@@ -13,7 +13,7 @@ abstract class UI {
             fontSize: 16.0,
             fontFamily: "WorkSansSemiBold"),
       ),
-      backgroundColor: Colors.orange,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       duration: Duration(seconds: 3),
     ));
   }

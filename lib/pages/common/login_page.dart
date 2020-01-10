@@ -143,7 +143,6 @@ class _LoginPageState extends State<LoginPage>
                 ),
               ),
             ),
-            //Container(height: 33.0, width: 1.0, color: Colors.white),
             Expanded(
               child: FlatButton(
                 splashColor: Colors.transparent,

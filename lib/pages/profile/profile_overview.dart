@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:arator/business/bloc/bloc.dart';
 import 'package:arator/components/common/page_body_container.dart';
 import 'package:arator/components/common/profile_picture.dart';
@@ -7,8 +5,6 @@ import 'package:arator/data/model/User.dart';
 import 'package:arator/tab_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../app.dart';
 
 class ProfileOverview extends StatefulWidget {
   @override
@@ -26,6 +22,13 @@ class _ProfileOverviewState extends State<ProfileOverview> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _userBloc.close();
+    _userBloc.close();
+    super.dispose();
+  }
+
   List<Widget> navigationOptions() {
     return [
       BlocBuilder<UserBloc, UserState>(
@@ -40,7 +43,7 @@ class _ProfileOverviewState extends State<ProfileOverview> {
                     leading: Hero(
                       tag: "user-profile-detail",
                       child: ProfilePicture(
-                        user.profileImagePath,
+                        user,
                         50.0,
                       ),
                     ),

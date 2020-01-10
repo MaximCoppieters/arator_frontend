@@ -1,24 +1,21 @@
 import 'package:arator/components/buy/increment_number_field.dart';
 import 'package:arator/components/common/page_body_container.dart';
 import 'package:arator/components/common/profile_review_row.dart';
+import 'package:arator/components/elements/button.dart';
 import 'package:arator/data/model/Product.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 
-import '../../app.dart';
-
 class BuyProductDetailPage extends StatefulWidget {
-  Product product;
+  final Product product;
   BuyProductDetailPage({this.product});
 
   @override
-  _BuyProductDetailPageState createState() =>
-      _BuyProductDetailPageState(product: product);
+  _BuyProductDetailPageState createState() => _BuyProductDetailPageState();
 }
 
 class _BuyProductDetailPageState extends State<BuyProductDetailPage> {
-  Product product;
-  _BuyProductDetailPageState({this.product});
+  _BuyProductDetailPageState();
 
   String selected = "blue";
   bool favourite = false;
@@ -31,42 +28,48 @@ class _BuyProductDetailPageState extends State<BuyProductDetailPage> {
         child: Column(
           children: <Widget>[
             productImageCarousel(),
-            PageBodyContainer(
+            Card(
               child: Column(
                 children: <Widget>[
-                  ProfileReviewRow(user: product.seller),
+                  PageBodyContainer(
+                    child: Column(
+                      children: <Widget>[
+                        ProfileReviewRow(user: widget.product.seller),
+                      ],
+                    ),
+                  ),
+                  Divider(),
+                  PageBodyContainer(
+                    alignment: Alignment.topLeft,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          "${widget.product.type} ${widget.product.name}",
+                          style: TextStyle(
+                              fontSize: 16.0, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          "${widget.product.priceInEuro}",
+                          // produceModel.selectedProduce.getPricePerUnit(),
+                          style: TextStyle(fontSize: 16.0),
+                        ),
+                        Text(
+                          "24km away",
+                          //produceModel.selectedProduce.distance,
+                          style: TextStyle(fontSize: 14.0),
+                        ),
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                        produceSections(),
+                      ],
+                    ),
+                  ),
+                  purchaseSection(null),
                 ],
               ),
             ),
-            Divider(),
-            PageBodyContainer(
-              alignment: Alignment.topLeft,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    "${product.type} ${product.name}",
-                    style:
-                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "${product.priceInEuro}",
-                    // produceModel.selectedProduce.getPricePerUnit(),
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                  Text(
-                    "24km away",
-                    //produceModel.selectedProduce.distance,
-                    style: TextStyle(fontSize: 14.0),
-                  ),
-                  SizedBox(
-                    height: 15.0,
-                  ),
-                  produceSections(),
-                ],
-              ),
-            ),
-            purchaseSection(null),
           ],
         ),
       ),
@@ -85,7 +88,7 @@ class _BuyProductDetailPageState extends State<BuyProductDetailPage> {
                 dotBgColor: Colors.transparent,
                 dotSize: 5.0,
                 autoplay: false,
-                images: [product.imagePath]
+                images: [widget.product.imagePath]
                     .map((url) => Image.network(
                           url,
                           fit: BoxFit.fitWidth,
@@ -118,7 +121,7 @@ class _BuyProductDetailPageState extends State<BuyProductDetailPage> {
 
   Widget produceDescription() {
     return Text(
-      product.description,
+      widget.product.description,
       style: TextStyle(color: Theme.of(context).textTheme.body2.color),
     );
   }
@@ -155,7 +158,7 @@ class _BuyProductDetailPageState extends State<BuyProductDetailPage> {
           Row(
             children: <Widget>[
               NumberInputWithIncrementDecrement(),
-              RaisedButton(
+              AppButton(
                 child: Row(
                   children: <Widget>[
                     Icon(Icons.shopping_basket, color: Colors.white),
@@ -171,7 +174,6 @@ class _BuyProductDetailPageState extends State<BuyProductDetailPage> {
                     ),
                   ],
                 ),
-                color: Colors.green,
                 onPressed: () {},
               ),
             ],
@@ -203,11 +205,8 @@ class ColorTicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(selected);
     return GestureDetector(
-        onTap: () {
-          selectedCallback();
-        },
+        onTap: selectedCallback,
         child: Container(
           padding: EdgeInsets.all(7),
           margin: EdgeInsets.all(5),

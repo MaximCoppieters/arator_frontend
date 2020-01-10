@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:arator/data/model/Product.dart';
 import 'package:arator/data/repo/repo.dart';
 import 'package:arator/utils/app_http_client.dart';
-import 'package:arator/utils/enums/input_name.dart';
 import 'package:arator/utils/exceptions/form_exception.dart';
 import 'package:http/http.dart';
 
@@ -14,6 +13,31 @@ class ProductRepository extends Repository {
 
   Future<List<Product>> getProducts() async {
     return _getProductsAtEndpoint(productsEndpoint);
+  }
+
+  Future<List<Product>> getProductsAtPosition(List<num> position) async {
+    Response res = await _httpClient.postJson(endpoint: productsEndpoint);
+
+    if (res.statusCode != 200) {
+      throw new FormException(message: "Unable to access server");
+    }
+
+    List<dynamic> productsJson = json.decode(res.body);
+
+    if (productsJson.isEmpty) {
+      throw new FormException(message: "No products were found");
+    }
+
+    List<Product> products = [];
+    try {
+      for (dynamic productJson in productsJson) {
+        Product product = Product.fromJson(productJson);
+        products.add(product);
+      }
+    } catch (err) {
+      print(err);
+    }
+    return products;
   }
 
   Future<List<Product>> _getProductsAtEndpoint(String endpoint) async {

@@ -80,7 +80,8 @@ class TabNavigator extends StatelessWidget {
           SellerProductDetail(product: object),
       TabNavigatorRoutes.buyProductDetail: (context) =>
           BuyProductDetailPage(product: object),
-      TabNavigatorRoutes.sellerUserProfile: (context) => SellerUserProfile(),
+      TabNavigatorRoutes.sellerUserProfile: (context) =>
+          SellerUserProfile(user: object),
       TabNavigatorRoutes.userMessage: (context) => MessagePage(),
       TabNavigatorRoutes.messageOverview: (context) => MessageOverviewPage(),
       TabNavigatorRoutes.locationPreferences: (context) =>

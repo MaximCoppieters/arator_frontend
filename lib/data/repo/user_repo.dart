@@ -38,6 +38,7 @@ class UserRepository extends Repository {
   Future<Map<String, dynamic>> _postAuthentication(
       UserCredentials credentials, String endpoint) async {
     var res = await _httpClient.postJson(endpoint: endpoint, body: credentials);
+    print(res.body);
 
     if (res.statusCode == 404) {
       throw new FormException(message: "Couldn't reach server");

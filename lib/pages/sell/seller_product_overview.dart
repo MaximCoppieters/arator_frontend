@@ -23,6 +23,12 @@ class _SellerProductOverviewState extends State<SellerProductOverview> {
   }
 
   @override
+  void dispose() {
+    _productBloc.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(

@@ -10,8 +10,7 @@ UserAddress _$UserAddressFromJson(Map<String, dynamic> json) {
   return UserAddress(
     addressLine: json['addressLine'] as String,
   )
-    ..latitude = json['latitude'] as num
-    ..longitude = json['longitude'] as num
+    ..position = (json['position'] as List)?.map((e) => e as num)?.toList()
     ..city = json['city'] as String
     ..zipcode = json['zipcode'] as String
     ..streetName = json['streetName'] as String
@@ -22,8 +21,7 @@ UserAddress _$UserAddressFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$UserAddressToJson(UserAddress instance) =>
     <String, dynamic>{
       'addressLine': instance.addressLine,
-      'latitude': instance.latitude,
-      'longitude': instance.longitude,
+      'position': instance.position,
       'city': instance.city,
       'zipcode': instance.zipcode,
       'streetName': instance.streetName,

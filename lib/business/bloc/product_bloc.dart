@@ -15,7 +15,7 @@ abstract class ProductBloc extends Bloc<ProductEvent, ProductState> {
     ProductEvent event,
   ) async* {
     if (event is GetProducts) {
-      yield* _mapLoadProductsToState();
+      yield* _mapLoadProductsToState(event);
     } else if (event is AddProduct) {
       yield* _mapAddProductToState(event.product);
     } else if (event is ResetProductEvent) {
@@ -23,7 +23,7 @@ abstract class ProductBloc extends Bloc<ProductEvent, ProductState> {
     }
   }
 
-  Stream<ProductState> _mapLoadProductsToState();
+  Stream<ProductState> _mapLoadProductsToState([ProductEvent event]);
 
   Stream<ProductState> _mapAddProductToState(Product product) async* {
     yield ProductsLoading();
@@ -31,9 +31,7 @@ abstract class ProductBloc extends Bloc<ProductEvent, ProductState> {
       await this.productRepository.addProduct(product);
       yield ProductAdded();
       yield InitialProductState();
-      print("added");
     } catch (error) {
-      print(error);
       yield AddProductFailed(error);
     }
   }
@@ -41,10 +39,12 @@ abstract class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
 class BuyerProductBloc extends ProductBloc {
   @override
-  Stream<ProductState> _mapLoadProductsToState() async* {
+  Stream<ProductState> _mapLoadProductsToState([ProductEvent event]) async* {
     yield ProductsLoading();
     try {
-      final products = await this.productRepository.getProducts();
+      List<num> position = event.props[0];
+      final products =
+          await this.productRepository.getProductsFromPosition(position);
       yield ProductsLoaded(
         products.toList(),
       );
@@ -56,7 +56,7 @@ class BuyerProductBloc extends ProductBloc {
 
 class SellerProductBloc extends ProductBloc {
   @override
-  Stream<ProductState> _mapLoadProductsToState() async* {
+  Stream<ProductState> _mapLoadProductsToState([ProductEvent event]) async* {
     yield ProductsLoading();
     try {
       final personalProducts =

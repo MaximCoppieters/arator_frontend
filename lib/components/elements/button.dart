@@ -27,7 +27,10 @@ class AppButton extends StatelessWidget {
             ),
           ],
           gradient: new LinearGradient(
-              colors: [Colors.green, Colors.green[200]],
+              colors: [
+                AratorTheme.colorScheme.primary,
+                AratorTheme.colorScheme.primaryVariant
+              ],
               begin: const FractionalOffset(0.2, 0.2),
               end: const FractionalOffset(1.0, 1.0),
               stops: [0.0, 1.0],

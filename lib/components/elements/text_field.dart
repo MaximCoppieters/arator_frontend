@@ -19,14 +19,14 @@ class AppTextField extends StatefulWidget {
       this.hintText,
       this.decorationIconData,
       this.textCapitalization = TextCapitalization.none,
-      this.keyboardType = TextInputType.text}) {}
+      this.keyboardType = TextInputType.text});
 
   @override
   _AppTextFieldState createState() => _AppTextFieldState();
 }
 
 class _AppTextFieldState extends State<AppTextField> {
-  bool isObscure = false;
+  bool isObscure = true;
 
   @override
   Widget build(BuildContext context) {

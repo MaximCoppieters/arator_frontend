@@ -1,3 +1,4 @@
+import 'package:arator/components/elements/button.dart';
 import 'package:arator/tab_navigator.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,7 @@ class MessageFollowButtonRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Expanded(
-          child: RaisedButton(
+          child: AppButton(
             onPressed: () =>
                 {TabNavigator.push(context, TabNavigatorRoutes.userMessage)},
             child: Text("Message"),
@@ -18,7 +19,7 @@ class MessageFollowButtonRow extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 10.0),
         ),
         Expanded(
-          child: RaisedButton(
+          child: AppButton(
             onPressed: () => {},
             child: Text("Follow"),
           ),

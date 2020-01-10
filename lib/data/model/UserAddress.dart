@@ -10,9 +10,7 @@ class UserAddress implements Model {
   String addressLine;
 
   @JsonKey(nullable: true)
-  num latitude;
-  @JsonKey(nullable: true)
-  num longitude;
+  List<num> position;
   @JsonKey(nullable: true)
   String city;
   @JsonKey(nullable: true)

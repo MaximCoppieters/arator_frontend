@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:arator/components/elements/button.dart';
 import 'package:arator/tab_navigator.dart';
 import 'package:arator/utils/enums/input_name.dart';
 import 'package:arator/utils/exceptions/form_exception.dart';
@@ -65,7 +66,7 @@ class _SellerAddProductPageState extends State<SellerAddProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Produce'),
+        title: Text('Add Product'),
       ),
       body: SingleChildScrollView(
         child: PageBodyContainer(
@@ -181,7 +182,7 @@ class _SellerAddProductPageState extends State<SellerAddProductPage> {
                       _fruitClassText,
                       style: TextStyle(color: Colors.green, fontSize: 20.0),
                     ),
-                    RaisedButton(
+                    AppButton(
                       child: Text("Add Product"),
                       onPressed: () async {
                         Product product = new Product(

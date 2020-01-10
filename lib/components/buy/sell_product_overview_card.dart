@@ -2,8 +2,6 @@ import 'package:arator/data/model/Product.dart';
 import 'package:arator/tab_navigator.dart';
 import 'package:flutter/material.dart';
 
-import '../../app.dart';
-
 class SellProductOverviewCard extends StatelessWidget {
   final Product product;
   SellProductOverviewCard(this.product);

@@ -32,6 +32,7 @@ class AppHttpClient {
   Future<Response> postJson({String endpoint, Model body}) async {
     var postRequest = post(_fullApiUrl(endpoint),
         headers: await _jsonHeaders(), body: json.encode(body.toJson()));
+
     return await _trySendRequest(postRequest);
   }
 
