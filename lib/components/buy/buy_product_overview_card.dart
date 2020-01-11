@@ -52,7 +52,7 @@ class BuyProduceOverviewCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(product.priceInEuro.toString(),
+                      Text(product.formattedPriceInEuro.toString(),
                           style: TextStyle(
                               color: Theme.of(context).accentColor,
                               fontSize:

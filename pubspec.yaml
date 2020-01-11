@@ -30,6 +30,7 @@ dependencies:
   geolocator: ^5.1.5
   google_maps_flutter: ^0.5.21+15
   geocoder: ^0.2.1
+  flutter_money_formatter: ^0.8.3
 
   flutter:
     sdk: flutter

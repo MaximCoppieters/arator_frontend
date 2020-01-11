@@ -2,6 +2,7 @@ import 'package:arator/business/app_image.dart';
 import 'package:arator/data/model/units/WeightUnit.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 
 import 'Model.dart';
 import 'User.dart';
@@ -21,6 +22,9 @@ class Product implements Model {
   final User seller;
   dynamic image;
 
+  static final moneyFormatterSettings =
+      MoneyFormatterSettings(symbol: "€", decimalSeparator: ",");
+
   Product(
       {this.id,
       @required this.name,
@@ -34,6 +38,12 @@ class Product implements Model {
       this.image});
 
   get imagePath => AppImage.formUrl(imageUrl);
+  get formattedPriceInEuro {
+    return FlutterMoneyFormatter(
+            amount: priceInEuro, settings: moneyFormatterSettings)
+        .output
+        .symbolOnLeft;
+  }
 
   Map<String, dynamic> toJson() => _$ProductToJson(this);
   factory Product.fromJson(dynamic json) {
