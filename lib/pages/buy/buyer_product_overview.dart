@@ -1,11 +1,11 @@
 import 'package:arator/business/bloc/product_bloc.dart';
 import 'package:arator/business/bloc/product_event.dart';
-import 'package:arator/business/bloc/product_state.dart';
+import 'package:arator/business/gps_service.dart';
 import 'package:arator/components/buy/buy_product_grid_view.dart';
-import 'package:arator/components/elements/button.dart';
-import 'package:arator/utils/exceptions/form_exception.dart';
+import 'package:arator/data/model/MapLocation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 
 class BuyerProductOverview extends StatefulWidget {
   @override
@@ -14,12 +14,20 @@ class BuyerProductOverview extends StatefulWidget {
 
 class _BuyerProductOverviewState extends State<BuyerProductOverview> {
   ProductBloc _productBloc;
+  GpsService _gpsService = GpsService();
 
   @override
   void initState() {
     _productBloc = BlocProvider.of<BuyerProductBloc>(context);
-    _productBloc.add(GetProducts());
+    loadProductsFromLocation();
     super.initState();
+  }
+
+  void loadProductsFromLocation() async {
+    Position position = await _gpsService.getUserPosition();
+    var userLocation = MapLocation(position: position);
+
+    _productBloc.add(GetProducts(location: userLocation));
   }
 
   @override

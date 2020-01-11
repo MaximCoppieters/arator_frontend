@@ -35,7 +35,11 @@ class Product implements Model {
 
   get imagePath => AppImage.formUrl(imageUrl);
 
-  factory Product.fromJson(Map<String, dynamic> json) =>
-      _$ProductFromJson(json);
   Map<String, dynamic> toJson() => _$ProductToJson(this);
+  factory Product.fromJson(dynamic json) {
+    if (json is Map) {
+      return _$ProductFromJson(json);
+    }
+    return null;
+  }
 }

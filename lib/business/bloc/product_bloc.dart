@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:arator/data/model/MapLocation.dart';
 import 'package:arator/data/model/Product.dart';
 import 'package:arator/data/repo/product_repo.dart';
 import 'package:bloc/bloc.dart';
@@ -42,9 +43,9 @@ class BuyerProductBloc extends ProductBloc {
   Stream<ProductState> _mapLoadProductsToState([ProductEvent event]) async* {
     yield ProductsLoading();
     try {
-      List<num> position = event.props[0];
+      MapLocation location = event.props[0];
       final products =
-          await this.productRepository.getProductsFromPosition(position);
+          await this.productRepository.getProductsFromLocation(location);
       yield ProductsLoaded(
         products.toList(),
       );

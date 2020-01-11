@@ -42,16 +42,19 @@ class AppHttpClient {
     return await _trySendRequest(putRequest);
   }
 
-  Future<Response> getJson({String endpoint}) async {
-    var getRequest = get(_fullApiUrl(endpoint), headers: await _jsonHeaders());
-    return await _trySendRequest(getRequest);
+  Future<BaseResponse> getJson({String endpoint, Model body}) async {
+    var getRequest = Request("get", Uri.parse(_fullApiUrl(endpoint)));
+    getRequest.headers.addAll(await _jsonHeaders());
+    getRequest.body = '{ "position": [ 5.29191635, 50.81139655 ] }';
+
+    return await _trySendRequest(getRequest.send());
   }
 
   _fullApiUrl(String endpoint) {
     return _baseUrl + endpoint;
   }
 
-  Future<Response> _trySendRequest(Future<Response> request) async {
+  Future<BaseResponse> _trySendRequest(Future<BaseResponse> request) async {
     try {
       return await request;
     } catch (err) {

@@ -10,6 +10,8 @@ import 'package:arator/utils/exceptions/gps_exception.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
+import 'package:http/http.dart';
+
 class UserRepository extends Repository {
   static final _registerEndpoint = "/signup";
   static final _loginEndpoint = "/login";
@@ -37,8 +39,8 @@ class UserRepository extends Repository {
 
   Future<Map<String, dynamic>> _postAuthentication(
       UserCredentials credentials, String endpoint) async {
-    var res = await _httpClient.postJson(endpoint: endpoint, body: credentials);
-    print(res.body);
+    BaseResponse res =
+        await _httpClient.postJson(endpoint: endpoint, body: credentials);
 
     if (res.statusCode == 404) {
       throw new FormException(message: "Couldn't reach server");
@@ -47,7 +49,7 @@ class UserRepository extends Repository {
     // Succesful registry, no body required
     if (res.statusCode == 201) return null;
 
-    var body = jsonDecode(res.body);
+    var body = jsonDecode((res as Response).body);
     if (res.statusCode != 200) {
       parseAndThrowException(body);
     }
@@ -70,13 +72,13 @@ class UserRepository extends Repository {
   }
 
   Future<User> getUserDetails() async {
-    var res = await _httpClient.getJson(endpoint: _userEndpoint);
+    BaseResponse res = await _httpClient.getJson(endpoint: _userEndpoint);
 
     if (res.statusCode == 400) {
       throw Exception("User details not found");
     }
-
-    return User.fromJson(jsonDecode(res.body));
+    return User.fromJson(
+        jsonDecode(await (res as StreamedResponse).stream.bytesToString()));
   }
 
   Future<void> updateUserSettings({

@@ -1,3 +1,4 @@
+import 'package:arator/data/model/MapLocation.dart';
 import 'package:arator/data/model/Product.dart';
 import 'package:equatable/equatable.dart';
 
@@ -14,7 +15,7 @@ class AddProduct extends ProductEvent {
 }
 
 class GetProducts extends ProductEvent {
-  final List<num> location;
+  final MapLocation location;
   GetProducts({this.location});
   @override
   List<Object> get props => [location];
