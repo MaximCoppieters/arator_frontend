@@ -24,9 +24,7 @@ class AppHttpClient {
     if (body.image != null) {
       req.files.add(await MultipartFile.fromPath("image", body.image.path));
     }
-    var res = await req.send();
-
-    return res;
+    return await req.send();
   }
 
   Future<Response> postJson({String endpoint, Model body}) async {

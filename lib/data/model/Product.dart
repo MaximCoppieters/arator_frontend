@@ -18,7 +18,7 @@ class Product implements Model {
   final String description;
   final num priceInEuro;
   final WeightUnit weightUnit;
-  final int amount;
+  final int amountForSale;
   final User seller;
   dynamic image;
 
@@ -34,7 +34,7 @@ class Product implements Model {
       this.priceInEuro,
       this.weightUnit,
       this.seller,
-      this.amount,
+      this.amountForSale,
       this.image});
 
   get imagePath => AppImage.formUrl(imageUrl);

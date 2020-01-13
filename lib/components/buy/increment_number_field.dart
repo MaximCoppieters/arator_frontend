@@ -1,3 +1,6 @@
+import 'dart:math' as Math;
+
+import 'package:arator/components/elements/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -22,7 +25,7 @@ class _NumberInputWithIncrementDecrementState
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Container(
-        width: 60.0,
+        width: 140.0,
         foregroundDecoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0),
           border: Border.all(
@@ -33,7 +36,19 @@ class _NumberInputWithIncrementDecrementState
         child: Row(
           children: <Widget>[
             Expanded(
-              flex: 1,
+              flex: 3,
+              child: AppButton(
+                child: Text(
+                  "-",
+                ),
+                onPressed: () {
+                  var newValue = Math.max(0, num.parse(_controller.text) - 1);
+                  _controller.text = newValue.toString();
+                },
+              ),
+            ),
+            Expanded(
+              flex: 4,
               child: TextFormField(
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
@@ -52,50 +67,14 @@ class _NumberInputWithIncrementDecrementState
                 ],
               ),
             ),
-            Container(
-              height: 38.0,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          width: 0.5,
-                        ),
-                      ),
-                    ),
-                    child: InkWell(
-                      child: Icon(
-                        Icons.arrow_drop_up,
-                        size: 18.0,
-                      ),
-                      onTap: () {
-                        int currentValue = int.parse(_controller.text);
-                        setState(() {
-                          currentValue++;
-                          _controller.text =
-                              (currentValue).toString(); // incrementing value
-                        });
-                      },
-                    ),
-                  ),
-                  InkWell(
-                    child: Icon(
-                      Icons.arrow_drop_down,
-                      size: 18.0,
-                    ),
-                    onTap: () {
-                      int currentValue = int.parse(_controller.text);
-                      setState(() {
-                        currentValue--;
-                        _controller.text = (currentValue > 0 ? currentValue : 0)
-                            .toString(); // decrementing value
-                      });
-                    },
-                  ),
-                ],
+            Expanded(
+              flex: 3,
+              child: AppButton(
+                child: Text("+"),
+                onPressed: () => {
+                  _controller.text =
+                      (num.parse(_controller.text) + 1).toString()
+                },
               ),
             ),
           ],

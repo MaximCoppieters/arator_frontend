@@ -27,8 +27,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
     ..ratingCount = json['ratingCount'] as num
     ..averageRating = json['averageRating'] as num
     ..products = (json['products'] as List)
-        ?.map((e) =>
-            e == null ? null : Product.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e == null ? null : Product.fromJson(e))
         ?.toList()
     ..reviewAverage = json['reviewAverage'] as num;
 }

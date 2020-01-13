@@ -191,7 +191,7 @@ class _SellerAddProductPageState extends State<SellerAddProductPage> {
                             description: _descriptionController.text,
                             priceInEuro: _priceController.numberValue,
                             weightUnit: _weightUnit,
-                            amount: _amountController.text.isEmpty
+                            amountForSale: _amountController.text.isEmpty
                                 ? 0
                                 : num.parse(_amountController.text),
                             image: _image);

@@ -1,4 +1,5 @@
 import 'package:arator/business/bloc/product_bloc.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:arator/business/bloc/product_event.dart';
 import 'package:arator/business/bloc/product_state.dart';
 import 'package:arator/components/buy/buy_product_overview_card.dart';
@@ -11,7 +12,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class BuyProductGridView extends StatefulWidget {
   final bool omitHeaders;
   final num childAspectRatio;
-  BuyProductGridView({this.omitHeaders = false, this.childAspectRatio = 0.7});
+  final Function reloadFunction;
+  BuyProductGridView(
+      {this.omitHeaders = false,
+      this.childAspectRatio = 0.7,
+      @required this.reloadFunction});
 
   @override
   _BuyProductGridViewState createState() => _BuyProductGridViewState();
@@ -50,17 +55,20 @@ class _BuyProductGridViewState extends State<BuyProductGridView> {
             List<Product> products = productState.props.first;
             return Column(children: <Widget>[
               Expanded(
-                  child: GridView.builder(
-                itemCount: products.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return BuyProduceOverviewCard(
-                    products[index],
-                    omitHeader: widget.omitHeaders,
-                  );
-                },
-                gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-                    childAspectRatio: widget.childAspectRatio,
-                    crossAxisCount: 2),
+                  child: LiquidPullToRefresh(
+                onRefresh: widget.reloadFunction,
+                child: GridView.builder(
+                  itemCount: products.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return BuyProduceOverviewCard(
+                      products[index],
+                      omitHeader: widget.omitHeaders,
+                    );
+                  },
+                  gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                      childAspectRatio: widget.childAspectRatio,
+                      crossAxisCount: 2),
+                ),
               )),
             ]);
           } else {

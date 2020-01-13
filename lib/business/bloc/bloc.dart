@@ -21,3 +21,6 @@ export 'user_settings_event.dart';
 export 'location_bloc.dart';
 export 'location_event.dart';
 export 'location_state.dart';
+export 'shopping_cart_bloc.dart';
+export 'shopping_cart_event.dart';
+export 'shopping_cart_state.dart';

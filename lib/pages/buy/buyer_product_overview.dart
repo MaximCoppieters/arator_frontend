@@ -23,7 +23,7 @@ class _BuyerProductOverviewState extends State<BuyerProductOverview> {
     super.initState();
   }
 
-  void loadProductsFromLocation() async {
+  Future<void> loadProductsFromLocation() async {
     Position position = await _gpsService.getUserPosition();
     var userLocation = MapLocation(position: position);
 
@@ -41,7 +41,15 @@ class _BuyerProductOverviewState extends State<BuyerProductOverview> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Product Overview"),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.shopping_basket),
+              onPressed: () => {},
+            )
+          ],
         ),
-        body: BuyProductGridView());
+        body: BuyProductGridView(
+          reloadFunction: loadProductsFromLocation,
+        ));
   }
 }

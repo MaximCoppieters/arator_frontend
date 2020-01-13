@@ -18,7 +18,7 @@ Product _$ProductFromJson(Map<String, dynamic> json) {
     seller: json['seller'] == null
         ? null
         : User.fromJson(json['seller'] as Map<String, dynamic>),
-    amount: json['amount'] as int,
+    amountForSale: json['amountForSale'] as int,
     image: json['image'],
   );
 }
@@ -31,7 +31,7 @@ Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
       'description': instance.description,
       'priceInEuro': instance.priceInEuro,
       'weightUnit': _$WeightUnitEnumMap[instance.weightUnit],
-      'amount': instance.amount,
+      'amountForSale': instance.amountForSale,
       'seller': instance.seller,
       'image': instance.image,
     };

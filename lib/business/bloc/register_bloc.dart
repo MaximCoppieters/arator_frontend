@@ -23,7 +23,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         await userRepository.register(
           userCredentials: event.userCredentials,
         );
-        print("yes");
         yield RegisterComplete();
       } catch (error) {
         yield RegisterFailure(error: error);

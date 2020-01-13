@@ -9,8 +9,7 @@ part of 'Order.dart';
 Order _$OrderFromJson(Map<String, dynamic> json) {
   return Order(
     products: (json['products'] as List)
-        ?.map((e) =>
-            e == null ? null : Product.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e == null ? null : Product.fromJson(e))
         ?.toList(),
     buyer: json['buyer'] == null
         ? null
