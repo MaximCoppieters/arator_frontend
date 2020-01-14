@@ -1,4 +1,4 @@
-import 'package:arator/data/model/Product.dart';
+import 'package:arator/data/model/ProductInCart.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'Model.dart';
@@ -6,18 +6,10 @@ import 'Model.dart';
 part 'ShoppingCart.g.dart';
 
 @JsonSerializable()
-class ShoppingCart extends Model {
-  Map<Product, num> _amountsByProduct = {};
+class ShoppingCart implements Model {
+  List<ProductInCart> productsInCart = [];
 
-  void add(Product product, num amount) {
-    _amountsByProduct[product] = amount;
-  }
-
-  void remove(Product product) {
-    _amountsByProduct[product] = null;
-  }
-
-  get products => _amountsByProduct;
+  ShoppingCart();
 
   factory ShoppingCart.fromJson(Map<String, dynamic> json) =>
       _$ShoppingCartFromJson(json);

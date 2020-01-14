@@ -11,6 +11,7 @@ part 'Product.g.dart';
 
 @JsonSerializable()
 class Product implements Model {
+  @JsonKey(name: "_id")
   String id;
   final String name;
   final String type;
@@ -21,6 +22,8 @@ class Product implements Model {
   final int amountForSale;
   final User seller;
   dynamic image;
+
+  num amountInCart;
 
   static final moneyFormatterSettings =
       MoneyFormatterSettings(symbol: "€", decimalSeparator: ",");

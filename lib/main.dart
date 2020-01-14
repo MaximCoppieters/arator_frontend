@@ -26,6 +26,9 @@ class Arator extends StatelessWidget {
         ),
         BlocProvider<LocationBloc>(
           create: (context) => LocationBloc(),
+        ),
+        BlocProvider<ShoppingCartBloc>(
+          create: (context) => ShoppingCartBloc(),
         )
       ],
       child: MaterialApp(

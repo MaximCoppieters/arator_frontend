@@ -11,12 +11,8 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     products: (json['products'] as List)
         ?.map((e) => e == null ? null : Product.fromJson(e))
         ?.toList(),
-    buyer: json['buyer'] == null
-        ? null
-        : User.fromJson(json['buyer'] as Map<String, dynamic>),
-  )..seller = json['seller'] == null
-      ? null
-      : User.fromJson(json['seller'] as Map<String, dynamic>);
+    buyer: json['buyer'] == null ? null : User.fromJson(json['buyer']),
+  )..seller = json['seller'] == null ? null : User.fromJson(json['seller']);
 }
 
 Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{

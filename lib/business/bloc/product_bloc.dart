@@ -66,7 +66,6 @@ class SellerProductBloc extends ProductBloc {
         personalProducts.toList(),
       );
     } catch (error) {
-      print(error);
       yield ProductsFailedLoading(error);
     }
   }

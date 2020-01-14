@@ -8,23 +8,21 @@ part of 'Product.dart';
 
 Product _$ProductFromJson(Map<String, dynamic> json) {
   return Product(
-    id: json['id'] as String,
+    id: json['_id'] as String,
     name: json['name'] as String,
     imageUrl: json['imageUrl'] as String,
     type: json['type'] as String,
     description: json['description'] as String,
     priceInEuro: json['priceInEuro'] as num,
     weightUnit: _$enumDecodeNullable(_$WeightUnitEnumMap, json['weightUnit']),
-    seller: json['seller'] == null
-        ? null
-        : User.fromJson(json['seller'] as Map<String, dynamic>),
+    seller: json['seller'] == null ? null : User.fromJson(json['seller']),
     amountForSale: json['amountForSale'] as int,
     image: json['image'],
-  );
+  )..amountInCart = json['amountInCart'] as num;
 }
 
 Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
-      'id': instance.id,
+      '_id': instance.id,
       'name': instance.name,
       'type': instance.type,
       'imageUrl': instance.imageUrl,
@@ -34,6 +32,7 @@ Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
       'amountForSale': instance.amountForSale,
       'seller': instance.seller,
       'image': instance.image,
+      'amountInCart': instance.amountInCart,
     };
 
 T _$enumDecode<T>(

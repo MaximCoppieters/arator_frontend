@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:arator/data/model/Product.dart';
+import 'package:arator/data/model/ProductInCart.dart';
 import 'package:arator/data/model/ShoppingCart.dart';
 import 'package:arator/data/repo/shopping_cart_repo.dart';
 import 'package:bloc/bloc.dart';
@@ -18,38 +18,40 @@ class ShoppingCartBloc extends Bloc<ShoppingCartEvent, ShoppingCartState> {
     ShoppingCartEvent event,
   ) async* {
     if (event is AddProductToCart) {
-      Product product = event.props[0];
-      num amount = event.props[1];
-      yield* _mapAddProductToShoppingCart(product, amount);
+      ProductInCart productInCart = event.props[0];
+      yield* _mapAddProductToShoppingCart(productInCart);
     } else if (event is RemoveProductFromCart) {
-      Product product = event.props[0];
-      yield* _mapRemoveProductFromShoppingCart(product);
+      ProductInCart productInCart = event.props[0];
+      yield* _mapRemoveProductFromShoppingCart(productInCart);
     } else if (event is LoadShoppingCart) {
       yield* _mapLoadShoppingCart();
+    } else if (event is ResetShoppingCartState) {
+      yield InitialShoppingCartState();
     }
   }
 
   Stream<ShoppingCartState> _mapAddProductToShoppingCart(
-      product, amount) async* {
-    yield ShoppingCartLoading();
+      ProductInCart productInCart) async* {
+    yield AddingItem();
     try {
-      shoppingCart.add(product, amount);
-      this.shoppingCartRepository.updateShoppingCart(shoppingCart);
-      yield ShoppingCartLoaded(this.shoppingCart);
+      this.shoppingCart.productsInCart.add(productInCart);
+      await this.shoppingCartRepository.updateShoppingCart(shoppingCart);
+      yield ItemAdded();
     } catch (error) {
-      yield ShoppingCartFailedLoading(error);
+      print(error);
+      yield AddItemFailed(error);
     }
   }
 
   Stream<ShoppingCartState> _mapRemoveProductFromShoppingCart(
-      Product product) async* {
-    yield ShoppingCartLoading();
+      ProductInCart productInCart) async* {
+    yield DeletingItem(this.shoppingCart);
     try {
-      shoppingCart.remove(product);
-      this.shoppingCartRepository.updateShoppingCart(shoppingCart);
+      shoppingCart.productsInCart.remove(productInCart);
+      await this.shoppingCartRepository.updateShoppingCart(shoppingCart);
       yield ShoppingCartLoaded(this.shoppingCart);
     } catch (error) {
-      yield ShoppingCartFailedLoading(error);
+      yield ItemDeletionFailed(error, this.shoppingCart);
     }
   }
 

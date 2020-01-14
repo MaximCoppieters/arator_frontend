@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class NumberInputWithIncrementDecrement extends StatefulWidget {
+  final TextEditingController controller;
+
+  NumberInputWithIncrementDecrement({@required this.controller});
+
   @override
   _NumberInputWithIncrementDecrementState createState() =>
       _NumberInputWithIncrementDecrementState();
@@ -12,12 +16,10 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
 
 class _NumberInputWithIncrementDecrementState
     extends State<NumberInputWithIncrementDecrement> {
-  TextEditingController _controller = TextEditingController();
-
   @override
   void initState() {
     super.initState();
-    _controller.text = "0"; // Setting the initial value for the field.
+    widget.controller.text = "0"; // Setting the initial value for the field.
   }
 
   @override
@@ -42,8 +44,9 @@ class _NumberInputWithIncrementDecrementState
                   "-",
                 ),
                 onPressed: () {
-                  var newValue = Math.max(0, num.parse(_controller.text) - 1);
-                  _controller.text = newValue.toString();
+                  var newValue =
+                      Math.max(0, num.parse(widget.controller.text) - 1);
+                  widget.controller.text = newValue.toString();
                 },
               ),
             ),
@@ -57,7 +60,7 @@ class _NumberInputWithIncrementDecrementState
                     borderRadius: BorderRadius.circular(5.0),
                   ),
                 ),
-                controller: _controller,
+                controller: widget.controller,
                 keyboardType: TextInputType.numberWithOptions(
                   decimal: false,
                   signed: true,
@@ -72,8 +75,8 @@ class _NumberInputWithIncrementDecrementState
               child: AppButton(
                 child: Text("+"),
                 onPressed: () => {
-                  _controller.text =
-                      (num.parse(_controller.text) + 1).toString()
+                  widget.controller.text =
+                      (num.parse(widget.controller.text) + 1).toString()
                 },
               ),
             ),

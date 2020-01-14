@@ -1,4 +1,5 @@
 import 'package:arator/data/model/Product.dart';
+import 'package:arator/data/model/ProductInCart.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
@@ -7,21 +8,25 @@ abstract class ShoppingCartEvent extends Equatable {
 }
 
 class AddProductToCart extends ShoppingCartEvent {
-  final Product product;
-  final num amount;
-  AddProductToCart({@required this.product, @required this.amount});
+  final ProductInCart productInCart;
+  AddProductToCart({@required this.productInCart});
   @override
-  List<Object> get props => [product, amount];
+  List<Object> get props => [productInCart];
 }
 
 class RemoveProductFromCart extends ShoppingCartEvent {
-  final Product product;
-  RemoveProductFromCart({@required this.product});
+  final ProductInCart productInCart;
+  RemoveProductFromCart({@required this.productInCart});
   @override
-  List<Object> get props => [product];
+  List<Object> get props => [productInCart];
 }
 
 class LoadShoppingCart extends ShoppingCartEvent {
+  @override
+  List<Object> get props => null;
+}
+
+class ResetShoppingCartState extends ShoppingCartEvent {
   @override
   List<Object> get props => null;
 }

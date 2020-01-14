@@ -7,7 +7,7 @@ import 'package:arator/utils/exceptions/form_exception.dart';
 import 'package:http/http.dart';
 
 class ShoppingCartRepository extends Repository {
-  static final shoppingCartEndpoint = "";
+  static final shoppingCartEndpoint = "/user/shoppingcart";
   final AppHttpClient _httpClient = AppHttpClient();
 
   Future<ShoppingCart> getShoppingCart() async {
@@ -21,14 +21,12 @@ class ShoppingCartRepository extends Repository {
   }
 
   Future<void> updateShoppingCart(ShoppingCart shoppingCart) async {
-    BaseResponse res = await _httpClient.putJson(
+    Response res = await _httpClient.postJson(
         endpoint: shoppingCartEndpoint, body: shoppingCart);
 
-    Map<String, dynamic> responseBody =
-        jsonDecode(await (res as StreamedResponse).stream.bytesToString());
-
     if (res.statusCode != 201) {
-      parseAndThrowException(responseBody);
+      print(res.body);
+      throw new FormException(message: "Unable to access server");
     }
   }
 }

@@ -1,10 +1,14 @@
+import 'package:arator/business/bloc/bloc.dart';
 import 'package:arator/components/buy/increment_number_field.dart';
 import 'package:arator/components/common/page_body_container.dart';
 import 'package:arator/components/common/profile_review_row.dart';
 import 'package:arator/components/elements/button.dart';
 import 'package:arator/data/model/Product.dart';
+import 'package:arator/data/model/ProductInCart.dart';
+import 'package:arator/tab_navigator.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BuyProductDetailPage extends StatefulWidget {
   final Product product;
@@ -20,6 +24,29 @@ class _BuyProductDetailPageState extends State<BuyProductDetailPage> {
   String selected = "blue";
   bool favourite = false;
   int currentImageIndex = 0;
+  ShoppingCartBloc _shoppingCartBloc;
+
+  TextEditingController _buyAmountController = TextEditingController();
+
+  @override
+  void initState() {
+    _shoppingCartBloc = BlocProvider.of<ShoppingCartBloc>(context);
+    if (_shoppingCartBloc.shoppingCart == null) {
+      _shoppingCartBloc.add(LoadShoppingCart());
+    }
+    _shoppingCartBloc.listen((state) {
+      if (state is ItemAdded) {
+        TabNavigator.push(context, TabNavigatorRoutes.buy);
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _shoppingCartBloc.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +184,9 @@ class _BuyProductDetailPageState extends State<BuyProductDetailPage> {
           purchaseAmountChoices(produce),
           Row(
             children: <Widget>[
-              NumberInputWithIncrementDecrement(),
+              NumberInputWithIncrementDecrement(
+                controller: _buyAmountController,
+              ),
               AppButton(
                 child: Row(
                   children: <Widget>[
@@ -174,7 +203,13 @@ class _BuyProductDetailPageState extends State<BuyProductDetailPage> {
                     ),
                   ],
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  var productInCart = new ProductInCart();
+                  productInCart.product = widget.product;
+                  productInCart.amount = num.parse(_buyAmountController.text);
+                  _shoppingCartBloc
+                      .add(AddProductToCart(productInCart: productInCart));
+                },
               ),
             ],
           ),
@@ -194,7 +229,6 @@ class _BuyProductDetailPageState extends State<BuyProductDetailPage> {
       width: size,
     );
   }
-  /***** End */
 }
 
 class ColorTicker extends StatelessWidget {

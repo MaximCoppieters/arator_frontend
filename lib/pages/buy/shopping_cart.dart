@@ -1,53 +1,51 @@
+import 'package:arator/business/bloc/bloc.dart';
 import 'package:arator/components/buy/increment_number_field.dart';
+import 'package:arator/components/buy/shopping_cart_item.dart';
 import 'package:arator/components/common/page_body_container.dart';
+import 'package:arator/components/elements/button.dart';
+import 'package:arator/data/model/ShoppingCart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ShoppingCartPage extends StatefulWidget {
+class ShoppingCartOverview extends StatefulWidget {
   @override
-  _ShoppingCartPageState createState() => _ShoppingCartPageState();
+  _ShoppingCartOverviewState createState() => _ShoppingCartOverviewState();
 }
 
-class _ShoppingCartPageState extends State<ShoppingCartPage> {
+class _ShoppingCartOverviewState extends State<ShoppingCartOverview> {
+  ShoppingCartBloc _shoppingCartBloc;
+  ShoppingCart _shoppingCart;
+
+  @override
+  void initState() {
+    _shoppingCartBloc = BlocProvider.of<ShoppingCartBloc>(context);
+    _shoppingCartBloc.add(LoadShoppingCart());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Shopping Cart"),
       ),
-      body: Column(
-        children: <Widget>[
-          Card(
-            child: Container(
-              padding: EdgeInsets.all(10.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                      width: 75.0,
-                      height: 75.0,
-                      child: Image.asset(
-                        "assets/images/apples.jpg",
-                        fit: BoxFit.cover,
-                      )),
-                  SizedBox(
-                    width: 10.0,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text("Amandelen bruin gezouten 450 gram"),
-                      Text("Prijs: € 3,95"),
-                      NumberInputWithIncrementDecrement(),
-                      Text("Subtotaal: € 3,95"),
-                      Text("Delete")
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          PaymentSummary()
-        ],
+      body: SingleChildScrollView(
+        child: BlocBuilder<ShoppingCartBloc, ShoppingCartState>(
+            bloc: _shoppingCartBloc,
+            builder: (context, shoppingCartState) {
+              if (shoppingCartState is ShoppingCartLoaded) {
+                _shoppingCart = shoppingCartState.props[0];
+                return Column(
+                    children: _shoppingCart.productsInCart
+                        .map((productInCart) =>
+                            ShoppingCartItem(productInCart: productInCart))
+                        .toList());
+              } else if (shoppingCartState is ShoppingCartLoading) {
+                return Center(child: CircularProgressIndicator());
+              } else {
+                return Center(child: Text("Fail"));
+              }
+            }),
       ),
     );
   }
@@ -84,7 +82,7 @@ class _PaymentSummaryState extends State<PaymentSummary> {
             Center(
               child: FractionallySizedBox(
                 widthFactor: 0.6,
-                child: RaisedButton(
+                child: AppButton(
                   child: Text("Checkout"),
                   onPressed: () => {},
                 ),

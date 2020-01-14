@@ -42,6 +42,11 @@ class User implements Model {
   get averageRatingRounded => averageRating.round();
   get profileImagePath => AppImage.formUrl(profileImageUrl);
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  factory User.fromJson(dynamic json) {
+    if (json is Map) {
+      return _$UserFromJson(json);
+    }
+    return null;
+  }
   Map<String, dynamic> toJson() => _$UserToJson(this);
 }

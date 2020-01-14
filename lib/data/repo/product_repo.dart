@@ -32,7 +32,6 @@ class ProductRepository extends Repository {
 
     List<dynamic> productsJson =
         json.decode(await (res as StreamedResponse).stream.bytesToString());
-    print(productsJson);
 
     if (productsJson.isEmpty) {
       throw new FormException(message: "No products were found");

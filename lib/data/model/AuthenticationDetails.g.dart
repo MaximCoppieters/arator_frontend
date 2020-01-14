@@ -9,9 +9,7 @@ part of 'AuthenticationDetails.dart';
 AuthenticationDetails _$AuthenticationDetailsFromJson(
     Map<String, dynamic> json) {
   return AuthenticationDetails(
-    json['user'] == null
-        ? null
-        : User.fromJson(json['user'] as Map<String, dynamic>),
+    json['user'] == null ? null : User.fromJson(json['user']),
     json['token'] as String,
   );
 }

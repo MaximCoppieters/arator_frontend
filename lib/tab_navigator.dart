@@ -39,6 +39,7 @@ class TabNavigatorRoutes {
   static const String sellerProductDetail = '/seller_product_detail';
   static const String settingsOverview = '/profile/settings';
   static const String addressConfiguration = "/profile/address";
+  static const String shoppingCartOverview = "/buy/shoppingcart";
 }
 
 class TabNavigator extends StatelessWidget {
@@ -87,7 +88,7 @@ class TabNavigator extends StatelessWidget {
       TabNavigatorRoutes.locationPreferences: (context) =>
           LocationPreferencesPage(),
       TabNavigatorRoutes.addFriend: (context) => AddFriendPage(),
-      TabNavigatorRoutes.shoppingCart: (context) => ShoppingCartPage(),
+      TabNavigatorRoutes.shoppingCart: (context) => ShoppingCartOverview(),
       TabNavigatorRoutes.transactionHistory: (context) =>
           TransactionHistoryPage(),
       TabNavigatorRoutes.personalProfileDetail: (context) =>
@@ -95,6 +96,8 @@ class TabNavigator extends StatelessWidget {
       TabNavigatorRoutes.settingsOverview: (context) => SettingsOverview(),
       TabNavigatorRoutes.addressConfiguration: (context) =>
           AddressConfiguration(),
+      TabNavigatorRoutes.shoppingCartOverview: (context) =>
+          ShoppingCartOverview(),
     };
   }
 
