@@ -97,6 +97,17 @@ class _BuyProductDetailPageState extends State<BuyProductDetailPage> {
                 ],
               ),
             ),
+            BlocBuilder<ShoppingCartBloc, ShoppingCartState>(
+                bloc: _shoppingCartBloc,
+                builder: (context, state) {
+                  if (state is AddingItem) {
+                    return CircularProgressIndicator();
+                  } else if (state is AddItemFailed) {
+                    return Text("Failed to add item to basket");
+                  } else {
+                    return Container();
+                  }
+                })
           ],
         ),
       ),

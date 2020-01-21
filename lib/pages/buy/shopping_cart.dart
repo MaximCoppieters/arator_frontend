@@ -1,9 +1,9 @@
 import 'package:arator/business/bloc/bloc.dart';
-import 'package:arator/components/buy/increment_number_field.dart';
 import 'package:arator/components/buy/shopping_cart_item.dart';
 import 'package:arator/components/common/page_body_container.dart';
 import 'package:arator/components/elements/button.dart';
 import 'package:arator/data/model/ShoppingCart.dart';
+import 'package:arator/tab_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -38,8 +38,14 @@ class _ShoppingCartOverviewState extends State<ShoppingCartOverview> {
                 return Column(
                     children: _shoppingCart.productsInCart
                         .map((productInCart) =>
-                            ShoppingCartItem(productInCart: productInCart))
-                        .toList());
+                            ShoppingCartItem(productInCart: productInCart)
+                                as Widget)
+                        .toList()
+                          ..add(_shoppingCart.productsInCart.length > 0
+                              ? PaymentSummary()
+                              : Center(
+                                  child: Text(
+                                      "There are no items in your shopping cart"))));
               } else if (shoppingCartState is ShoppingCartLoading) {
                 return Center(child: CircularProgressIndicator());
               } else {
@@ -59,37 +65,58 @@ class PaymentSummary extends StatefulWidget {
 }
 
 class _PaymentSummaryState extends State<PaymentSummary> {
+  ShoppingCartBloc _shoppingCartBloc;
+
+  @override
+  void initState() {
+    _shoppingCartBloc = BlocProvider.of<ShoppingCartBloc>(context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
       child: PageBodyContainer(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              "Summary",
-              style: TextStyle(
-                  fontSize: Theme.of(context).textTheme.title.fontSize,
-                  fontWeight: FontWeight.bold),
-            ),
-            PaymentRow("Subtotal", "€ 3,95"),
-            PaymentRow("BTW", "€ 0,22"),
-            Divider(),
-            PaymentRow("Totaal", "€ 3,95"),
-            SizedBox(
-              height: 8.0,
-            ),
-            Center(
-              child: FractionallySizedBox(
-                widthFactor: 0.6,
-                child: AppButton(
-                  child: Text("Checkout"),
-                  onPressed: () => {},
-                ),
-              ),
-            ),
-          ],
-        ),
+        child: BlocBuilder<ShoppingCartBloc, ShoppingCartState>(
+            bloc: _shoppingCartBloc,
+            builder: (context, state) {
+              if (state is ShoppingCartLoaded) {
+                ShoppingCart shoppingCart = state.props[0];
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "Summary",
+                      style: TextStyle(
+                          fontSize: Theme.of(context).textTheme.title.fontSize,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    PaymentRow(
+                        "Subtotal", shoppingCart.formattedSubtotalInEuro),
+                    PaymentRow("BTW", shoppingCart.formattedBtwInEuro),
+                    Divider(),
+                    PaymentRow("Totaal", shoppingCart.formattedTotalInEuro),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    Center(
+                      child: FractionallySizedBox(
+                        widthFactor: 0.6,
+                        child: AppButton(
+                          child: Text("Calculate Route"),
+                          onPressed: () => {
+                            TabNavigator.push(
+                                context, TabNavigatorRoutes.shoppingRoute)
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              } else {
+                return Container();
+              }
+            }),
       ),
     );
   }

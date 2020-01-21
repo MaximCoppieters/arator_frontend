@@ -50,6 +50,10 @@ class ItemDeletionFailed extends ShoppingCartLoaded {
   List<Object> get props => [shoppingCart, error];
 }
 
+class ItemDeleted extends ShoppingCartLoaded {
+  ItemDeleted(ShoppingCart shoppingCart) : super(shoppingCart);
+}
+
 class AddingItem extends ShoppingCartState {
   @override
   List<Object> get props => [];

@@ -1,6 +1,9 @@
 import 'package:arator/pages/buy/buy_product_detail_page.dart';
 import 'package:arator/pages/buy/buyer_product_overview.dart';
+import 'package:arator/pages/buy/finding_device.dart';
+import 'package:arator/pages/buy/route_trip_page.dart';
 import 'package:arator/pages/buy/shopping_cart.dart';
+import 'package:arator/pages/buy/shopping_route_page.dart';
 import 'package:arator/pages/chat/message_page.dart';
 import 'package:arator/pages/profile/add_friend.dart';
 import 'package:arator/pages/profile/address_configuration.dart';
@@ -40,6 +43,8 @@ class TabNavigatorRoutes {
   static const String settingsOverview = '/profile/settings';
   static const String addressConfiguration = "/profile/address";
   static const String shoppingCartOverview = "/buy/shoppingcart";
+  static const String shoppingRoute = "/buy/shoppingcart/route";
+  static const String shoppingTrip = "/buy/shoppingcart/route/trip";
 }
 
 class TabNavigator extends StatelessWidget {
@@ -98,6 +103,8 @@ class TabNavigator extends StatelessWidget {
           AddressConfiguration(),
       TabNavigatorRoutes.shoppingCartOverview: (context) =>
           ShoppingCartOverview(),
+      TabNavigatorRoutes.shoppingRoute: (context) => ShoppingRoutePage(),
+      TabNavigatorRoutes.shoppingTrip: (context) => ShoppingTripPage(),
     };
   }
 

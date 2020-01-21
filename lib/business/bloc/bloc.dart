@@ -24,3 +24,6 @@ export 'location_state.dart';
 export 'shopping_cart_bloc.dart';
 export 'shopping_cart_event.dart';
 export 'shopping_cart_state.dart';
+export 'bluetooth_device_bloc.dart';
+export 'bluetooth_device_event.dart';
+export 'bluetooth_device_state.dart';

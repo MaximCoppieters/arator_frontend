@@ -49,7 +49,7 @@ class ShoppingCartBloc extends Bloc<ShoppingCartEvent, ShoppingCartState> {
     try {
       shoppingCart.productsInCart.remove(productInCart);
       await this.shoppingCartRepository.updateShoppingCart(shoppingCart);
-      yield ShoppingCartLoaded(this.shoppingCart);
+      yield ItemDeleted(this.shoppingCart);
     } catch (error) {
       yield ItemDeletionFailed(error, this.shoppingCart);
     }

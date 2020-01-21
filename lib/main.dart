@@ -1,5 +1,7 @@
 import 'package:arator/app.dart';
 import 'package:arator/business/bloc/bloc.dart';
+import 'package:arator/business/bloc/bluetooth_device_bloc.dart';
+import 'package:arator/pages/buy/finding_device.dart';
 import 'package:arator/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,6 +31,9 @@ class Arator extends StatelessWidget {
         ),
         BlocProvider<ShoppingCartBloc>(
           create: (context) => ShoppingCartBloc(),
+        ),
+        BlocProvider<BluetoothDeviceBloc>(
+          create: (context) => BluetoothDeviceBloc(),
         )
       ],
       child: MaterialApp(

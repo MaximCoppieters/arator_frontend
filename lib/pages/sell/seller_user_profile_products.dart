@@ -66,6 +66,7 @@ class _SellerUserProfileProductsState extends State<SellerUserProfileProducts> {
         ),
         Expanded(
             child: BuyProductGridView(
+          reloadFunction: () => {},
           omitHeaders: true,
           childAspectRatio: 0.85,
         )),
