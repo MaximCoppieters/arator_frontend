@@ -106,7 +106,8 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                           child: Text("Calculate Route"),
                           onPressed: () => {
                             TabNavigator.push(
-                                context, TabNavigatorRoutes.shoppingRoute)
+                                context, TabNavigatorRoutes.shoppingTrip,
+                                object: shoppingCart)
                           },
                         ),
                       ),

@@ -24,7 +24,7 @@ class ProductRepository extends Repository {
   Future<List<Product>> _getProductsAtEndpoint(String endpoint,
       {Model body}) async {
     BaseResponse res =
-        await _httpClient.getJson(endpoint: endpoint, body: body);
+        await _httpClient.getJsonStreamed(endpoint: endpoint, body: body);
 
     if (res.statusCode != 200) {
       throw new FormException(message: "Unable to access server");

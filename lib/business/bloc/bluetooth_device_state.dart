@@ -30,3 +30,12 @@ class Connected extends BluetoothDeviceConnectionState {
   @override
   List<Object> get props => [device];
 }
+
+class CheckingStatus extends Connected {
+  CheckingStatus(BluetoothDevice device) : super(device);
+}
+
+class StatusFound extends Connected {
+  bool measure;
+  StatusFound(BluetoothDevice device, this.measure) : super(device);
+}

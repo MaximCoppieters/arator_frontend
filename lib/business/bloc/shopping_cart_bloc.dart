@@ -8,7 +8,7 @@ import './bloc.dart';
 class ShoppingCartBloc extends Bloc<ShoppingCartEvent, ShoppingCartState> {
   final ShoppingCartRepository shoppingCartRepository =
       ShoppingCartRepository();
-  ShoppingCart shoppingCart;
+  ShoppingCart shoppingCart = ShoppingCart();
 
   @override
   ShoppingCartState get initialState => InitialShoppingCartState();
@@ -38,7 +38,6 @@ class ShoppingCartBloc extends Bloc<ShoppingCartEvent, ShoppingCartState> {
       await this.shoppingCartRepository.updateShoppingCart(shoppingCart);
       yield ItemAdded();
     } catch (error) {
-      print(error);
       yield AddItemFailed(error);
     }
   }

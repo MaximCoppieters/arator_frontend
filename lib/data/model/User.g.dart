@@ -20,6 +20,9 @@ User _$UserFromJson(Map<String, dynamic> json) {
     address:
         json['address'] == null ? null : UserAddress.fromJson(json['address']),
     about: json['about'] as String,
+    bodyMetrics: json['bodyMetrics'] == null
+        ? null
+        : BodyMetrics.fromJson(json['bodyMetrics']),
     userSettings: json['userSettings'] == null
         ? null
         : UserSettings.fromJson(json['userSettings']),
@@ -41,6 +44,7 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'about': instance.about,
       'ratingCount': instance.ratingCount,
       'averageRating': instance.averageRating,
+      'bodyMetrics': instance.bodyMetrics,
       'products': instance.products,
       'reviews': instance.reviews,
       'reviewCount': instance.reviewCount,

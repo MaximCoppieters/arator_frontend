@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:io';
-import 'package:convert/convert.dart';
 
 import 'package:arator/business/bloc/bluetooth_device_bloc.dart';
 import 'package:arator/business/bloc/bluetooth_device_event.dart';
@@ -72,26 +70,30 @@ class _FindingDevicePageState extends State<FindingDevicePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        AppButton(
-          child: Text("Connect"),
-          onPressed: () {
-            _bluetoothDeviceBloc.add(ConnectDevice());
-          },
-        ),
-        BlocBuilder(
+        body: BlocBuilder<BluetoothDeviceBloc, BluetoothDeviceConnectionState>(
             bloc: _bluetoothDeviceBloc,
             builder: (context, state) {
+              var trailing;
               if (state is Connected) {
-                return Text("Connected");
+                trailing = Text("Connected");
               } else {
-                return Text("Not connected");
+                trailing = AppButton(
+                  child: Text("Connect"),
+                  onPressed: () {
+                    _bluetoothDeviceBloc.add(ConnectDevice());
+                  },
+                );
               }
-            })
-      ],
-    ));
+              return ListView(
+                children: <Widget>[
+                  Card(
+                    child: ListTile(
+                        leading: Image.asset("assets/images/tickr_fit.jpg"),
+                        title: Text("TICKR FIT"),
+                        trailing: trailing),
+                  ),
+                ],
+              );
+            }));
   }
 }

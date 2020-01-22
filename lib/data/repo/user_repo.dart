@@ -72,7 +72,8 @@ class UserRepository extends Repository {
   }
 
   Future<User> getUserDetails() async {
-    BaseResponse res = await _httpClient.getJson(endpoint: _userEndpoint);
+    BaseResponse res =
+        await _httpClient.getJsonStreamed(endpoint: _userEndpoint);
 
     if (res.statusCode == 400) {
       throw Exception("User details not found");

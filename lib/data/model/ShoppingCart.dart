@@ -15,8 +15,12 @@ class ShoppingCart implements Model {
 
   ShoppingCart();
 
-  factory ShoppingCart.fromJson(Map<String, dynamic> json) =>
-      _$ShoppingCartFromJson(json);
+  factory ShoppingCart.fromJson(dynamic json) {
+    if (json is Map) {
+      return _$ShoppingCartFromJson(json);
+    }
+    return null;
+  }
   Map<String, dynamic> toJson() => _$ShoppingCartToJson(this);
 
   num calculateSubTotal() {

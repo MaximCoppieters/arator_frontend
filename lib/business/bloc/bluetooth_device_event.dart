@@ -8,3 +8,8 @@ class ConnectDevice extends BluetoothDeviceEvent {
   @override
   List<Object> get props => null;
 }
+
+class CheckDevice extends BluetoothDeviceEvent {
+  @override
+  List<Object> get props => null;
+}

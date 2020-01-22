@@ -1,3 +1,5 @@
+import 'package:arator/pages/bmi_calculator_page.dart';
+import 'package:arator/pages/bmi_results_page.dart';
 import 'package:arator/pages/buy/buy_product_detail_page.dart';
 import 'package:arator/pages/buy/buyer_product_overview.dart';
 import 'package:arator/pages/buy/finding_device.dart';
@@ -45,6 +47,9 @@ class TabNavigatorRoutes {
   static const String shoppingCartOverview = "/buy/shoppingcart";
   static const String shoppingRoute = "/buy/shoppingcart/route";
   static const String shoppingTrip = "/buy/shoppingcart/route/trip";
+  static const String bmiCalculator = "/profile/bmi/calculator";
+  static const String bmiResults = "/profile/bmi/results";
+  static const String myDevices = "/profile/devices";
 }
 
 class TabNavigator extends StatelessWidget {
@@ -103,8 +108,10 @@ class TabNavigator extends StatelessWidget {
           AddressConfiguration(),
       TabNavigatorRoutes.shoppingCartOverview: (context) =>
           ShoppingCartOverview(),
-      TabNavigatorRoutes.shoppingRoute: (context) => ShoppingRoutePage(),
-      TabNavigatorRoutes.shoppingTrip: (context) => ShoppingTripPage(),
+      TabNavigatorRoutes.shoppingRoute: (context) => ShoppingRoutePage(object),
+      TabNavigatorRoutes.shoppingTrip: (context) => ShoppingTripPage(object),
+      TabNavigatorRoutes.bmiCalculator: (context) => BMICalculatorPage(),
+      TabNavigatorRoutes.myDevices: (context) => FindingDevicePage()
     };
   }
 

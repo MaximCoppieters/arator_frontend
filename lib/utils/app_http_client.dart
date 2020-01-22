@@ -40,10 +40,13 @@ class AppHttpClient {
     return await _trySendRequest(putRequest);
   }
 
-  Future<BaseResponse> getJson({String endpoint, Model body}) async {
+  Future<BaseResponse> getJsonStreamed({String endpoint, Model body}) async {
     var getRequest = Request("get", Uri.parse(_fullApiUrl(endpoint)));
     getRequest.headers.addAll(await _jsonHeaders());
-    getRequest.body = '{ "position": [ 5.29191635, 50.81139655 ] }';
+
+    if (body != null) {
+      getRequest.body = json.encode(body.toJson());
+    }
 
     return await _trySendRequest(getRequest.send());
   }
@@ -54,7 +57,8 @@ class AppHttpClient {
 
   Future<BaseResponse> _trySendRequest(Future<BaseResponse> request) async {
     try {
-      return await request;
+      var response = await request;
+      return response;
     } catch (err) {
       return Response("Server not found", 404);
     }

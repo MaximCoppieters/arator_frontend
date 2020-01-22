@@ -2,6 +2,7 @@ import 'package:arator/business/app_image.dart';
 import 'package:arator/data/model/UserSettings.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import 'BodyMetrics.dart';
 import 'Model.dart';
 import 'Product.dart';
 import 'Review.dart';
@@ -21,6 +22,8 @@ class User implements Model {
   num ratingCount;
   num averageRating;
 
+  BodyMetrics bodyMetrics;
+
   List<Product> products;
   List<Review> reviews;
   num reviewCount;
@@ -37,6 +40,7 @@ class User implements Model {
       this.reviewCount,
       this.address,
       this.about,
+      this.bodyMetrics,
       this.userSettings});
 
   get averageRatingRounded => averageRating.round();

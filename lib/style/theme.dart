@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 class AratorTheme {
   static final primaryColor = Color(0xFF2b8c5b);
   static final secondaryColor = Colors.blueGrey;
-  static final primaryVariantColor = Color(0xFFa7d391);
+  static final primaryVariantColor = Color(0xFF86d37a);
+  static final primaryLightVariantColor = Color(0xFF37b574);
   static final onPrimary = Colors.white;
   static final background = Colors.grey[50];
   static final onBackground = Colors.black;

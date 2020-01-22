@@ -14,4 +14,31 @@ class AppStyles {
       fontSize: AratorTheme.titleFontSize,
       fontWeight: FontWeight.bold,
       color: AratorTheme.onBackgroundLight);
+
+  final bmiLabelStyle = TextStyle(
+    fontSize: 18,
+    color: Colors.white,
+  );
+
+  final kNumberStyle = TextStyle(
+      fontSize: 50.0, fontWeight: FontWeight.w900, color: Colors.white);
+
+  final kLargeButtonStyle =
+      TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold);
+
+  final kTitleStyle = TextStyle(
+      fontSize: 50.0,
+      fontWeight: FontWeight.bold,
+      color: AratorTheme.primaryColor);
+
+  final kResultStyle = TextStyle(
+      fontSize: 22.0, fontWeight: FontWeight.bold, color: Colors.white);
+
+  final kBMIStyle = TextStyle(
+      fontSize: 100.0, fontWeight: FontWeight.bold, color: Colors.white);
+
+  final kBodyStyle = TextStyle(
+    fontSize: 22.0,
+    color: Colors.white,
+  );
 }
