@@ -30,3 +30,6 @@ export 'bluetooth_device_state.dart';
 export 'route_trip_bloc.dart';
 export 'route_trip_event.dart';
 export 'route_trip_state.dart';
+export 'bmi_bloc.dart';
+export 'bmi_event.dart';
+export 'bmi_state.dart';

@@ -35,6 +35,7 @@ class ShoppingCartBloc extends Bloc<ShoppingCartEvent, ShoppingCartState> {
     yield AddingItem();
     try {
       this.shoppingCart.productsInCart.add(productInCart);
+      print("adding");
       await this.shoppingCartRepository.updateShoppingCart(shoppingCart);
       yield ItemAdded();
     } catch (error) {

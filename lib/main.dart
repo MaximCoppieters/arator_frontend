@@ -37,6 +37,9 @@ class Arator extends StatelessWidget {
         ),
         BlocProvider<RouteTripBloc>(
           create: (context) => RouteTripBloc(),
+        ),
+        BlocProvider<BmiBloc>(
+          create: (context) => BmiBloc(),
         )
       ],
       child: MaterialApp(

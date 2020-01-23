@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:arator/business/bloc/bloc.dart';
 import 'package:arator/business/bloc/bluetooth_device_bloc.dart';
 import 'package:arator/business/bloc/bluetooth_device_event.dart';
 import 'package:arator/business/bloc/bluetooth_device_state.dart';
@@ -70,19 +71,24 @@ class _FindingDevicePageState extends State<FindingDevicePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: Text("Connected Devices"),
+        ),
         body: BlocBuilder<BluetoothDeviceBloc, BluetoothDeviceConnectionState>(
             bloc: _bluetoothDeviceBloc,
             builder: (context, state) {
               var trailing;
               if (state is Connected) {
                 trailing = Text("Connected");
-              } else {
+              } else if (state is InitialBluetoothDeviceState) {
                 trailing = AppButton(
                   child: Text("Connect"),
                   onPressed: () {
                     _bluetoothDeviceBloc.add(ConnectDevice());
                   },
                 );
+              } else {
+                trailing = CircularProgressIndicator();
               }
               return ListView(
                 children: <Widget>[

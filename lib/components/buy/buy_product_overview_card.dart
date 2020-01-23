@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:arator/components/common/profile_picture.dart';
 import 'package:arator/data/model/Product.dart';
 import 'package:arator/tab_navigator.dart';
@@ -7,6 +9,7 @@ import 'package:flutter/material.dart';
 class BuyProduceOverviewCard extends StatelessWidget {
   final Product product;
   final bool omitHeader;
+  final Random random = Random();
 
   BuyProduceOverviewCard(this.product, {this.omitHeader = false});
 
@@ -46,19 +49,19 @@ class BuyProduceOverviewCard extends StatelessWidget {
                   height: 150.0, fit: BoxFit.fitHeight),
             ),
             Container(
-                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                padding: EdgeInsets.only(left: 5.0, top: 10.0),
                 alignment: Alignment.topLeft,
                 child: Row(children: <Widget>[
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(product.formattedPriceInEuro.toString(),
+                      Text(product.formattedPriceInEuro.toString() + "/kg",
                           style: TextStyle(
                               color: Theme.of(context).accentColor,
                               fontSize:
                                   Theme.of(context).textTheme.subtitle.fontSize,
                               fontWeight: FontWeight.bold)),
-                      Text("2,5 km away",
+                      Text("0,${random.nextInt(100)} km away",
                           style: TextStyle(
                             color: Theme.of(context).textTheme.body1.color,
                             fontSize:
@@ -73,7 +76,6 @@ class BuyProduceOverviewCard extends StatelessWidget {
                     ],
                   ),
                   Align(
-                    alignment: Alignment.topRight,
                     child: FlatButton(
                       onPressed: () => {},
                       child: Image.asset(

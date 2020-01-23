@@ -77,7 +77,7 @@ class _BuyProductDetailPageState extends State<BuyProductDetailPage> {
                               fontSize: 16.0, fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          "${widget.product.priceInEuro}",
+                          "${widget.product.formattedPriceInEuro}/kg",
                           // produceModel.selectedProduce.getPricePerUnit(),
                           style: TextStyle(fontSize: 16.0),
                         ),

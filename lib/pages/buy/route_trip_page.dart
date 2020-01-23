@@ -5,13 +5,14 @@ import 'package:arator/business/bloc/bloc.dart';
 import 'package:arator/business/gps_service.dart';
 import 'package:arator/components/buy/heart_rate_circle.dart';
 import 'package:arator/components/common/page_body_container.dart';
+import 'package:arator/components/elements/button.dart';
 import 'package:arator/components/maps/shopping_route_map.dart';
 import 'package:arator/data/model/ShoppingCart.dart';
 import 'package:arator/data/repo/shopping_cart_repo.dart';
 import 'package:arator/style/theme.dart';
+import 'package:arator/tab_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_blue/flutter_blue.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pedometer/pedometer.dart';
@@ -28,7 +29,6 @@ class _ShoppingTripPageState extends State<ShoppingTripPage> {
   GpsService _gpsService = GpsService();
   final num mapBoxHeight = 200.0;
 
-  String muestrePasos = "";
   String _distanceInKm = "0";
   String _caloriesBurned = "0";
 
@@ -37,8 +37,9 @@ class _ShoppingTripPageState extends State<ShoppingTripPage> {
 
   RouteTripBloc _routeTripBloc;
   BluetoothDeviceBloc _bluetoothDeviceBloc;
+  BmiBloc _bmiBloc;
 
-  double _numerox;
+  double _numberx;
   double _convert;
   double _distanceInKilometers;
 
@@ -46,51 +47,10 @@ class _ShoppingTripPageState extends State<ShoppingTripPage> {
 
   @override
   void initState() {
+    _bmiBloc = BlocProvider.of<BmiBloc>(context);
     _routeTripBloc = BlocProvider.of<RouteTripBloc>(context);
     super.initState();
-    print("hey");
-    _bluetoothDeviceBloc = BlocProvider.of<BluetoothDeviceBloc>(context);
-    _bluetoothDeviceBloc.listen((state) {
-      if (state is Connected) {
-        BluetoothDevice dev = state.props[0];
-
-        dev.discoverServices();
-        readHeartRate(dev);
-      }
-    });
     setUpPedometer();
-  }
-
-  readHeartRate(BluetoothDevice dev) async {
-    Timer.periodic(Duration(seconds: 4), (timer) {
-      dev.services.listen((services) async {
-        // var heartRateService = services.firstWhere((service) =>
-        //     service.uuid.toString() ==
-        //     "0000180d-0000-1000-8000-00805f9b34fb");
-        Stopwatch stopwatch = Stopwatch();
-        for (BluetoothService service in services) {
-          if (service != null &&
-              service.uuid
-                  .toString()
-                  .startsWith("45121540-51f2-406e-927a-3e1e183412e0")) {
-            for (BluetoothCharacteristic characteristic
-                in service.characteristics) {
-              try {
-                if (!stopwatch.isRunning) {
-                  stopwatch.start();
-                }
-                if (!characteristic.isNotifying) {
-                  await characteristic.setNotifyValue(true);
-                  characteristic.value.listen((readValue) {
-                    print(readValue);
-                  });
-                }
-              } catch (error) {}
-            }
-          }
-        }
-      });
-    });
   }
 
   void setUpPedometer() {
@@ -109,10 +69,10 @@ class _ShoppingTripPageState extends State<ShoppingTripPage> {
     double y = (dist + .0);
 
     setState(() {
-      _numerox = y;
+      _numberx = y;
     });
 
-    var long3 = (_numerox);
+    var long3 = (_numberx);
     long3 = num.parse(y.toStringAsFixed(2));
     var long4 = (long3 / 10000);
 
@@ -122,7 +82,7 @@ class _ShoppingTripPageState extends State<ShoppingTripPage> {
     d = (d * fac).round() / fac;
     print("d: $d");
 
-    getDistanceRun(_numerox);
+    getDistanceRun(_numberx);
 
     setState(() {
       _convert = d;
@@ -146,6 +106,9 @@ class _ShoppingTripPageState extends State<ShoppingTripPage> {
   void getBurnedRun() {
     setState(() {
       var calories = _distanceInKilometers;
+      if (_distanceInKilometers == null) {
+        calories = 0;
+      }
       _caloriesBurned = "$calories";
     });
   }
@@ -185,6 +148,7 @@ class _ShoppingTripPageState extends State<ShoppingTripPage> {
 
   @override
   Widget build(BuildContext context) {
+    getBurnedRun();
     return Scaffold(
         body: SingleChildScrollView(
             child: Column(
@@ -295,8 +259,36 @@ class _ShoppingTripPageState extends State<ShoppingTripPage> {
                                 fontSize: 36.0,
                                 fontWeight: FontWeight.bold))
                       ],
-                    )
+                    ),
                   ],
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                BlocBuilder<BmiBloc, BmiState>(
+                  bloc: _bmiBloc,
+                  builder: (BuildContext context, BmiState state) {
+                    if (state is Calculated) {
+                      var bmi = state.props[0];
+                      return Text("Based on your BMI of $bmi");
+                    } else {
+                      return Column(
+                        children: <Widget>[
+                          Text("To get more accurate results"),
+                          SizedBox(
+                            height: 8.0,
+                          ),
+                          AppButton(
+                            child: Text("Calculate BMI"),
+                            onPressed: () {
+                              TabNavigator.push(
+                                  context, TabNavigatorRoutes.bmiCalculator);
+                            },
+                          )
+                        ],
+                      );
+                    }
+                  },
                 )
               ],
             )
